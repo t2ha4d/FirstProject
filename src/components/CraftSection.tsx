@@ -15,13 +15,22 @@ export function CraftSection({ onShopAll }: CraftSectionProps) {
 
       <div className="craft-copy">
         <p className="eyebrow eyebrow-dark">Built by hand. Made to last.</p>
-        <h2 id="craft-title" className="craft-title">The art of<br />watchmaking</h2>
+        <h2 id="craft-title" className="craft-title">
+          The art of
+          <br />
+          watchmaking
+        </h2>
         <p className="craft-text">
           Every WTC timepiece is assembled and regulated in small batches by a dedicated team of
           watchmakers. We pair proven movements with enduring materials, then check each watch by
           hand before it leaves our bench.
         </p>
-        <button type="button" className="text-link" onClick={onShopAll} aria-label="Explore the collection">
+        <button
+          type="button"
+          className="text-link"
+          onClick={onShopAll}
+          aria-label="Explore the collection"
+        >
           Explore the collection <Icon name="arrow" size={16} />
         </button>
       </div>
@@ -30,7 +39,11 @@ export function CraftSection({ onShopAll }: CraftSectionProps) {
         {CRAFT_FEATURES.map(({ icon, lines }) => (
           <li key={lines[0]} className="craft-feature">
             <Icon name={icon} size={36} />
-            <span>{lines[0]}<br />{lines[1]}</span>
+            <span>
+              {lines[0]}
+              <br />
+              {lines[1]}
+            </span>
           </li>
         ))}
       </ul>

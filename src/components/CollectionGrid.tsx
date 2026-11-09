@@ -10,7 +10,9 @@ export interface CollectionGridProps {
 export function CollectionGrid({ onSelectCollection }: CollectionGridProps) {
   return (
     <section className="section" aria-labelledby="collections-title">
-      <h2 id="collections-title" className="section-title">Shop by Collection</h2>
+      <h2 id="collections-title" className="section-title">
+        Shop by Collection
+      </h2>
       <div className="collection-grid">
         {COLLECTIONS.map(({ name, icon }) => (
           <button

@@ -81,15 +81,15 @@ Below is the complete component hierarchy matching what appears in the **React D
 
 ## 📋 Component Summary Table
 
-| Component | Source File | Props Interface | State Owned | Description |
-| :--- | :--- | :--- | :--- | :--- |
-| **`App`** | `src/App.tsx` | N/A (Root) | `products`, `status`, `errorMessage`, `filters`, `cart` | Root container coordinating data fetching, filter pipeline, and cart drawer. |
-| **`Header`** | `src/components/Header.tsx` | `HeaderProps` | *None* | Top navigation displaying logo, title, tagline, and cart button with badge. |
-| **`SearchAndFilter`** | `src/components/SearchAndFilter.tsx` | `SearchAndFilterProps` | *None* | Search text input, category dropdown, price/name sort selector, and filter reset. |
-| **`ProductList`** | `src/components/ProductList.tsx` | `ProductListProps` | *None* | Renders product cards grid or handles Loading, Error, Empty, and No Match states. |
-| **`ProductCard`** | `src/components/ProductCard.tsx` | `ProductCardProps` | `isSaved: boolean` | Individual product card with price formatting, stock indicator, wishlist toggle, and add-to-cart. |
-| **`CartDrawer`** | `src/components/CartDrawer.tsx` | `CartDrawerProps` | *None* | Slide-out overlay showing cart items, subtotal calculation, checkout, and backdrop dismiss. |
-| **`CartItem`** | `src/components/CartItem.tsx` | `CartItemProps` | *None* | Line item row with unit price, subtotal, and quantity increment/decrement/remove actions. |
+| Component             | Source File                          | Props Interface        | State Owned                                             | Description                                                                                       |
+| :-------------------- | :----------------------------------- | :--------------------- | :------------------------------------------------------ | :------------------------------------------------------------------------------------------------ |
+| **`App`**             | `src/App.tsx`                        | N/A (Root)             | `products`, `status`, `errorMessage`, `filters`, `cart` | Root container coordinating data fetching, filter pipeline, and cart drawer.                      |
+| **`Header`**          | `src/components/Header.tsx`          | `HeaderProps`          | _None_                                                  | Top navigation displaying logo, title, tagline, and cart button with badge.                       |
+| **`SearchAndFilter`** | `src/components/SearchAndFilter.tsx` | `SearchAndFilterProps` | _None_                                                  | Search text input, category dropdown, price/name sort selector, and filter reset.                 |
+| **`ProductList`**     | `src/components/ProductList.tsx`     | `ProductListProps`     | _None_                                                  | Renders product cards grid or handles Loading, Error, Empty, and No Match states.                 |
+| **`ProductCard`**     | `src/components/ProductCard.tsx`     | `ProductCardProps`     | `isSaved: boolean`                                      | Individual product card with price formatting, stock indicator, wishlist toggle, and add-to-cart. |
+| **`CartDrawer`**      | `src/components/CartDrawer.tsx`      | `CartDrawerProps`      | _None_                                                  | Slide-out overlay showing cart items, subtotal calculation, checkout, and backdrop dismiss.       |
+| **`CartItem`**        | `src/components/CartItem.tsx`        | `CartItemProps`        | _None_                                                  | Line item row with unit price, subtotal, and quantity increment/decrement/remove actions.         |
 
 ---
 
@@ -156,21 +156,25 @@ shopboard-react/
 ## 🚀 Getting Started
 
 ### Installation
+
 ```bash
 npm install
 ```
 
 ### Development
+
 ```bash
 npm run dev
 ```
 
 ### Production Build
+
 ```bash
 npm run build
 ```
 
 ### Code Quality & Linting
+
 ```bash
 npm run lint
 ```

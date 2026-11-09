@@ -16,14 +16,22 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
   return (
     <article className={`product-card ${!isAvailable ? 'sold-out' : ''}`}>
       <div className="card-media">
-        <WatchIllustration design={product.design} label={`${product.title}, ${product.subtitle}`} className="card-watch" />
+        <WatchIllustration
+          design={product.design}
+          label={`${product.title}, ${product.subtitle}`}
+          className="card-watch"
+        />
         {!isAvailable && <span className="sold-out-tag">Sold out</span>}
         <button
           type="button"
           className={`favorite-btn ${isSaved ? 'favorited' : ''}`}
           onClick={() => setIsSaved(!isSaved)}
           aria-pressed={isSaved}
-          aria-label={isSaved ? `Remove ${product.title} from favorites` : `Save ${product.title} to favorites`}
+          aria-label={
+            isSaved
+              ? `Remove ${product.title} from favorites`
+              : `Save ${product.title} to favorites`
+          }
         >
           <Icon name={isSaved ? 'heart-filled' : 'heart'} size={19} />
         </button>

@@ -7,16 +7,20 @@
 - **How I found it:** Console warning on initial reload.
 - **Cause:** Line 8–10 in `CategoryChips.tsx`:
   ```tsx
-  {categories.map((category) => (
-    <span className="chip">{category}</span>
-  ))}
+  {
+    categories.map((category) => <span className="chip">{category}</span>)
+  }
   ```
   The JSX elements produced by mapping over the `categories` array lack a `key` prop, preventing React's reconciliation algorithm from uniquely tracking list items.
 - **Fix:** Add a stable unique key (the category string itself):
   ```tsx
-  {categories.map((category) => (
-    <span key={category} className="chip">{category}</span>
-  ))}
+  {
+    categories.map((category) => (
+      <span key={category} className="chip">
+        {category}
+      </span>
+    ))
+  }
   ```
 
 ---
@@ -28,7 +32,7 @@
 - **How I found it:** Visual inspection of sold-out product cards and inspecting `stock` prop in React DevTools Components tab.
 - **Cause:** Line 6 in `StockNote.tsx`:
   ```tsx
-  return <p className="stock">{stock && <span>Only {stock} left</span>}</p>;
+  return <p className="stock">{stock && <span>Only {stock} left</span>}</p>
   ```
   And line 19 in `CartPanel.tsx`:
   ```tsx
@@ -53,16 +57,16 @@
 - **How I found it:** React DevTools Components tab: inspecting `<ProductCard>` instances revealed `key="0"`, `key="1"`, etc., in the tree.
 - **Cause:** Line 18 in `ProductList.tsx`:
   ```tsx
-  {shown.map((product, index) => (
-    <ProductCard key={index} product={product} onAdd={onAdd} />
-  ))}
+  {
+    shown.map((product, index) => <ProductCard key={index} product={product} onAdd={onAdd} />)
+  }
   ```
   Using array `index` as a key instructs React to associate DOM identity and local component state (`const [saved, setSaved] = useState(false)`) with the slot position (`0`), rather than the product identity.
 - **Fix:** Use the persistent unique product ID for the key:
   ```tsx
-  {shown.map((product) => (
-    <ProductCard key={product.id} product={product} onAdd={onAdd} />
-  ))}
+  {
+    shown.map((product) => <ProductCard key={product.id} product={product} onAdd={onAdd} />)
+  }
   ```
 
 ---
@@ -74,14 +78,12 @@
 - **How I found it:** React DevTools Components tab: selected `<ProductList>` and inspected the `products` prop before and after sorting; the original `PRODUCTS` array was mutated.
 - **Cause:** Line 13 in `ProductList.tsx`:
   ```tsx
-  const shown = sort === "price-asc" ? products.sort((a, b) => a.price - b.price) : products;
+  const shown = sort === 'price-asc' ? products.sort((a, b) => a.price - b.price) : products
   ```
   `Array.prototype.sort()` mutates the source array in place. Because `PRODUCTS` was passed by reference from `App.tsx`, the original array order in module scope was permanently altered.
 - **Fix:** Shallow-copy the array before sorting, or use `toSorted()`:
   ```tsx
-  const shown = sort === "price-asc"
-    ? [...products].sort((a, b) => a.price - b.price)
-    : products;
+  const shown = sort === 'price-asc' ? [...products].sort((a, b) => a.price - b.price) : products
   ```
 
 ---
@@ -108,13 +110,12 @@
   // In App.tsx:
   function updateQty(id: number, delta: number) {
     setCart((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, qty: item.qty + delta } : item
-      )
-    );
+      prev.map((item) => (item.id === id ? { ...item, qty: item.qty + delta } : item)),
+    )
   }
 
   // In CartRow.tsx:
-  <button type="button" onClick={() => onUpdateQty(item.id, 1)}>+</button>
+  ;<button type="button" onClick={() => onUpdateQty(item.id, 1)}>
+    +
+  </button>
   ```
-

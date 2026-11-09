@@ -8,12 +8,7 @@ export interface CartItemProps {
   onRemove: (productId: number) => void
 }
 
-export function CartItem({
-  item,
-  onIncrement,
-  onDecrement,
-  onRemove,
-}: CartItemProps) {
+export function CartItem({ item, onIncrement, onDecrement, onRemove }: CartItemProps) {
   const lineTotalCents = item.product.price_cents * item.quantity
 
   return (
@@ -25,7 +20,11 @@ export function CartItem({
       </div>
 
       <div className="cart-item-actions">
-        <div className="quantity-controls" role="group" aria-label={`Quantity controls for ${item.product.title}`}>
+        <div
+          className="quantity-controls"
+          role="group"
+          aria-label={`Quantity controls for ${item.product.title}`}
+        >
           <button
             type="button"
             className="qty-btn"
@@ -62,4 +61,3 @@ export function CartItem({
     </li>
   )
 }
-

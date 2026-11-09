@@ -89,14 +89,14 @@ export function CartDrawer({
             </ul>
           ) : (
             <div className="empty-cart-state">
-              <span className="empty-cart-icon"><Icon name="bag" size={44} /></span>
+              <span className="empty-cart-icon">
+                <Icon name="bag" size={44} />
+              </span>
               <p className="empty-cart-title">Your bag is empty</p>
-              <p className="empty-cart-text">Explore the collection and find a piece worth keeping.</p>
-              <button
-                type="button"
-                className="continue-shopping-btn"
-                onClick={onClose}
-              >
+              <p className="empty-cart-text">
+                Explore the collection and find a piece worth keeping.
+              </p>
+              <button type="button" className="continue-shopping-btn" onClick={onClose}>
                 Explore Watches
               </button>
             </div>
@@ -114,15 +114,18 @@ export function CartDrawer({
               <button
                 type="button"
                 className="checkout-btn"
-                onClick={() => alert('Secure checkout is coming soon. Your bag has ' + totalCount + ' items totaling ' + subtotalFormatted)}
+                onClick={() =>
+                  alert(
+                    'Secure checkout is coming soon. Your bag has ' +
+                      totalCount +
+                      ' items totaling ' +
+                      subtotalFormatted,
+                  )
+                }
               >
                 Checkout ({subtotalFormatted})
               </button>
-              <button
-                type="button"
-                className="clear-cart-btn"
-                onClick={onClear}
-              >
+              <button type="button" className="clear-cart-btn" onClick={onClear}>
                 Empty Bag
               </button>
             </div>
@@ -132,4 +135,3 @@ export function CartDrawer({
     </div>
   )
 }
-

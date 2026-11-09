@@ -592,7 +592,8 @@
   padding: 0;
   overflow: hidden;
   border-radius: 6px;
-  background: radial-gradient(circle 110px at 100% 100%, var(--olive) 99%, transparent), var(--sand);
+  background:
+    radial-gradient(circle 110px at 100% 100%, var(--olive) 99%, transparent), var(--sand);
 }
 
 .craft-media {

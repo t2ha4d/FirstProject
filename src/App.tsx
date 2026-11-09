@@ -76,12 +76,16 @@ export default function App() {
         <CollectionGrid onSelectCollection={handleSelectCollection} />
 
         <section id="shop" className="section" aria-labelledby="shop-title">
-          <h2 id="shop-title" className="section-title section-title-left">Featured Pieces</h2>
+          <h2 id="shop-title" className="section-title section-title-left">
+            Featured Pieces
+          </h2>
           <SearchAndFilter
             categories={categories}
             filters={filters}
             onSearchChange={(searchQuery) => setFilters((prev) => ({ ...prev, searchQuery }))}
-            onCategoryChange={(selectedCategory) => setFilters((prev) => ({ ...prev, selectedCategory }))}
+            onCategoryChange={(selectedCategory) =>
+              setFilters((prev) => ({ ...prev, selectedCategory }))
+            }
             onSortChange={(sortBy: SortOption) => setFilters((prev) => ({ ...prev, sortBy }))}
             onResetFilters={handleResetFilters}
             totalResults={filteredProducts.length}

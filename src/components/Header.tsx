@@ -9,17 +9,32 @@ export interface HeaderProps {
   onSelectCollection: (collection: string) => void
 }
 
-export function Header({ cartCount, onOpenCart, onOpenSearch, onShopAll, onSelectCollection }: HeaderProps) {
+export function Header({
+  cartCount,
+  onOpenCart,
+  onOpenSearch,
+  onShopAll,
+  onSelectCollection,
+}: HeaderProps) {
   return (
     <header className="header">
       <div className="header-inner">
         <a className="brand" href="#top" aria-label={`${BRAND_NAME} home`}>
-          <span className="brand-mark"><Icon name="circle" size={26} /></span>
+          <span className="brand-mark">
+            <Icon name="circle" size={26} />
+          </span>
           <span className="brand-name">{BRAND_NAME}</span>
         </a>
 
         <nav className="header-nav" aria-label="Main navigation">
-          <button type="button" className="nav-link" onClick={onShopAll} aria-label="Shop all watches">Shop All</button>
+          <button
+            type="button"
+            className="nav-link"
+            onClick={onShopAll}
+            aria-label="Shop all watches"
+          >
+            Shop All
+          </button>
           {COLLECTIONS.map(({ name }) => (
             <button
               key={name}
@@ -31,11 +46,18 @@ export function Header({ cartCount, onOpenCart, onOpenSearch, onShopAll, onSelec
               {name}
             </button>
           ))}
-          <a className="nav-link" href="#story">Our Story</a>
+          <a className="nav-link" href="#story">
+            Our Story
+          </a>
         </nav>
 
         <div className="header-actions">
-          <button type="button" className="icon-btn" onClick={onOpenSearch} aria-label="Search watches">
+          <button
+            type="button"
+            className="icon-btn"
+            onClick={onOpenSearch}
+            aria-label="Search watches"
+          >
             <Icon name="search" />
           </button>
           <button
@@ -45,7 +67,11 @@ export function Header({ cartCount, onOpenCart, onOpenSearch, onShopAll, onSelec
             aria-label={`Open shopping bag containing ${cartCount} items`}
           >
             <Icon name="bag" />
-            {cartCount > 0 && <span className="cart-badge" aria-hidden="true">{cartCount}</span>}
+            {cartCount > 0 && (
+              <span className="cart-badge" aria-hidden="true">
+                {cartCount}
+              </span>
+            )}
           </button>
         </div>
       </div>

@@ -20,16 +20,21 @@ export function SearchAndFilter({
   onResetFilters,
   totalResults,
 }: SearchAndFilterProps) {
-  const isFiltered = filters.searchQuery !== '' || filters.selectedCategory !== 'all' || filters.sortBy !== 'default'
+  const isFiltered =
+    filters.searchQuery !== '' || filters.selectedCategory !== 'all' || filters.sortBy !== 'default'
 
   return (
     <section className="search-filter-section" aria-label="Search and filter watches">
       <div className="search-filter-grid">
         {/* Search input */}
         <div className="filter-group search-group">
-          <label htmlFor="search-input" className="filter-label">Search Watches</label>
+          <label htmlFor="search-input" className="filter-label">
+            Search Watches
+          </label>
           <div className="search-input-wrapper">
-            <span className="search-icon"><Icon name="search" size={18} /></span>
+            <span className="search-icon">
+              <Icon name="search" size={18} />
+            </span>
             <input
               id="search-input"
               type="search"
@@ -53,7 +58,9 @@ export function SearchAndFilter({
 
         {/* Category select */}
         <div className="filter-group">
-          <label htmlFor="category-select" className="filter-label">Collection</label>
+          <label htmlFor="category-select" className="filter-label">
+            Collection
+          </label>
           <select
             id="category-select"
             className="filter-select"
@@ -71,7 +78,9 @@ export function SearchAndFilter({
 
         {/* Sort select */}
         <div className="filter-group">
-          <label htmlFor="sort-select" className="filter-label">Sort By</label>
+          <label htmlFor="sort-select" className="filter-label">
+            Sort By
+          </label>
           <select
             id="sort-select"
             className="filter-select"
@@ -105,4 +114,3 @@ export function SearchAndFilter({
     </section>
   )
 }
-

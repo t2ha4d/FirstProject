@@ -8,7 +8,9 @@ export interface LookbookProps {
 export function Lookbook({ onShopAll }: LookbookProps) {
   return (
     <section className="section" aria-labelledby="lookbook-title">
-      <h2 id="lookbook-title" className="section-title">Style Your Time</h2>
+      <h2 id="lookbook-title" className="section-title">
+        Style Your Time
+      </h2>
       <div className="lookbook-grid">
         {LOOKBOOK.map(({ id, caption, surface, design }) => (
           <figure key={id} className="lookbook-tile" style={{ background: surface }}>
@@ -18,7 +20,12 @@ export function Lookbook({ onShopAll }: LookbookProps) {
         ))}
       </div>
       <div className="section-action">
-        <button type="button" className="btn btn-olive" onClick={onShopAll} aria-label="Shop the look">
+        <button
+          type="button"
+          className="btn btn-olive"
+          onClick={onShopAll}
+          aria-label="Shop the look"
+        >
           Shop the Look
         </button>
       </div>

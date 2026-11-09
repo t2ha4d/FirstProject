@@ -19,15 +19,23 @@ export function Newsletter({ onSubscribe }: NewsletterProps) {
     <section className="newsletter" aria-labelledby="newsletter-title">
       <div className="newsletter-inner">
         <div>
-          <h2 id="newsletter-title" className="newsletter-title">Let’s stay in touch</h2>
-          <p className="newsletter-text">Be the first to know about new releases, limited editions, and special offers.</p>
+          <h2 id="newsletter-title" className="newsletter-title">
+            Let’s stay in touch
+          </h2>
+          <p className="newsletter-text">
+            Be the first to know about new releases, limited editions, and special offers.
+          </p>
         </div>
 
         {isSubmitted ? (
-          <p className="newsletter-thanks" role="status">Thank you for subscribing.</p>
+          <p className="newsletter-thanks" role="status">
+            Thank you for subscribing.
+          </p>
         ) : (
           <form className="newsletter-form" onSubmit={handleSubmit}>
-            <label htmlFor="newsletter-email" className="visually-hidden">Email address</label>
+            <label htmlFor="newsletter-email" className="visually-hidden">
+              Email address
+            </label>
             <input
               id="newsletter-email"
               type="email"
@@ -37,7 +45,13 @@ export function Newsletter({ onSubscribe }: NewsletterProps) {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
-            <button type="submit" className="newsletter-btn" aria-label="Subscribe to the newsletter">Subscribe</button>
+            <button
+              type="submit"
+              className="newsletter-btn"
+              aria-label="Subscribe to the newsletter"
+            >
+              Subscribe
+            </button>
           </form>
         )}
       </div>

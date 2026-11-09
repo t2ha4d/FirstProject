@@ -36,7 +36,9 @@ export function ProductList({
   if (status === 'error') {
     return (
       <div className="product-list-state error-state" role="alert">
-        <div className="state-icon"><Icon name="alert" size={36} /></div>
+        <div className="state-icon">
+          <Icon name="alert" size={36} />
+        </div>
         <h3 className="state-title">Unable to load the collection</h3>
         <p className="state-description">
           {errorMessage || 'Something went wrong while loading our watches.'}
@@ -52,9 +54,13 @@ export function ProductList({
   if (status === 'success' && totalCatalogCount === 0) {
     return (
       <div className="product-list-state empty-state">
-        <div className="state-icon"><Icon name="box" size={36} /></div>
+        <div className="state-icon">
+          <Icon name="box" size={36} />
+        </div>
         <h3 className="state-title">No watches available</h3>
-        <p className="state-description">The collection is currently empty. Please check back soon.</p>
+        <p className="state-description">
+          The collection is currently empty. Please check back soon.
+        </p>
         <button type="button" className="retry-btn" onClick={onRetry}>
           Refresh Collection
         </button>
@@ -66,9 +72,13 @@ export function ProductList({
   if (status === 'success' && products.length === 0) {
     return (
       <div className="product-list-state no-match-state">
-        <div className="state-icon"><Icon name="search" size={36} /></div>
+        <div className="state-icon">
+          <Icon name="search" size={36} />
+        </div>
         <h3 className="state-title">No matching watches found</h3>
-        <p className="state-description">Try a different search, choose another collection, or clear your filters.</p>
+        <p className="state-description">
+          Try a different search, choose another collection, or clear your filters.
+        </p>
         <button type="button" className="retry-btn" onClick={onResetFilters}>
           Clear all filters
         </button>
@@ -80,13 +90,8 @@ export function ProductList({
   return (
     <div className="products-grid" role="region" aria-label="Watch collection">
       {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          onAddToCart={onAddToCart}
-        />
+        <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
       ))}
     </div>
   )
 }
-

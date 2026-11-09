@@ -17,9 +17,14 @@ export function loadCartFromStorage(): CartItem[] {
     if (!raw) return []
     const parsed = JSON.parse(raw)
     if (!Array.isArray(parsed)) return []
-    return parsed.filter(
-      (item): item is CartItem =>
-        Boolean(item && item.product && typeof item.product.id === 'number' && typeof item.quantity === 'number' && item.quantity > 0)
+    return parsed.filter((item): item is CartItem =>
+      Boolean(
+        item &&
+        item.product &&
+        typeof item.product.id === 'number' &&
+        typeof item.quantity === 'number' &&
+        item.quantity > 0,
+      ),
     )
   } catch {
     return []
@@ -47,9 +52,7 @@ export function addItemToCart(cart: CartItem[], product: Product): CartItem[] {
   const existing = cart.find((item) => item.product.id === product.id)
   if (existing) {
     return cart.map((item) =>
-      item.product.id === product.id
-        ? { ...item, quantity: item.quantity + 1 }
-        : item
+      item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item,
     )
   }
   return [...cart, { product, quantity: 1 }]
@@ -58,13 +61,15 @@ export function addItemToCart(cart: CartItem[], product: Product): CartItem[] {
 /**
  * Pure state reducer: updates item quantity or removes if quantity <= 0
  */
-export function updateItemQuantity(cart: CartItem[], productId: number, quantity: number): CartItem[] {
+export function updateItemQuantity(
+  cart: CartItem[],
+  productId: number,
+  quantity: number,
+): CartItem[] {
   if (quantity <= 0) {
     return removeItemFromCart(cart, productId)
   }
-  return cart.map((item) =>
-    item.product.id === productId ? { ...item, quantity } : item
-  )
+  return cart.map((item) => (item.product.id === productId ? { ...item, quantity } : item))
 }
 
 /**
@@ -119,7 +124,6 @@ export function useCartState() {
     handleClearCart,
   }
 }
-
 
 /**
  * React hook for loading the catalog, with Loading / Error / Success states and retry

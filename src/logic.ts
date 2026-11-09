@@ -8,10 +8,11 @@ export function filterBySearch(products: Product[], query: string): Product[] {
   if (!trimmed) {
     return products
   }
-  return products.filter((product) =>
-    product.title.toLowerCase().includes(trimmed) ||
-    product.subtitle.toLowerCase().includes(trimmed) ||
-    product.category_name.toLowerCase().includes(trimmed)
+  return products.filter(
+    (product) =>
+      product.title.toLowerCase().includes(trimmed) ||
+      product.subtitle.toLowerCase().includes(trimmed) ||
+      product.category_name.toLowerCase().includes(trimmed),
   )
 }
 
@@ -88,4 +89,3 @@ export function calculateSubtotalCents(items: CartItem[]): number {
 export function calculateTotalCount(items: CartItem[]): number {
   return items.reduce((count, item) => count + item.quantity, 0)
 }
-
