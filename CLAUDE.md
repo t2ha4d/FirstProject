@@ -11,7 +11,7 @@
 
 - **`src/types.ts`**: Pure data contracts and interface definitions.
   - **Rule**: Always import with `import type` throughout the entire codebase.
-- **`src/api.ts`**: Asynchronous data layer for fetching remote products with Loading, Error, Empty, and Success states.
+- **`src/api.ts`**: Asynchronous data layer serving the WTC watch catalog (`src/catalog.ts`) behind Loading, Error, Empty, and Success states.
 - **`src/logic.ts`**: Pure, immutable utility functions for searching, filtering by category, sorting by price/name, and price formatting.
 - **`src/state.ts`**: State reducers and custom hooks managing cart operations with `localStorage` persistence.
 - **`src/components/`**: Reusable presentational components, each isolated in its own file with a typed `Props` interface.

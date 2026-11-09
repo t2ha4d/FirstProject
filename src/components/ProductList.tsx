@@ -1,3 +1,4 @@
+import { Icon } from './Icon'
 import { ProductCard } from './ProductCard'
 import type { ApiStatus, Product } from '../types'
 
@@ -25,8 +26,8 @@ export function ProductList({
     return (
       <div className="product-list-state loading-state" role="status" aria-live="polite">
         <div className="spinner" aria-hidden="true"></div>
-        <p className="state-title">Loading catalog...</p>
-        <p className="state-description">Fetching current stock from ShopBoard API</p>
+        <p className="state-title">Loading the collection...</p>
+        <p className="state-description">Winding up the latest WTC pieces</p>
       </div>
     )
   }
@@ -35,10 +36,10 @@ export function ProductList({
   if (status === 'error') {
     return (
       <div className="product-list-state error-state" role="alert">
-        <div className="state-icon" aria-hidden="true">⚠️</div>
-        <h3 className="state-title">Unable to load products</h3>
+        <div className="state-icon"><Icon name="alert" size={36} /></div>
+        <h3 className="state-title">Unable to load the collection</h3>
         <p className="state-description">
-          {errorMessage || 'There was a problem reaching the product service.'}
+          {errorMessage || 'Something went wrong while loading our watches.'}
         </p>
         <button type="button" className="retry-btn" onClick={onRetry}>
           Try again
@@ -51,11 +52,11 @@ export function ProductList({
   if (status === 'success' && totalCatalogCount === 0) {
     return (
       <div className="product-list-state empty-state">
-        <div className="state-icon" aria-hidden="true">📦</div>
-        <h3 className="state-title">No products available</h3>
-        <p className="state-description">The store catalog is currently empty. Please check back later.</p>
+        <div className="state-icon"><Icon name="box" size={36} /></div>
+        <h3 className="state-title">No watches available</h3>
+        <p className="state-description">The collection is currently empty. Please check back soon.</p>
         <button type="button" className="retry-btn" onClick={onRetry}>
-          Refresh Catalog
+          Refresh Collection
         </button>
       </div>
     )
@@ -65,9 +66,9 @@ export function ProductList({
   if (status === 'success' && products.length === 0) {
     return (
       <div className="product-list-state no-match-state">
-        <div className="state-icon" aria-hidden="true">🔍</div>
-        <h3 className="state-title">No matching products found</h3>
-        <p className="state-description">Try adjusting your search query, selecting another category, or resetting filters.</p>
+        <div className="state-icon"><Icon name="search" size={36} /></div>
+        <h3 className="state-title">No matching watches found</h3>
+        <p className="state-description">Try a different search, choose another collection, or clear your filters.</p>
         <button type="button" className="retry-btn" onClick={onResetFilters}>
           Clear all filters
         </button>
@@ -77,7 +78,7 @@ export function ProductList({
 
   // 5. Success state: Grid of products using real unique product.id as key
   return (
-    <div className="products-grid" role="region" aria-label="Products catalog">
+    <div className="products-grid" role="region" aria-label="Watch collection">
       {products.map((product) => (
         <ProductCard
           key={product.id}

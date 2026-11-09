@@ -1,3 +1,4 @@
+import { Icon } from './Icon'
 import type { FilterState, SortOption } from '../types'
 
 export interface SearchAndFilterProps {
@@ -22,18 +23,18 @@ export function SearchAndFilter({
   const isFiltered = filters.searchQuery !== '' || filters.selectedCategory !== 'all' || filters.sortBy !== 'default'
 
   return (
-    <section className="search-filter-section" aria-label="Search and filter products">
+    <section className="search-filter-section" aria-label="Search and filter watches">
       <div className="search-filter-grid">
         {/* Search input */}
         <div className="filter-group search-group">
-          <label htmlFor="search-input" className="filter-label">Search Products</label>
+          <label htmlFor="search-input" className="filter-label">Search Watches</label>
           <div className="search-input-wrapper">
-            <span className="search-icon" aria-hidden="true">🔍</span>
+            <span className="search-icon"><Icon name="search" size={18} /></span>
             <input
               id="search-input"
               type="search"
               className="search-input"
-              placeholder="Search by title or category..."
+              placeholder="Search by name, dial or strap..."
               value={filters.searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
             />
@@ -44,7 +45,7 @@ export function SearchAndFilter({
                 onClick={() => onSearchChange('')}
                 aria-label="Clear search query"
               >
-                ✕
+                <Icon name="close" size={16} />
               </button>
             )}
           </div>
@@ -52,14 +53,14 @@ export function SearchAndFilter({
 
         {/* Category select */}
         <div className="filter-group">
-          <label htmlFor="category-select" className="filter-label">Category</label>
+          <label htmlFor="category-select" className="filter-label">Collection</label>
           <select
             id="category-select"
             className="filter-select"
             value={filters.selectedCategory}
             onChange={(e) => onCategoryChange(e.target.value)}
           >
-            <option value="all">All Categories</option>
+            <option value="all">All Collections</option>
             {categories.map((cat) => (
               <option key={cat} value={cat}>
                 {cat}
@@ -77,7 +78,7 @@ export function SearchAndFilter({
             value={filters.sortBy}
             onChange={(e) => onSortChange(e.target.value as SortOption)}
           >
-            <option value="default">Featured / Default</option>
+            <option value="default">Featured</option>
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>
             <option value="name-asc">Alphabetical (A - Z)</option>
@@ -88,12 +89,13 @@ export function SearchAndFilter({
       {/* Active filters & results counter */}
       <div className="filter-status-bar">
         <span className="results-count">
-          Showing <strong>{totalResults}</strong> {totalResults === 1 ? 'product' : 'products'}
+          Showing <strong>{totalResults}</strong> {totalResults === 1 ? 'watch' : 'watches'}
         </span>
         {isFiltered && (
           <button
             type="button"
             className="reset-filters-btn"
+            aria-label="Reset all filters"
             onClick={onResetFilters}
           >
             Reset Filters

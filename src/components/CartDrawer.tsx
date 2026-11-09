@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { CartItem } from './CartItem'
+import { Icon } from './Icon'
 import type { CartItem as CartItemType } from '../types'
 
 export interface CartDrawerProps {
@@ -51,12 +52,12 @@ export function CartDrawer({
         className="cart-drawer"
         role="dialog"
         aria-modal="true"
-        aria-label="Shopping Cart Drawer"
+        aria-label="Shopping bag"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="drawer-header">
           <div className="drawer-title-group">
-            <h2 className="drawer-title">Shopping Cart</h2>
+            <h2 className="drawer-title">Your Bag</h2>
             {totalCount > 0 && (
               <span className="drawer-count-badge">
                 {totalCount} {totalCount === 1 ? 'item' : 'items'}
@@ -67,15 +68,15 @@ export function CartDrawer({
             type="button"
             className="drawer-close-btn"
             onClick={onClose}
-            aria-label="Close shopping cart"
+            aria-label="Close shopping bag"
           >
-            ✕
+            <Icon name="close" size={20} />
           </button>
         </div>
 
         <div className="drawer-body">
           {hasItems ? (
-            <ul className="cart-items-list" aria-label="Cart items">
+            <ul className="cart-items-list" aria-label="Bag items">
               {items.map((item) => (
                 <CartItem
                   key={item.product.id}
@@ -88,15 +89,15 @@ export function CartDrawer({
             </ul>
           ) : (
             <div className="empty-cart-state">
-              <span className="empty-cart-icon" aria-hidden="true">🛒</span>
-              <p className="empty-cart-title">Your cart is empty</p>
-              <p className="empty-cart-text">Explore our collection and add some items to your bag.</p>
+              <span className="empty-cart-icon"><Icon name="bag" size={44} /></span>
+              <p className="empty-cart-title">Your bag is empty</p>
+              <p className="empty-cart-text">Explore the collection and find a piece worth keeping.</p>
               <button
                 type="button"
                 className="continue-shopping-btn"
                 onClick={onClose}
               >
-                Start Shopping
+                Explore Watches
               </button>
             </div>
           )}
@@ -113,7 +114,7 @@ export function CartDrawer({
               <button
                 type="button"
                 className="checkout-btn"
-                onClick={() => alert('Proceeding to checkout with ' + totalCount + ' items totaling ' + subtotalFormatted)}
+                onClick={() => alert('Secure checkout is coming soon. Your bag has ' + totalCount + ' items totaling ' + subtotalFormatted)}
               >
                 Checkout ({subtotalFormatted})
               </button>
@@ -122,7 +123,7 @@ export function CartDrawer({
                 className="clear-cart-btn"
                 onClick={onClear}
               >
-                Empty Cart
+                Empty Bag
               </button>
             </div>
           </div>

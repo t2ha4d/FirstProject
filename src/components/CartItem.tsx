@@ -53,7 +53,7 @@ export function CartItem({
             type="button"
             className="remove-item-btn"
             onClick={() => onRemove(item.product.id)}
-            aria-label={`Remove ${item.product.title} from cart`}
+            aria-label={`Remove ${item.product.title} from bag`}
           >
             Remove
           </button>
