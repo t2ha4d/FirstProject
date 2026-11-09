@@ -1,0 +1,57 @@
+const DEFAULT_API_BASE_URL = '/api'
+
+/** Base URL for every request, from VITE_API_BASE_URL without a trailing slash. */
+export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL).replace(
+  /\/+$/,
+  '',
+)
+
+export class ApiError extends Error {
+  readonly status: number | null
+
+  constructor(message: string, status: number | null = null) {
+    super(message)
+    this.name = 'ApiError'
+    this.status = status
+  }
+}
+
+export interface ApiRequestOptions {
+  signal?: AbortSignal
+}
+
+/** Builds the full URL for an endpoint path such as "/products.json". */
+export function buildApiUrl(path: string): string {
+  return `${API_BASE_URL}/${path.replace(/^\/+/, '')}`
+}
+
+/**
+ * GETs an endpoint and hands the JSON body to `parse`, which validates it and
+ * returns typed data (or throws). Every feature goes through this function.
+ */
+export async function apiGet<T>(
+  path: string,
+  parse: (data: unknown) => T,
+  { signal }: ApiRequestOptions = {},
+): Promise<T> {
+  const response = await fetch(buildApiUrl(path), {
+    signal,
+    headers: { Accept: 'application/json' },
+  })
+
+  if (!response.ok) {
+    throw new ApiError(
+      `Request to ${path} failed: ${response.status} ${response.statusText}`,
+      response.status,
+    )
+  }
+
+  let data: unknown
+  try {
+    data = await response.json()
+  } catch {
+    throw new ApiError(`Response from ${path} is not valid JSON`, response.status)
+  }
+
+  return parse(data)
+}
