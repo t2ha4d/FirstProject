@@ -44,6 +44,9 @@ const drawerSubtotalVal = document.querySelector("#drawer-subtotal-val");
 const checkoutActionBtn = document.querySelector("#checkout-action-btn");
 const quickSearchTrigger = document.querySelector("#quick-search-trigger");
 
+// Sign-up Form
+const signupForm = document.querySelector("#signup-form");
+
 /**
  * Updates the catalog display through the pure logic pipeline.
  */
@@ -229,6 +232,14 @@ function setupEventDelegation() {
       toggleCartDrawer(cartBackdrop, false);
     }
   });
+
+  // 11. Sign-up Form Submit (browser validates required/type/minlength first)
+  if (signupForm) {
+    signupForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Thank you for subscribing to NAVE Autumn!");
+    });
+  }
 }
 
 /**

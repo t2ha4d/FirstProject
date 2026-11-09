@@ -786,21 +786,41 @@
             </div>
           </div>
 
-          <form
-            class="newsletter-form-inline"
-            onsubmit="
-              event.preventDefault();
-              alert('Thank you for subscribing to NAVE Autumn!');
-            "
-          >
+          <form class="newsletter-form-inline" id="signup-form">
+            <label for="signup-name" class="visually-hidden">Your name</label>
+            <input
+              id="signup-name"
+              name="name"
+              class="newsletter-email-field"
+              type="text"
+              placeholder="Your name"
+              autocomplete="name"
+              minlength="2"
+              required
+            />
             <label for="newsletter-email" class="visually-hidden"
               >Your email address</label
             >
             <input
               id="newsletter-email"
+              name="email"
               class="newsletter-email-field"
               type="email"
               placeholder="Enter your email"
+              autocomplete="email"
+              required
+            />
+            <label for="signup-password" class="visually-hidden"
+              >Password (at least 8 characters)</label
+            >
+            <input
+              id="signup-password"
+              name="password"
+              class="newsletter-email-field"
+              type="password"
+              placeholder="Password"
+              autocomplete="new-password"
+              minlength="8"
               required
             />
             <button type="submit" class="newsletter-submit-btn">
