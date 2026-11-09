@@ -1399,6 +1399,25 @@ select {
   background-color: #380c17;
 }
 
+.btn-drawer-clear {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  background-color: transparent;
+  border: 1px solid var(--accent-wine);
+  color: var(--accent-wine);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: background-color 0.2s;
+}
+
+.btn-drawer-clear:hover {
+  background-color: var(--accent-cream);
+}
+
 /* ==========================================================================
    12. RESPONSIVE MEDIA QUERIES (MOBILE-FIRST ONLY)
    ========================================================================== */

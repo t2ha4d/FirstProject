@@ -42,6 +42,7 @@ const cartBackdrop = document.querySelector("#cart-drawer-backdrop");
 const drawerItemsList = document.querySelector("#drawer-items-list");
 const drawerSubtotalVal = document.querySelector("#drawer-subtotal-val");
 const checkoutActionBtn = document.querySelector("#checkout-action-btn");
+const clearCartBtn = document.querySelector("#clear-cart-btn");
 const quickSearchTrigger = document.querySelector("#quick-search-trigger");
 
 // Sign-up Form
@@ -212,6 +213,14 @@ function setupEventDelegation() {
       cart = clearCart();
       updateCart();
       toggleCartDrawer(cartBackdrop, false);
+    });
+  }
+
+  // 8b. Clear Cart Button (empties cart, saves, resets count and total)
+  if (clearCartBtn) {
+    clearCartBtn.addEventListener("click", () => {
+      cart = clearCart();
+      updateCart();
     });
   }
 
