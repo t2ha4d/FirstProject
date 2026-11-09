@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "oxlint",
+    "lint": "oxlint && node scripts/check-no-as-const.mjs",
     "preview": "vite preview",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -31,6 +31,7 @@
   "lint-staged": {
     "*.{ts,tsx}": [
       "oxlint",
+      "node scripts/check-no-as-const.mjs",
       "prettier --write"
     ],
     "*.{css,md,json,html}": "prettier --write"

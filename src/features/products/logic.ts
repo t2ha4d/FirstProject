@@ -1,3 +1,4 @@
+import { isOneOf } from '../../shared/lib/guards'
 import type { Product } from '../../shared/types'
 import type { FilterState, SortOption } from './types'
 
@@ -5,6 +6,21 @@ export const INITIAL_FILTERS: FilterState = {
   searchQuery: '',
   selectedCategory: 'all',
   sortBy: 'default',
+}
+
+/** Sort choices in display order; the single source for the select and the guard. */
+export const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+  { value: 'default', label: 'Featured' },
+  { value: 'price-asc', label: 'Price: Low to High' },
+  { value: 'price-desc', label: 'Price: High to Low' },
+  { value: 'name-asc', label: 'Alphabetical (A - Z)' },
+]
+
+const SORT_VALUES = SORT_OPTIONS.map((option) => option.value)
+
+/** Narrows a raw <select> value to a SortOption without a type assertion. */
+export function isSortOption(value: string): value is SortOption {
+  return isOneOf(value, SORT_VALUES)
 }
 
 /**

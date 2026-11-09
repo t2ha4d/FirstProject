@@ -1,4 +1,5 @@
 import { Icon } from '../../../shared/ui/Icon'
+import { SORT_OPTIONS, isSortOption } from '../logic'
 import type { FilterState, SortOption } from '../types'
 import { SEARCH_INPUT_ID } from '../useShopNavigation'
 
@@ -86,12 +87,16 @@ export function SearchAndFilter({
             id="sort-select"
             className="filter-select"
             value={filters.sortBy}
-            onChange={(e) => onSortChange(e.target.value as SortOption)}
+            onChange={(e) => {
+              const { value } = e.target
+              if (isSortOption(value)) onSortChange(value)
+            }}
           >
-            <option value="default">Featured</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="name-asc">Alphabetical (A - Z)</option>
+            {SORT_OPTIONS.map(({ value, label }) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
           </select>
         </div>
       </div>
