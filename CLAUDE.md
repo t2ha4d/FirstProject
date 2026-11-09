@@ -4,24 +4,27 @@
 
 - `npm run dev` - Start local development server (Vite)
 - `npm run build` - TypeScript type check and production bundle
-- `npm run lint` - Run oxlint linter
+- `npm run lint` - Run oxlint plus the `as const` check
+- `npm run format` / `npm run format:check` - Prettier write / check (`prettier --check .` must pass)
 - `npm run preview` - Preview production build locally
 
 ## Architecture & Code Organization
 
-- **`src/types.ts`**: Pure data contracts and interface definitions.
-  - **Rule**: Always import with `import type` throughout the entire codebase.
-- **`src/api.ts`**: Asynchronous data layer serving the WTC watch catalog (`src/catalog.ts`) behind Loading, Error, Empty, and Success states.
-- **`src/logic.ts`**: Pure, immutable utility functions for searching, filtering by category, sorting by price/name, and price formatting.
-- **`src/state.ts`**: State reducers and custom hooks managing cart operations with `localStorage` persistence.
-- **`src/components/`**: Reusable presentational components, each isolated in its own file with a typed `Props` interface.
+- **`src/features/<name>/`**: One folder per feature (`products`, `cart`, `home`). A feature owns its state (a Provider + `use<Feature>()` hook), its pure `logic.ts`, its `types.ts` and its `components/`. Other code imports a feature only through its `index.ts`.
+  - Features never import each other. Cross-feature wiring happens in `src/app/` (e.g. `CatalogCartProvider` passes catalog products to the cart).
+- **`src/shared/`**: Code used by more than one feature: the API client, endpoint paths, type guards, `formatPrice`, domain types, UI primitives (`Icon`, `WatchIllustration`) and global styles. `shared/` never imports from `features/` or `app/`.
+- **`src/shared/api/client.ts`**: The only place that calls `fetch`. Base URL from `VITE_API_BASE_URL`; paths from `shared/api/endpoints.ts`. Never hardcode a URL in a feature.
+- **`src/app/`**: Composition only: providers, page layout (`Storefront`, `layout/`) and `App.css`. No business state.
+- **Types**: Always import with `import type`. Validate unknown data (API responses, `localStorage`) with the guards in `shared/lib/guards.ts`.
+- **Cart storage**: `localStorage` holds only `[{ id, qty }]`. Prices always come from the product data, and no line is dropped before the catalog has loaded.
 
 ## React Rules & Coding Standards
 
 1. **Explicit Props Contracts**: Every component must declare and export an interface for its props (e.g. `export interface ProductCardProps`).
 2. **Pure Components**: Presentational components should be stateless or restrict state to purely local UI visual flags (like expanded states). Business state must be hoisted.
 3. **Semantic HTML & Accessibility**: Use appropriate elements (`<header>`, `<main>`, `<section>`, `<aside>`), label all buttons with `aria-label`, and ensure full keyboard navigability.
-4. **Clean Code & Modularity**: Keep components under 150 lines and isolate complex calculation logic into pure helper functions in `logic.ts`.
+4. **Clean Code & Modularity**: Keep components under 150 lines and isolate complex calculation logic into pure helper functions in the feature's `logic.ts`.
+5. **No Escape Hatches in Types**: No `any`, no type assertions (`as`, `<T>x`), no non-null assertions (`!`) and no `as const`. Narrow with type guards instead. Enforced by oxlint and `scripts/check-no-as-const.mjs`.
 
 ---
 
