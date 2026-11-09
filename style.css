@@ -1434,10 +1434,6 @@ select {
 }
 
 @media (min-width: 768px) {
-  .nav-menu {
-    display: flex;
-  }
-
   .catalog-filter-bar {
     flex-direction: row;
     align-items: center;
@@ -1462,6 +1458,10 @@ select {
 }
 
 @media (min-width: 1024px) {
+  .nav-menu {
+    display: flex;
+  }
+
   .hero-headline {
     font-size: 4.6rem;
   }
