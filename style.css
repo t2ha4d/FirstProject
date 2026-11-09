@@ -138,16 +138,16 @@ select {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
+  padding: 16px;
   max-width: 1400px;
   margin: 0 auto;
 }
 
 .brand-logo-text {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.2em;
   color: var(--text-dark);
   text-transform: uppercase;
 }
@@ -182,7 +182,7 @@ select {
 .header-utilities {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 }
 
 .util-icon-btn {
@@ -1402,6 +1402,19 @@ select {
    12. RESPONSIVE MEDIA QUERIES (MOBILE-FIRST ONLY)
    ========================================================================== */
 @media (min-width: 640px) {
+  .header-inner {
+    padding: 16px 24px;
+  }
+
+  .brand-logo-text {
+    font-size: 1.5rem;
+    letter-spacing: 0.28em;
+  }
+
+  .header-utilities {
+    gap: 16px;
+  }
+
   .hero-headline {
     font-size: 3.8rem;
   }
