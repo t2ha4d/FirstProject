@@ -131,7 +131,7 @@ shopboard-react/
 ## ⚡ Key Features
 
 1. **Async Remote API Integration**:
-   - Fetches live product data from `https://shopboard-api.vercel.app/api/products`.
+   - Fetches the catalog from `public/api/products.json`, because the original ShopBoard API (`https://shopboard-api.vercel.app/api/products`) returns bags and shoes, not WTC watches, and has no `subtitle` or `design` fields.
    - Explicitly handles **Loading**, **Error** (with interactive "Try again" button), **Empty**, and **Success** states.
 
 2. **Pure Data Transformation (`src/logic.ts`)**:
