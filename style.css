@@ -886,6 +886,28 @@ select {
   gap: 28px;
 }
 
+.catalog-empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 64px 20px;
+  background: #fff;
+  border: 1px solid #efe9e2;
+  border-radius: 4px;
+}
+
+.catalog-empty-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.6rem;
+  margin: 0 0 8px;
+  color: #211b1d;
+}
+
+.catalog-empty-text {
+  font-size: 0.85rem;
+  color: #63575a;
+  margin: 0;
+}
+
 .apparel-card {
   background-color: #ffffff;
   border: 1px solid var(--border-subtle);
@@ -1348,6 +1370,29 @@ select {
 .cart-item-meta {
   font-size: 0.78rem;
   color: var(--text-secondary);
+}
+
+.cart-qty-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.cart-qty-btn {
+  padding: 2px 8px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  background: #fff;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.cart-qty-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 18px;
+  text-align: center;
 }
 
 .cart-item-remove-btn {

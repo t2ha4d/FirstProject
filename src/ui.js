@@ -69,9 +69,9 @@ export function renderProducts(list) {
 
   if (!list || list.length === 0) {
     container.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:64px 20px;background:#fff;border:1px solid #EFE9E2;border-radius:4px;">
-        <p style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;margin:0 0 8px;color:#211B1D;">No Pieces Found</p>
-        <p style="font-size:0.85rem;color:#63575A;margin:0;">Try refining your search terms or selecting another category.</p>
+      <div class="catalog-empty-state">
+        <p class="catalog-empty-title">No Pieces Found</p>
+        <p class="catalog-empty-text">Try refining your search terms or selecting another category.</p>
       </div>
     `;
     return;
@@ -154,10 +154,10 @@ export function renderCart(cart, products, totals) {
             <div class="cart-item-info">
               <h4 class="cart-item-name">${product.name}</h4>
               <span class="cart-item-meta">$${product.price} each &bull; $${lineTotal}</span>
-              <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
-                <button type="button" class="cart-qty-btn" data-action="decrement" data-id="${item.id}" aria-label="Decrease quantity" style="padding:2px 8px;border:1px solid #ddd;border-radius:2px;background:#fff;font-size:0.75rem;cursor:pointer;">&minus;</button>
-                <span style="font-size:0.85rem;font-weight:600;min-width:18px;text-align:center;">${itemQty}</span>
-                <button type="button" class="cart-qty-btn" data-action="increment" data-id="${item.id}" aria-label="Increase quantity" style="padding:2px 8px;border:1px solid #ddd;border-radius:2px;background:#fff;font-size:0.75rem;cursor:pointer;">&#43;</button>
+              <div class="cart-qty-row">
+                <button type="button" class="cart-qty-btn" data-action="decrement" data-id="${item.id}" aria-label="Decrease quantity">&minus;</button>
+                <span class="cart-qty-value">${itemQty}</span>
+                <button type="button" class="cart-qty-btn" data-action="increment" data-id="${item.id}" aria-label="Increase quantity">&#43;</button>
               </div>
             </div>
             <button type="button" class="cart-item-remove-btn" data-action="remove" data-id="${item.id}" aria-label="Remove item">&times;</button>
