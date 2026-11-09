@@ -1,0 +1,6 @@
+dist
+node_modules
+package-lock.json
+
+# Vendored agent skills: keep them byte-for-byte as published
+.claude/skills
