@@ -36,6 +36,16 @@ export function filterByCategory(list, category) {
 }
 
 /**
+ * Returns the unique product categories in order of first appearance.
+ * Pure function: does not mutate input.
+ * @param {Array} list - Array of product objects.
+ * @returns {Array<string>} Unique category names.
+ */
+export function getCategories(list) {
+  return [...new Set(list.map((p) => p.category).filter(Boolean))];
+}
+
+/**
  * Sorts products without mutating the original array.
  * Preserves default original array order when order is not specified.
  * @param {Array} list - Array of product objects.

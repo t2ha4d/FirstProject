@@ -1,7 +1,12 @@
 // Application orchestrator: wires logic, state, UI, and event delegation.
 
 import { products } from "./products.js";
-import { searchProducts, filterByCategory, sortProducts } from "./logic.js";
+import {
+  searchProducts,
+  filterByCategory,
+  sortProducts,
+  getCategories,
+} from "./logic.js";
 import {
   loadCart,
   saveCart,
@@ -13,6 +18,7 @@ import {
 } from "./state.js";
 import {
   renderProducts,
+  renderCategoryButtons,
   renderCatalogCount,
   renderCart,
   toggleCartDrawer,
@@ -30,7 +36,7 @@ let sortOrder = "default";
 const productsGrid = document.querySelector("#products-grid");
 const catalogCountBadge = document.querySelector("#catalog-count-badge");
 const searchInput = document.querySelector("#search-input");
-const categoryFilterBtns = document.querySelectorAll(".cat-filter-btn");
+const categoryButtonsGroup = document.querySelector("#category-buttons");
 const categoryCircles = document.querySelectorAll(".category-circle-item");
 const sortSelect = document.querySelector("#sort-select");
 
@@ -84,6 +90,9 @@ function updateCart() {
  */
 function handleCategoryChange(category) {
   activeCategory = category || "all";
+  const categoryFilterBtns = categoryButtonsGroup
+    ? categoryButtonsGroup.querySelectorAll(".cat-filter-btn")
+    : [];
   updateActiveCategoryUI(categoryFilterBtns, categoryCircles, activeCategory);
   updateCatalog();
 }
@@ -149,12 +158,15 @@ function setupEventDelegation() {
     });
   }
 
-  // 4. Category Filter Buttons (Toolbar pills)
-  categoryFilterBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      handleCategoryChange(btn.dataset.category || "all");
+  // 4. Category Filter Buttons (Toolbar pills, delegated on the group)
+  if (categoryButtonsGroup) {
+    categoryButtonsGroup.addEventListener("click", (e) => {
+      const btn = e.target.closest(".cat-filter-btn");
+      if (btn) {
+        handleCategoryChange(btn.dataset.category || "all");
+      }
     });
-  });
+  }
 
   // 5. Circular Category Thumbnails
   categoryCircles.forEach((circle) => {
@@ -255,6 +267,11 @@ function setupEventDelegation() {
  * Initializes the application.
  */
 function init() {
+  renderCategoryButtons(
+    categoryButtonsGroup,
+    getCategories(products),
+    activeCategory,
+  );
   setupEventDelegation();
   updateCatalog();
   updateCart();

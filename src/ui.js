@@ -53,6 +53,30 @@ export function renderProducts(container, list) {
 }
 
 /**
+ * Renders the category filter buttons: "All Pieces" first, then one per category.
+ * @param {HTMLElement} container - Button group container.
+ * @param {Array<string>} categories - Unique category names.
+ * @param {string} [activeCategory="all"] - Currently selected category.
+ */
+export function renderCategoryButtons(
+  container,
+  categories,
+  activeCategory = "all",
+) {
+  if (!container) return;
+  const options = [
+    { value: "all", label: "ALL PIECES" },
+    ...categories.map((c) => ({ value: c, label: c.toUpperCase() })),
+  ];
+  container.innerHTML = options
+    .map(
+      ({ value, label }) =>
+        `<button type="button" class="cat-filter-btn${value === activeCategory ? " active" : ""}" data-category="${value}">${label}</button>`,
+    )
+    .join("");
+}
+
+/**
  * Updates the catalog count badge.
  * @param {HTMLElement} badgeEl - Count badge element.
  * @param {number} count - Number of visible items.
