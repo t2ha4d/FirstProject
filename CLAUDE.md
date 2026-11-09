@@ -7,7 +7,7 @@ ShopBoard: An architectural, modular e-commerce web application built with vanil
 ## Strict AI Assistance & Architecture Rules
 
 1. **Separation of Concerns & Pure Logic Modules**:
-   - Do not query or manipulate DOM elements inside `logic.js` or `state.js` modules. All `document.querySelector`, class manipulations, and DOM element writes must live strictly in `ui.js` and `main.js`.
+   - Only `ui.js` touches the DOM. Do not query or manipulate DOM elements inside `main.js`, `logic.js` or `state.js`. All `document.*` calls, element queries, class manipulations, event listeners and DOM element writes must live strictly in `ui.js`. `main.js` only connects state, logic and ui.
    - All functions in `src/logic.js` must be pure functions: deterministic, returning new arrays or values without mutating input parameters or relying on outside state.
 
 2. **Cart State Integrity & Local Storage Persistence**:
