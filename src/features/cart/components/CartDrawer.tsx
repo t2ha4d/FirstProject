@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
 import { CartItem } from './CartItem'
-import { Icon } from '../shared/ui/Icon'
-import type { CartItem as CartItemType } from '../shared/types'
+import { Icon } from '../../../shared/ui/Icon'
+import type { CartEntry } from '../types'
 
 export interface CartDrawerProps {
   isOpen: boolean
-  items: CartItemType[]
+  ariaLabel: string
+  items: CartEntry[]
   subtotalFormatted: string
   totalCount: number
   onClose: () => void
@@ -16,6 +17,7 @@ export interface CartDrawerProps {
 }
 
 export function CartDrawer({
+  ariaLabel,
   isOpen,
   items,
   subtotalFormatted,
@@ -52,7 +54,7 @@ export function CartDrawer({
         className="cart-drawer"
         role="dialog"
         aria-modal="true"
-        aria-label="Shopping bag"
+        aria-label={ariaLabel}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="drawer-header">

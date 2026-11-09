@@ -26,16 +26,6 @@ export interface Product {
   design: WatchDesign
 }
 
-export interface CartItem {
-  product: Product
-  quantity: number
-}
-
-export interface CartState {
-  items: CartItem[]
-  isOpen: boolean
-}
-
 export type ApiStatus = 'idle' | 'loading' | 'error' | 'success'
 
 export interface Testimonial {

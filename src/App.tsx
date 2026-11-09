@@ -1,3 +1,4 @@
+import { CartProvider } from './features/cart'
 import { CatalogProvider } from './features/products'
 import { Storefront } from './Storefront'
 import './App.css'
@@ -5,7 +6,9 @@ import './App.css'
 export default function App() {
   return (
     <CatalogProvider>
-      <Storefront />
+      <CartProvider>
+        <Storefront />
+      </CartProvider>
     </CatalogProvider>
   )
 }

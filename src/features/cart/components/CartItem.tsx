@@ -1,8 +1,8 @@
-import { formatPrice } from '../shared/lib/format'
-import type { CartItem as CartItemType } from '../shared/types'
+import { formatPrice } from '../../../shared/lib/format'
+import type { CartEntry } from '../types'
 
 export interface CartItemProps {
-  item: CartItemType
+  item: CartEntry
   onIncrement: (productId: number) => void
   onDecrement: (productId: number) => void
   onRemove: (productId: number) => void
