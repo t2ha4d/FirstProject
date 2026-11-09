@@ -2,27 +2,63 @@
 
 ## Bug 1
 
-- **What I saw:** The product grid loaded completely empty, and the browser DevTools console displayed a red runtime exception: `Uncaught ReferenceError: upadte is not defined at HTMLInputElement.<anonymous> (main.js:27)`.
+- **What I saw:** Typing in the search box did nothing. The Console showed `ReferenceError: upadte is not defined`.
 - **Type:** runtime
-- **How I found it:** Opened Chrome DevTools Console tab (F12) on page load. The red error message pointed directly to `main.js` line 27 with a full stack trace.
-- **Cause:** A typographical error in `main.js`: the event handler invoked `upadte()` instead of the declared `update()` function, which threw an unhandled ReferenceError and halted JavaScript execution before rendering completed.
-- **Fix:** Corrected the typo from `upadte()` to `update()` in `src/main.js`.
-- **Did I use AI? For what?** No. Found directly by inspecting the browser console error message and stack trace.
+- **How I found it:** I opened the Console and clicked the file link next to the error. It took me to main.js line 29.
+- **Cause:** debug-lab/src/main.js line 29. The search listener calls `upadte()`, but the real function is `update()`. It's a typo.
+- **Fix:** I changed `upadte()` to `update()`.
+- **Did I use AI? For what?** Yes. Claude Code ran the debug lab and confirmed the line number. I checked the fix in the browser.
 
 ## Bug 2
 
-- **What I saw:** Searching for uppercase queries (e.g. "BAG" or "Coat") returned 0 products, even though those items existed in the store. Additionally, sorting by price mutated the original products array in place, preventing users from restoring the default featured order.
-- **Type:** logic
-- **How I found it:** Tested the search input with lowercase "bag" (which worked) and uppercase "Bag" (which failed). Used `console.log()` inside `searchProducts` and set a breakpoint in the Chrome DevTools Sources tab to inspect the query and product name comparisons.
-- **Cause:** In `src/logic.js`, `searchProducts` performed a direct `p.name.includes(query)` check without converting both strings to lowercase. In `sortProducts`, the function called `.sort()` directly on the input array, mutating the reference rather than sorting a shallow copy (`[...list]`).
-- **Fix:** Normalized both the search query and the product name with `.toLowerCase().trim()` in `searchProducts`. In `sortProducts`, created a shallow copy with `const copy = [...list]` before sorting and added a fallback branch that returns the unmodified copy when default order is selected.
-- **Did I use AI? For what?** No. Found by testing case sensitivity in the search input and inspecting array mutation in the debugger.
+- **What I saw:** The cart count in the header stayed at "0 items · $0". The Console showed `TypeError: Cannot set properties of null (setting 'textContent')`.
+- **Type:** runtime
+- **How I found it:** The error pointed to ui.js line 22. I compared the selector there with the id in index.html.
+- **Cause:** debug-lab/src/ui.js line 22. `renderCart` looks for `#cart-counter`, but the element in the HTML is `#cart-count`. So `querySelector` returns `null`.
+- **Fix:** I changed the selector to `#cart-count`.
+- **Did I use AI? For what?** Yes. Claude Code confirmed the line number and the wrong id.
 
 ## Bug 3
 
-- **What I saw:** After adding items to the shopping cart, the count updated, but refreshing the page reset the cart to 0 or caused products to disappear. Inspecting Local Storage in the DevTools Application tab showed `shopboard-cart: [object Object]`. Adding the same item multiple times also pushed duplicate objects into the cart array instead of updating quantity.
+- **What I saw:** Searching "bag" showed "No products found", even though there are 3 bags. "Bag" and "BAG" didn't work either.
+- **Type:** logic
+- **How I found it:** There was no error in the Console. I tried different searches, then read the search function in logic.js.
+- **Cause:** debug-lab/src/logic.js line 3. The search text is lowercased, but the product name is not. So "bag" never matches "Leather Tote Bag".
+- **Fix:** I compare with `p.name.toLowerCase()` too.
+- **Did I use AI? For what?** Yes. Claude Code helped me find the exact line.
+
+## Bug 4
+
+- **What I saw:** "Price: high to low" showed the same order as "low to high".
+- **Type:** logic
+- **How I found it:** I tried both sort options and the result was the same. Then I read the sort function in logic.js.
+- **Cause:** debug-lab/src/logic.js line 14. The `price-desc` case uses `a.price - b.price`, which is the same as `price-asc`.
+- **Fix:** I changed it to `b.price - a.price`.
+- **Did I use AI? For what?** Yes. Claude Code confirmed the line number.
+
+## Bug 5
+
+- **What I saw:** After adding an item and refreshing, the product grid was empty. The Console showed `SyntaxError: "[object Object]" is not valid JSON`.
 - **Type:** state
-- **How I found it:** Opened Chrome DevTools Application tab > Storage > Local Storage, examined the value of `shopboard-cart`, and tested page reload behavior with items added.
-- **Cause:** In `src/state.js`, `saveCart` attempted to write the cart array directly to `localStorage` without stringifying it (`localStorage.setItem(KEY, cart)`), which converted the array into the invalid string `"[object Object]"`. Upon page reload, `JSON.parse` crashed on this string. Furthermore, `addToCart` used `.push(item)` directly without checking if an item with that `id` already existed to increment its `qty`.
-- **Fix:** Serialized data properly using `JSON.stringify(cart)` in `saveCart()`. Wrapped `loadCart()` in a `try...catch` block to handle corrupt data gracefully by resetting to `[]`. Refactored `addToCart()` to check if the product ID is already in the cart: if found, cleanly increment its `qty`; if not, append `{ id, qty: 1 }`.
-- **Did I use AI? For what?** No. Discovered by verifying the serialized storage value in the Application tab and monitoring cart state changes across page reloads.
+- **How I found it:** I opened Application, then Local Storage. The saved cart was the text `[object Object]`.
+- **Cause:** debug-lab/src/state.js line 9. `saveCart` puts the array straight into `localStorage.setItem`, so it gets saved as `"[object Object]"`. That can't be read back on reload.
+- **Fix:** I save `JSON.stringify(cart)`. I also put `loadCart` inside `try/catch`, so a bad saved value can't break the page.
+- **Did I use AI? For what?** Yes. Claude Code confirmed the line and the error message.
+
+## Bug 6
+
+- **What I saw:** After I changed the search, category or sort a few times, one click on "Add to cart" added more than one item.
+- **Type:** state
+- **How I found it:** The quantity jumped by more than 1. I looked at where the click listener is added in main.js.
+- **Cause:** debug-lab/src/main.js line 18. `onAddToCart(...)` is called inside `update()`. Every filter or sort change runs `update()` again and adds one more click listener.
+- **Fix:** I moved `onAddToCart(...)` out of `update()`, so it runs only once at startup.
+- **Did I use AI? For what?** Yes. Claude Code reproduced it and showed me where the listener was added.
+
+## Bonus bug
+
+- **What I saw:** Two Leather Tote Bags ($89 each) showed a total of $89 instead of $178. The count showed 2, which was correct.
+- **Type:** logic
+- **How I found it:** I added the same product twice and checked the total by hand.
+- **Cause:** debug-lab/src/logic.js line 25. `cartTotal` adds `product.price` but doesn't multiply it by `item.qty`.
+- **Fix:** I changed it to `product.price * item.qty`.
+- **Did I use AI? For what?** Yes. Claude Code found this one while checking the debug lab.
