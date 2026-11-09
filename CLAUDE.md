@@ -1,9 +1,11 @@
 # CLAUDE.md
 
 ## Project
+
 ShopBoard: An architectural, modular e-commerce web application built with vanilla HTML5, modern CSS, and ES Modules (ESM) bundled and served with Vite.
 
 ## Strict AI Assistance & Architecture Rules
+
 1. **Separation of Concerns & Pure Logic Modules**:
    - Do not query or manipulate DOM elements inside `logic.js` or `state.js` modules. All `document.querySelector`, class manipulations, and DOM element writes must live strictly in `ui.js` and `main.js`.
    - All functions in `src/logic.js` must be pure functions: deterministic, returning new arrays or values without mutating input parameters or relying on outside state.
@@ -23,4 +25,3 @@ ShopBoard: An architectural, modular e-commerce web application built with vanil
    - Every input element must have an accessible `<label>`.
    - Write mobile-first CSS with `min-width` media queries only. Never use `!important`.
    - Explain any new file created in one line at the top of the file.
-

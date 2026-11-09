@@ -69,7 +69,7 @@ function updateCart() {
     },
     cart,
     products,
-    totals
+    totals,
   );
   saveCart(cart);
 }
@@ -176,10 +176,14 @@ function setupEventDelegation() {
 
   // 7. Cart Drawer Open / Close Controls
   if (openCartBtn) {
-    openCartBtn.addEventListener("click", () => toggleCartDrawer(cartBackdrop, true));
+    openCartBtn.addEventListener("click", () =>
+      toggleCartDrawer(cartBackdrop, true),
+    );
   }
   if (closeCartBtn) {
-    closeCartBtn.addEventListener("click", () => toggleCartDrawer(cartBackdrop, false));
+    closeCartBtn.addEventListener("click", () =>
+      toggleCartDrawer(cartBackdrop, false),
+    );
   }
   if (cartBackdrop) {
     cartBackdrop.addEventListener("click", (e) => {
@@ -193,12 +197,14 @@ function setupEventDelegation() {
   if (checkoutActionBtn) {
     checkoutActionBtn.addEventListener("click", () => {
       if (cart.length === 0) {
-        alert("Your wardrobe bag is currently empty. Please select pieces first.");
+        alert(
+          "Your wardrobe bag is currently empty. Please select pieces first.",
+        );
         return;
       }
       const totals = calculateCartTotals(cart, products);
       alert(
-        `Order Confirmed!\nTotal: $${totals.subtotal.toFixed(2)} for ${totals.count} item(s).\nThank you for choosing NAVE Autumn Essentials!`
+        `Order Confirmed!\nTotal: $${totals.subtotal.toFixed(2)} for ${totals.count} item(s).\nThank you for choosing NAVE Autumn Essentials!`,
       );
       cart = clearCart();
       updateCart();
@@ -236,4 +242,3 @@ function init() {
 
 // Boot application
 init();
-

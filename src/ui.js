@@ -144,7 +144,12 @@ export function toggleCartDrawer(backdrop, isOpen) {
  * @param {string} originalText - Reverted text.
  * @param {number} [duration=900] - Duration in ms.
  */
-export function flashButtonSuccess(button, feedbackText, originalText, duration = 900) {
+export function flashButtonSuccess(
+  button,
+  feedbackText,
+  originalText,
+  duration = 900,
+) {
   if (!button) return;
   button.classList.add("success-flash");
   button.textContent = feedbackText;
@@ -163,16 +168,19 @@ export function flashButtonSuccess(button, feedbackText, originalText, duration 
 export function updateActiveCategoryUI(buttons, circles, activeCategory) {
   if (buttons) {
     buttons.forEach((btn) => {
-      const match = (btn.dataset.category || "all").toLowerCase() === activeCategory.toLowerCase();
+      const match =
+        (btn.dataset.category || "all").toLowerCase() ===
+        activeCategory.toLowerCase();
       btn.classList.toggle("active", match);
     });
   }
 
   if (circles) {
     circles.forEach((circle) => {
-      const match = (circle.dataset.category || "").toLowerCase() === activeCategory.toLowerCase();
+      const match =
+        (circle.dataset.category || "").toLowerCase() ===
+        activeCategory.toLowerCase();
       circle.classList.toggle("active", match);
     });
   }
 }
-

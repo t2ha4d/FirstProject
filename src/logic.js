@@ -30,7 +30,9 @@ export function searchProducts(list, query) {
 export function filterByCategory(list, category) {
   if (!category || category === "all") return list;
   const target = category.trim().toLowerCase();
-  return list.filter((p) => (p.category ? p.category.toLowerCase() === target : false));
+  return list.filter((p) =>
+    p.category ? p.category.toLowerCase() === target : false,
+  );
 }
 
 /**
@@ -51,4 +53,3 @@ export function sortProducts(list, order) {
   // Default: preserve original order
   return copy;
 }
-

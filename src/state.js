@@ -50,7 +50,7 @@ export function addToCart(cart, id, qty = 1) {
 
   if (existingIndex > -1) {
     return cart.map((item, idx) =>
-      idx === existingIndex ? { ...item, qty: (item.qty || 1) + qty } : item
+      idx === existingIndex ? { ...item, qty: (item.qty || 1) + qty } : item,
     );
   }
 
@@ -72,7 +72,7 @@ export function updateQuantity(cart, id, newQty) {
   }
 
   return cart.map((item) =>
-    item.id === numericId ? { ...item, qty: newQty } : item
+    item.id === numericId ? { ...item, qty: newQty } : item,
   );
 }
 
@@ -117,4 +117,3 @@ export function calculateCartTotals(cart, products) {
 
   return { count, subtotal };
 }
-
