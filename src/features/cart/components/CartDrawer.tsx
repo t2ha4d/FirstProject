@@ -5,6 +5,7 @@ import type { CartEntry } from '../types'
 
 export interface CartDrawerProps {
   isOpen: boolean
+  isResolving: boolean
   ariaLabel: string
   items: CartEntry[]
   subtotalFormatted: string
@@ -19,6 +20,7 @@ export interface CartDrawerProps {
 export function CartDrawer({
   ariaLabel,
   isOpen,
+  isResolving,
   items,
   subtotalFormatted,
   totalCount,
@@ -77,7 +79,12 @@ export function CartDrawer({
         </div>
 
         <div className="drawer-body">
-          {hasItems ? (
+          {isResolving && (
+            <p className="cart-resolving" role="status">
+              Loading your bag…
+            </p>
+          )}
+          {!isResolving && hasItems && (
             <ul className="cart-items-list" aria-label="Bag items">
               {items.map((item) => (
                 <CartItem
@@ -89,7 +96,8 @@ export function CartDrawer({
                 />
               ))}
             </ul>
-          ) : (
+          )}
+          {!isResolving && !hasItems && (
             <div className="empty-cart-state">
               <span className="empty-cart-icon">
                 <Icon name="bag" size={44} />

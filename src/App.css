@@ -1050,6 +1050,13 @@
   color: var(--clay);
 }
 
+.cart-resolving {
+  margin: 0;
+  padding: 3.5rem 1rem;
+  text-align: center;
+  color: var(--muted);
+}
+
 .empty-cart-state {
   display: flex;
   flex-direction: column;

@@ -1,38 +1,45 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { formatPrice } from '../../shared/lib/format'
+import type { Product } from '../../shared/types'
 import { CartContext } from './CartContext'
 import type { CartActions, CartValue } from './CartContext'
 import {
-  addItemToCart,
+  addLine,
   calculateSubtotalCents,
   calculateTotalCount,
-  changeItemQuantity,
-  removeItemFromCart,
+  changeLineQuantity,
+  pruneLines,
+  removeLine,
+  resolveCart,
 } from './logic'
-import { loadCartFromStorage, saveCartToStorage } from './storage'
-import type { CartEntry } from './types'
+import { loadCartLines, saveCartLines } from './storage'
+import type { CartLine } from './types'
 
 export interface CartProviderProps {
+  /** Current product data; the only source of prices. */
+  products: Product[]
+  /** True once `products` is the loaded catalog. Until then no line is ever dropped. */
+  isCatalogReady: boolean
   children: ReactNode
 }
 
-/** Owns the bag contents and drawer visibility, persisting the bag to localStorage. */
-export function CartProvider({ children }: CartProviderProps) {
-  const [items, setItems] = useState<CartEntry[]>(loadCartFromStorage)
+/** Owns the bag (`{ id, qty }` lines) and drawer visibility, persisting lines to localStorage. */
+export function CartProvider({ products, isCatalogReady, children }: CartProviderProps) {
+  const [lines, setLines] = useState<CartLine[]>(loadCartLines)
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
-    saveCartToStorage(items)
-  }, [items])
+    saveCartLines(isCatalogReady ? pruneLines(lines, products) : lines)
+  }, [lines, products, isCatalogReady])
 
   const actions = useMemo<CartActions>(
     () => ({
-      addItem: (product) => setItems((prev) => addItemToCart(prev, product)),
-      increment: (productId) => setItems((prev) => changeItemQuantity(prev, productId, 1)),
-      decrement: (productId) => setItems((prev) => changeItemQuantity(prev, productId, -1)),
-      removeItem: (productId) => setItems((prev) => removeItemFromCart(prev, productId)),
-      clear: () => setItems([]),
+      addItem: (product) => setLines((prev) => addLine(prev, product.id)),
+      increment: (productId) => setLines((prev) => changeLineQuantity(prev, productId, 1)),
+      decrement: (productId) => setLines((prev) => changeLineQuantity(prev, productId, -1)),
+      removeItem: (productId) => setLines((prev) => removeLine(prev, productId)),
+      clear: () => setLines([]),
       open: () => setIsOpen(true),
       close: () => setIsOpen(false),
     }),
@@ -40,16 +47,19 @@ export function CartProvider({ children }: CartProviderProps) {
   )
 
   const value = useMemo<CartValue>(() => {
+    const items = resolveCart(lines, products)
     const subtotalCents = calculateSubtotalCents(items)
+    const countedLines = isCatalogReady ? pruneLines(lines, products) : lines
     return {
       ...actions,
       items,
       isOpen,
-      totalCount: calculateTotalCount(items),
+      isResolving: !isCatalogReady && lines.length > 0,
+      totalCount: calculateTotalCount(countedLines),
       subtotalCents,
       subtotalFormatted: formatPrice(subtotalCents),
     }
-  }, [actions, items, isOpen])
+  }, [actions, lines, products, isCatalogReady, isOpen])
 
   return <CartContext value={value}>{children}</CartContext>
 }

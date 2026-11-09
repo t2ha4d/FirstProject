@@ -15,6 +15,8 @@ export interface CartActions {
 export interface CartValue extends CartActions {
   items: CartEntry[]
   isOpen: boolean
+  /** Stored lines exist but the catalog has not loaded yet, so they cannot be priced. */
+  isResolving: boolean
   totalCount: number
   subtotalCents: number
   subtotalFormatted: string

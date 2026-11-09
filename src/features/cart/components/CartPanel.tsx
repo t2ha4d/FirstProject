@@ -13,6 +13,7 @@ export function CartPanel({ ariaLabel = 'Shopping bag' }: CartPanelProps) {
     <CartDrawer
       ariaLabel={ariaLabel}
       isOpen={cart.isOpen}
+      isResolving={cart.isResolving}
       items={cart.items}
       subtotalFormatted={cart.subtotalFormatted}
       totalCount={cart.totalCount}

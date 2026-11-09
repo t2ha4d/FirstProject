@@ -1,58 +1,62 @@
 import type { Product } from '../../shared/types'
-import type { CartEntry } from './types'
+import type { CartEntry, CartLine } from './types'
 
 /**
- * Pure state reducer: adds a product to cart or increments quantity
+ * Pure reducer: adds one of a product, or increments its quantity
  */
-export function addItemToCart(cart: CartEntry[], product: Product): CartEntry[] {
-  const existing = cart.find((item) => item.product.id === product.id)
-  if (existing) {
-    return cart.map((item) =>
-      item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item,
-    )
+export function addLine(lines: CartLine[], productId: number): CartLine[] {
+  if (lines.some((line) => line.id === productId)) {
+    return lines.map((line) => (line.id === productId ? { ...line, qty: line.qty + 1 } : line))
   }
-  return [...cart, { product, quantity: 1 }]
+  return [...lines, { id: productId, qty: 1 }]
 }
 
 /**
- * Pure state reducer: updates item quantity or removes if quantity <= 0
+ * Pure reducer: changes a line's quantity by `delta`, removing it at zero
  */
-export function updateItemQuantity(
-  cart: CartEntry[],
-  productId: number,
-  quantity: number,
-): CartEntry[] {
-  if (quantity <= 0) {
-    return removeItemFromCart(cart, productId)
-  }
-  return cart.map((item) => (item.product.id === productId ? { ...item, quantity } : item))
+export function changeLineQuantity(lines: CartLine[], productId: number, delta: number) {
+  return lines
+    .map((line) => (line.id === productId ? { ...line, qty: line.qty + delta } : line))
+    .filter((line) => line.qty > 0)
 }
 
 /**
- * Pure state reducer: changes an item's quantity by `delta`, removing it at zero
+ * Pure reducer: removes a line by product id
  */
-export function changeItemQuantity(cart: CartEntry[], productId: number, delta: number) {
-  const item = cart.find((entry) => entry.product.id === productId)
-  return item ? updateItemQuantity(cart, productId, item.quantity + delta) : cart
+export function removeLine(lines: CartLine[], productId: number): CartLine[] {
+  return lines.filter((line) => line.id !== productId)
 }
 
 /**
- * Pure state reducer: removes item by product id
+ * Joins stored lines with current product data. Lines whose product is not in
+ * the catalog are left out (they are kept in storage until the catalog has loaded).
  */
-export function removeItemFromCart(cart: CartEntry[], productId: number): CartEntry[] {
-  return cart.filter((item) => item.product.id !== productId)
+export function resolveCart(lines: CartLine[], products: Product[]): CartEntry[] {
+  const byId = new Map(products.map((product) => [product.id, product]))
+  return lines.flatMap((line) => {
+    const product = byId.get(line.id)
+    return product ? [{ product, quantity: line.qty }] : []
+  })
 }
 
 /**
- * Computes subtotal in cents for cart items
+ * Removes lines whose product no longer exists. Only call with a loaded catalog.
  */
-export function calculateSubtotalCents(items: CartEntry[]): number {
-  return items.reduce((total, item) => total + item.product.price_cents * item.quantity, 0)
+export function pruneLines(lines: CartLine[], products: Product[]): CartLine[] {
+  const ids = new Set(products.map((product) => product.id))
+  return lines.filter((line) => ids.has(line.id))
 }
 
 /**
- * Computes total item count in cart
+ * Subtotal in cents, priced from the product data
  */
-export function calculateTotalCount(items: CartEntry[]): number {
-  return items.reduce((count, item) => count + item.quantity, 0)
+export function calculateSubtotalCents(entries: CartEntry[]): number {
+  return entries.reduce((total, entry) => total + entry.product.price_cents * entry.quantity, 0)
+}
+
+/**
+ * Total number of watches across lines
+ */
+export function calculateTotalCount(lines: CartLine[]): number {
+  return lines.reduce((count, line) => count + line.qty, 0)
 }
