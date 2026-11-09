@@ -1,6 +1,15 @@
-import { LOOKBOOK_DESIGNS } from './shared/ui/watchDesigns'
-import type { IconName } from './shared/ui/Icon'
-import type { LookbookTile, Testimonial } from './shared/types'
+import {
+  chronoClay,
+  classicIvory,
+  classicSand,
+  diveInk,
+  fieldOlive,
+  miniClay,
+} from '../../shared/ui/watchDesigns'
+import type { IconName } from '../../shared/ui/Icon'
+import type { LookbookTile, Testimonial } from './types'
+
+export const HERO_DESIGN = chronoClay
 
 export const ANNOUNCEMENTS = [
   'Free shipping on every watch',
@@ -19,31 +28,31 @@ export const LOOKBOOK: LookbookTile[] = [
     id: 'desk',
     caption: 'At the desk',
     surface: 'linear-gradient(160deg, #d8c6ae, #a98d6f)',
-    design: LOOKBOOK_DESIGNS.classicIvory,
+    design: classicIvory,
   },
   {
     id: 'trail',
     caption: 'On the trail',
     surface: 'linear-gradient(160deg, #a9ac92, #6e7358)',
-    design: LOOKBOOK_DESIGNS.fieldOlive,
+    design: fieldOlive,
   },
   {
     id: 'dark',
     caption: 'After dark',
     surface: 'linear-gradient(160deg, #6b5546, #3e3128)',
-    design: LOOKBOOK_DESIGNS.diveInk,
+    design: diveInk,
   },
   {
     id: 'weekend',
     caption: 'Weekend away',
     surface: 'linear-gradient(160deg, #c9926f, #94573a)',
-    design: LOOKBOOK_DESIGNS.classicSand,
+    design: classicSand,
   },
   {
     id: 'everyday',
     caption: 'Every day',
     surface: 'linear-gradient(160deg, #eadfce, #cdb99e)',
-    design: LOOKBOOK_DESIGNS.miniClay,
+    design: miniClay,
   },
 ]
 

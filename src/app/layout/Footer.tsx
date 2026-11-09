@@ -1,8 +1,8 @@
-import { Icon } from '../shared/ui/Icon'
-import { WatchIllustration } from '../shared/ui/WatchIllustration'
-import { FOOTER_DESIGN } from '../shared/ui/watchDesigns'
-import { BRAND_NAME } from '../shared/config/brand'
-import { COLLECTIONS } from '../features/products'
+import { Icon } from '../../shared/ui/Icon'
+import { WatchIllustration } from '../../shared/ui/WatchIllustration'
+import { classicSand } from '../../shared/ui/watchDesigns'
+import { BRAND_NAME } from '../../shared/config/brand'
+import { COLLECTIONS } from '../../features/products'
 
 export interface FooterProps {
   onShopAll: () => void
@@ -67,7 +67,7 @@ export function Footer({ onShopAll, onSelectCollection }: FooterProps) {
         </nav>
 
         <div className="footer-art" aria-hidden="true">
-          <WatchIllustration design={FOOTER_DESIGN} className="footer-watch" />
+          <WatchIllustration design={classicSand} className="footer-watch" />
         </div>
       </div>
     </footer>

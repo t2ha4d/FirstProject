@@ -1,4 +1,4 @@
-import { Icon } from '../shared/ui/Icon'
+import { Icon } from '../../../shared/ui/Icon'
 import { MovementIllustration } from './MovementIllustration'
 import { CRAFT_FEATURES } from '../content'
 

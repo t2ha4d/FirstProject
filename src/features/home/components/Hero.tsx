@@ -1,6 +1,6 @@
 import { Sprig } from './Sprig'
-import { WatchIllustration } from '../shared/ui/WatchIllustration'
-import { HERO_DESIGN } from '../shared/ui/watchDesigns'
+import { WatchIllustration } from '../../../shared/ui/WatchIllustration'
+import { HERO_DESIGN } from '../content'
 
 export interface HeroProps {
   onShopAll: () => void

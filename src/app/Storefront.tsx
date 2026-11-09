@@ -1,14 +1,17 @@
-import { AnnouncementBar } from './components/AnnouncementBar'
-import { CraftSection } from './components/CraftSection'
-import { Footer } from './components/Footer'
-import { Header } from './components/Header'
-import { Hero } from './components/Hero'
-import { Lookbook } from './components/Lookbook'
-import { Newsletter } from './components/Newsletter'
-import { Testimonials } from './components/Testimonials'
-import { ANNOUNCEMENTS, TESTIMONIALS } from './content'
-import { CollectionGrid, ProductsSection, useShopNavigation } from './features/products'
-import { CartPanel, useCart } from './features/cart'
+import { AnnouncementBar } from './layout/AnnouncementBar'
+import { Footer } from './layout/Footer'
+import { Header } from './layout/Header'
+import {
+  ANNOUNCEMENTS,
+  CraftSection,
+  Hero,
+  Lookbook,
+  Newsletter,
+  TESTIMONIALS,
+  Testimonials,
+} from '../features/home'
+import { CollectionGrid, ProductsSection, useShopNavigation } from '../features/products'
+import { CartPanel, useCart } from '../features/cart'
 
 /** Page layout. Composes the features; holds no state of its own. */
 export function Storefront() {

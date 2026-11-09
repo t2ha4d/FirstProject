@@ -1,5 +1,5 @@
 import { CatalogCartProvider } from './CatalogCartProvider'
-import { CatalogProvider } from './features/products'
+import { CatalogProvider } from '../features/products'
 import { Storefront } from './Storefront'
 import './App.css'
 

@@ -100,7 +100,3 @@ export const miniClay: WatchDesign = {
   caseTone: 'gold',
   dialStyle: 'minimal',
 }
-
-export const HERO_DESIGN = chronoClay
-export const FOOTER_DESIGN = classicSand
-export const LOOKBOOK_DESIGNS = { classicIvory, fieldOlive, diveInk, classicSand, miniClay }

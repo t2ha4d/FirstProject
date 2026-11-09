@@ -1,4 +1,4 @@
-import type { Testimonial } from '../shared/types'
+import type { Testimonial } from '../types'
 
 export interface TestimonialsProps {
   testimonials: Testimonial[]
