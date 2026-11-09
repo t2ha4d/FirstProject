@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import { fetchProducts } from './api'
 import { calculateSubtotalCents, calculateTotalCount } from './logic'
 import { formatPrice } from './shared/lib/format'
-import type { ApiStatus, CartItem, Product } from './shared/types'
+import type { CartItem, Product } from './shared/types'
 
 export const CART_STORAGE_KEY = 'wtc_cart_items_v1'
 
@@ -124,42 +123,4 @@ export function useCartState() {
     handleRemoveItem,
     handleClearCart,
   }
-}
-
-/**
- * React hook for loading the catalog, with Loading / Error / Success states and retry
- */
-export function useProducts() {
-  const [products, setProducts] = useState<Product[]>([])
-  const [status, setStatus] = useState<ApiStatus>('loading')
-  const [errorMessage, setErrorMessage] = useState('')
-  const [reloadCount, setReloadCount] = useState(0)
-
-  useEffect(() => {
-    let ignore = false
-
-    fetchProducts()
-      .then((items) => {
-        if (ignore) return
-        setProducts(items)
-        setStatus('success')
-      })
-      .catch((error) => {
-        if (ignore) return
-        setErrorMessage(error instanceof Error ? error.message : 'Failed to load the collection')
-        setStatus('error')
-      })
-
-    return () => {
-      ignore = true
-    }
-  }, [reloadCount])
-
-  function reload() {
-    setStatus('loading')
-    setErrorMessage('')
-    setReloadCount((count) => count + 1)
-  }
-
-  return { products, status, errorMessage, reload }
 }

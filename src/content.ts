@@ -1,4 +1,4 @@
-import { LOOKBOOK_DESIGNS } from './catalog'
+import { LOOKBOOK_DESIGNS } from './shared/ui/watchDesigns'
 import type { IconName } from './shared/ui/Icon'
 import type { LookbookTile, Testimonial } from './shared/types'
 
@@ -6,15 +6,6 @@ export const ANNOUNCEMENTS = [
   'Free shipping on every watch',
   'Assembled in small batches',
   'Easy 30-day returns',
-]
-
-export const COLLECTIONS: { name: string; icon: IconName }[] = [
-  { name: 'Classic', icon: 'crown' },
-  { name: 'Dive', icon: 'wave' },
-  { name: 'Chronograph', icon: 'stopwatch' },
-  { name: 'Field', icon: 'compass' },
-  { name: 'Pilot', icon: 'plane' },
-  { name: 'Minimalist', icon: 'circle' },
 ]
 
 export const CRAFT_FEATURES: { icon: IconName; lines: [string, string] }[] = [

@@ -1,6 +1,6 @@
-import { Icon } from '../shared/ui/Icon'
+import { Icon } from '../../../shared/ui/Icon'
 import { ProductCard } from './ProductCard'
-import type { ApiStatus, Product } from '../shared/types'
+import type { ApiStatus, Product } from '../../../shared/types'
 
 export interface ProductListProps {
   products: Product[]

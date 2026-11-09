@@ -1,10 +1,10 @@
-import type { WatchDesign } from './shared/types'
+import type { WatchDesign } from '../types'
 
 const INK = '#2f2a26'
 const CREAM = '#efe6d6'
 const CLAY = '#b0603a'
 
-const classicIvory: WatchDesign = {
+export const classicIvory: WatchDesign = {
   dialColor: '#f1e8d8',
   markerColor: INK,
   accentColor: CLAY,
@@ -13,7 +13,7 @@ const classicIvory: WatchDesign = {
   caseTone: 'gold',
   dialStyle: 'baton',
 }
-const classicSand: WatchDesign = {
+export const classicSand: WatchDesign = {
   dialColor: '#d9c3a3',
   markerColor: INK,
   accentColor: CLAY,
@@ -23,7 +23,7 @@ const classicSand: WatchDesign = {
   dialStyle: 'baton',
   hasDate: true,
 }
-const diveSage: WatchDesign = {
+export const diveSage: WatchDesign = {
   dialColor: '#59644f',
   markerColor: CREAM,
   accentColor: '#e0a26f',
@@ -34,7 +34,7 @@ const diveSage: WatchDesign = {
   bezelColor: '#3f4a3a',
   hasDate: true,
 }
-const diveInk: WatchDesign = {
+export const diveInk: WatchDesign = {
   dialColor: '#26282a',
   markerColor: CREAM,
   accentColor: CLAY,
@@ -44,7 +44,7 @@ const diveInk: WatchDesign = {
   dialStyle: 'baton',
   bezelColor: '#1b1c1e',
 }
-const chronoCream: WatchDesign = {
+export const chronoCream: WatchDesign = {
   dialColor: '#ece2d0',
   markerColor: INK,
   accentColor: CLAY,
@@ -54,7 +54,7 @@ const chronoCream: WatchDesign = {
   dialStyle: 'baton',
   hasSubdials: true,
 }
-const chronoClay: WatchDesign = {
+export const chronoClay: WatchDesign = {
   dialColor: '#a4532f',
   markerColor: CREAM,
   accentColor: CREAM,
@@ -64,7 +64,7 @@ const chronoClay: WatchDesign = {
   dialStyle: 'baton',
   hasSubdials: true,
 }
-const fieldOlive: WatchDesign = {
+export const fieldOlive: WatchDesign = {
   dialColor: '#6e7358',
   markerColor: CREAM,
   accentColor: '#e0a26f',
@@ -73,7 +73,7 @@ const fieldOlive: WatchDesign = {
   caseTone: 'steel',
   dialStyle: 'numeral',
 }
-const pilotCharcoal: WatchDesign = {
+export const pilotCharcoal: WatchDesign = {
   dialColor: '#37342f',
   markerColor: CREAM,
   accentColor: '#e0a26f',
@@ -82,7 +82,7 @@ const pilotCharcoal: WatchDesign = {
   caseTone: 'steel',
   dialStyle: 'numeral',
 }
-const miniSand: WatchDesign = {
+export const miniSand: WatchDesign = {
   dialColor: '#f4eee3',
   markerColor: INK,
   accentColor: CLAY,
@@ -91,7 +91,7 @@ const miniSand: WatchDesign = {
   caseTone: 'steel',
   dialStyle: 'minimal',
 }
-const miniClay: WatchDesign = {
+export const miniClay: WatchDesign = {
   dialColor: '#c98f6b',
   markerColor: INK,
   accentColor: CREAM,
@@ -99,16 +99,6 @@ const miniClay: WatchDesign = {
   strapStyle: 'leather',
   caseTone: 'gold',
   dialStyle: 'minimal',
-}
-
-/** One representative design per collection, for tiles and imagery. */
-export const COLLECTION_DESIGNS: Record<string, WatchDesign> = {
-  Classic: classicIvory,
-  Dive: diveSage,
-  Chronograph: chronoCream,
-  Field: fieldOlive,
-  Pilot: pilotCharcoal,
-  Minimalist: miniSand,
 }
 
 export const HERO_DESIGN = chronoClay

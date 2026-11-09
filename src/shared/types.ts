@@ -36,14 +36,6 @@ export interface CartState {
   isOpen: boolean
 }
 
-export type SortOption = 'default' | 'price-asc' | 'price-desc' | 'name-asc'
-
-export interface FilterState {
-  searchQuery: string
-  selectedCategory: string
-  sortBy: SortOption
-}
-
 export type ApiStatus = 'idle' | 'loading' | 'error' | 'success'
 
 export interface Testimonial {

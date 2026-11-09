@@ -1,7 +1,7 @@
-import { apiGet } from './shared/api/client'
-import { ENDPOINTS } from './shared/api/endpoints'
-import { isBoolean, isFiniteNumber, isOneOf, isRecord, isString } from './shared/lib/guards'
-import type { CaseTone, DialStyle, Product, StrapStyle, WatchDesign } from './shared/types'
+import { apiGet } from '../../shared/api/client'
+import { ENDPOINTS } from '../../shared/api/endpoints'
+import { isBoolean, isFiniteNumber, isOneOf, isRecord, isString } from '../../shared/lib/guards'
+import type { CaseTone, DialStyle, Product, StrapStyle, WatchDesign } from '../../shared/types'
 
 const STRAP_STYLES: StrapStyle[] = ['leather', 'steel', 'mesh']
 const CASE_TONES: CaseTone[] = ['steel', 'gold', 'black']

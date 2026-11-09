@@ -1,5 +1,6 @@
-import { Icon } from '../shared/ui/Icon'
-import type { FilterState, SortOption } from '../shared/types'
+import { Icon } from '../../../shared/ui/Icon'
+import type { FilterState, SortOption } from '../types'
+import { SEARCH_INPUT_ID } from '../useShopNavigation'
 
 export interface SearchAndFilterProps {
   categories: string[]
@@ -28,7 +29,7 @@ export function SearchAndFilter({
       <div className="search-filter-grid">
         {/* Search input */}
         <div className="filter-group search-group">
-          <label htmlFor="search-input" className="filter-label">
+          <label htmlFor={SEARCH_INPUT_ID} className="filter-label">
             Search Watches
           </label>
           <div className="search-input-wrapper">
@@ -36,7 +37,7 @@ export function SearchAndFilter({
               <Icon name="search" size={18} />
             </span>
             <input
-              id="search-input"
+              id={SEARCH_INPUT_ID}
               type="search"
               className="search-input"
               placeholder="Search by name, dial or strap..."
