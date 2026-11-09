@@ -226,6 +226,17 @@ shopboard-react/
 **Import rules:** features import from `shared/` and never from each other; `app/` imports
 features only through their `index.ts`; `shared/` imports nothing from `features/` or `app/`.
 
+**Agent skills:** `.claude/skills/vercel-react-best-practices` and
+`.claude/skills/vercel-composition-patterns` are copied unmodified from
+[vercel-labs/agent-skills@1a2c79d](https://github.com/vercel-labs/agent-skills/tree/1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62/skills)
+(`skills/react-best-practices` and `skills/composition-patterns`). They were not installed with
+`npx skills add` because that runs a package downloaded from npm, which our tooling policy blocked.
+The repository was cloned as plain files instead, reviewed (Markdown only, no scripts), and copied.
+The committed folders have the same git tree hashes as upstream.
+
+**Catalog source:** the catalog lives in `public/api/products.json` because the original
+ShopBoard API returns bags and shoes without the `subtitle` and `design` fields the watch store needs.
+
 ---
 
 ## ⚡ Key Features
