@@ -1,5 +1,5 @@
 import { Sprig } from './Sprig'
-import { WatchIllustration } from './WatchIllustration'
+import { WatchIllustration } from '../shared/ui/WatchIllustration'
 import { HERO_DESIGN } from '../catalog'
 
 export interface HeroProps {

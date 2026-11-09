@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { CartItem } from './CartItem'
-import { Icon } from './Icon'
-import type { CartItem as CartItemType } from '../types'
+import { Icon } from '../shared/ui/Icon'
+import type { CartItem as CartItemType } from '../shared/types'
 
 export interface CartDrawerProps {
   isOpen: boolean

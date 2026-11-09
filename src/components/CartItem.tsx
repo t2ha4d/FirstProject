@@ -1,5 +1,5 @@
-import { formatPrice } from '../logic'
-import type { CartItem as CartItemType } from '../types'
+import { formatPrice } from '../shared/lib/format'
+import type { CartItem as CartItemType } from '../shared/types'
 
 export interface CartItemProps {
   item: CartItemType

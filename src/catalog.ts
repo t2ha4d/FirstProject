@@ -1,4 +1,4 @@
-import type { Product, WatchDesign } from './types'
+import type { Product, WatchDesign } from './shared/types'
 
 const INK = '#2f2a26'
 const CREAM = '#efe6d6'

@@ -14,7 +14,7 @@ import { Testimonials } from './components/Testimonials'
 import { ANNOUNCEMENTS, TESTIMONIALS } from './content'
 import { applyFilters, getUniqueCategories } from './logic'
 import { useCartState, useProducts } from './state'
-import type { FilterState, SortOption } from './types'
+import type { FilterState, SortOption } from './shared/types'
 import './App.css'
 
 const INITIAL_FILTERS: FilterState = {

@@ -1,4 +1,4 @@
-import { WatchIllustration } from './WatchIllustration'
+import { WatchIllustration } from '../shared/ui/WatchIllustration'
 import { LOOKBOOK } from '../content'
 
 export interface LookbookProps {

@@ -1,5 +1,5 @@
-import { Icon } from './Icon'
-import { WatchIllustration } from './WatchIllustration'
+import { Icon } from '../shared/ui/Icon'
+import { WatchIllustration } from '../shared/ui/WatchIllustration'
 import { COLLECTION_DESIGNS } from '../catalog'
 import { COLLECTIONS } from '../content'
 

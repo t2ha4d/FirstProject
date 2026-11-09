@@ -1,7 +1,8 @@
-import { Icon } from './Icon'
-import { WatchIllustration } from './WatchIllustration'
+import { Icon } from '../shared/ui/Icon'
+import { WatchIllustration } from '../shared/ui/WatchIllustration'
 import { FOOTER_DESIGN } from '../catalog'
-import { BRAND_NAME, COLLECTIONS } from '../content'
+import { BRAND_NAME } from '../shared/config/brand'
+import { COLLECTIONS } from '../content'
 
 export interface FooterProps {
   onShopAll: () => void

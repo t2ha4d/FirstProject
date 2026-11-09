@@ -1,5 +1,5 @@
 import { WATCH_CATALOG } from './catalog'
-import type { Product } from './types'
+import type { Product } from './shared/types'
 
 /**
  * Data-layer boundary for the catalog. It serves the local WTC catalog today;

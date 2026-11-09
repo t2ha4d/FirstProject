@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Icon } from './Icon'
-import { WatchIllustration } from './WatchIllustration'
-import { formatPrice } from '../logic'
-import type { Product } from '../types'
+import { Icon } from '../shared/ui/Icon'
+import { WatchIllustration } from '../shared/ui/WatchIllustration'
+import { formatPrice } from '../shared/lib/format'
+import type { Product } from '../shared/types'
 
 export interface ProductCardProps {
   product: Product

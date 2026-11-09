@@ -1,8 +1,6 @@
 import { LOOKBOOK_DESIGNS } from './catalog'
-import type { IconName } from './components/Icon'
-import type { LookbookTile, Testimonial } from './types'
-
-export const BRAND_NAME = 'WTC'
+import type { IconName } from './shared/ui/Icon'
+import type { LookbookTile, Testimonial } from './shared/types'
 
 export const ANNOUNCEMENTS = [
   'Free shipping on every watch',

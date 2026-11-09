@@ -1,5 +1,6 @@
-import { Icon } from './Icon'
-import { BRAND_NAME, COLLECTIONS } from '../content'
+import { Icon } from '../shared/ui/Icon'
+import { BRAND_NAME } from '../shared/config/brand'
+import { COLLECTIONS } from '../content'
 
 export interface HeaderProps {
   cartCount: number

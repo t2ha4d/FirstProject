@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { fetchProducts } from './api'
-import { calculateSubtotalCents, calculateTotalCount, formatPrice } from './logic'
-import type { ApiStatus, CartItem, Product } from './types'
+import { calculateSubtotalCents, calculateTotalCount } from './logic'
+import { formatPrice } from './shared/lib/format'
+import type { ApiStatus, CartItem, Product } from './shared/types'
 
 export const CART_STORAGE_KEY = 'wtc_cart_items_v1'
 

@@ -1,5 +1,5 @@
-import { Icon } from './Icon'
-import type { FilterState, SortOption } from '../types'
+import { Icon } from '../shared/ui/Icon'
+import type { FilterState, SortOption } from '../shared/types'
 
 export interface SearchAndFilterProps {
   categories: string[]

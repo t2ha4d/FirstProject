@@ -1,4 +1,4 @@
-import type { CartItem, FilterState, Product, SortOption } from './types'
+import type { CartItem, FilterState, Product, SortOption } from './shared/types'
 
 /**
  * Pure search filter: matches product title, subtitle or category name (case-insensitive)
@@ -64,16 +64,6 @@ export function getUniqueCategories(products: Product[]): string[] {
     }
   }
   return Array.from(set).sort((a, b) => a.localeCompare(b))
-}
-
-/**
- * Formats price in cents to a standard USD currency string ($XX.XX)
- */
-export function formatPrice(priceCents: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(priceCents / 100)
 }
 
 /**
