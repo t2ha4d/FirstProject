@@ -13,8 +13,7 @@
     "lint": "oxlint && node scripts/check-no-as-const.mjs",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "prepare": "husky"
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.5",

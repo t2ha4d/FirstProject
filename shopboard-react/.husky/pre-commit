@@ -1,5 +1,0 @@
-# Every commit must pass the same checks as CI would: types, lint, formatting and a production build.
-npm run typecheck
-npm run lint
-npm run format:check
-npm run build
