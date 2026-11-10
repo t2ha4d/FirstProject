@@ -1,6 +1,4 @@
 import { Icon } from '../../shared/ui/Icon'
-import { WatchIllustration } from '../../shared/ui/WatchIllustration'
-import { classicSand } from '../../shared/ui/watchDesigns'
 import { BRAND_NAME } from '../../shared/config/brand'
 import { COLLECTIONS } from '../../features/products'
 
@@ -65,10 +63,6 @@ export function Footer({ onShopAll, onSelectCollection }: FooterProps) {
             Back to Top
           </a>
         </nav>
-
-        <div className="footer-art" aria-hidden="true">
-          <WatchIllustration design={classicSand} className="footer-watch" />
-        </div>
       </div>
     </footer>
   )

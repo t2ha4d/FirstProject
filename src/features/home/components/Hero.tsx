@@ -1,6 +1,5 @@
 import { Sprig } from './Sprig'
-import { WatchIllustration } from '../../../shared/ui/WatchIllustration'
-import { HERO_DESIGN } from '../content'
+import { HeroWatch } from './HeroWatch'
 
 export interface HeroProps {
   onShopAll: () => void
@@ -33,7 +32,7 @@ export function Hero({ onShopAll }: HeroProps) {
       <div className="hero-scene" aria-hidden="true">
         <span className="hero-arch" />
         <Sprig className="hero-sprig" />
-        <WatchIllustration design={HERO_DESIGN} className="hero-watch" />
+        <HeroWatch className="hero-watch" />
       </div>
     </section>
   )

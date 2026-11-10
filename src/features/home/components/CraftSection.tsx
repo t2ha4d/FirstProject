@@ -1,6 +1,5 @@
 import { Icon } from '../../../shared/ui/Icon'
-import { MovementIllustration } from './MovementIllustration'
-import { CRAFT_FEATURES } from '../content'
+import { CRAFT_FEATURES, CRAFT_ICONS } from '../content'
 
 export interface CraftSectionProps {
   onShopAll: () => void
@@ -9,21 +8,23 @@ export interface CraftSectionProps {
 export function CraftSection({ onShopAll }: CraftSectionProps) {
   return (
     <section id="story" className="section craft" aria-labelledby="craft-title">
-      <div className="craft-media">
-        <MovementIllustration label="Exposed mechanical watch movement with turning brass wheels" />
+      <div className="craft-media" aria-hidden="true">
+        {CRAFT_ICONS.map((icon) => (
+          <Icon key={icon} name={icon} size={64} />
+        ))}
       </div>
 
       <div className="craft-copy">
         <p className="eyebrow eyebrow-dark">Built by hand. Made to last.</p>
         <h2 id="craft-title" className="craft-title">
-          The art of
+          Made with
           <br />
-          watchmaking
+          intention
         </h2>
         <p className="craft-text">
-          Every WTC timepiece is assembled and regulated in small batches by a dedicated team of
-          watchmakers. We pair proven movements with enduring materials, then check each watch by
-          hand before it leaves our bench.
+          Every WTC piece is cut, stitched and finished in small batches by a dedicated team of
+          makers. We choose materials that age well, then check each bag, shoe and accessory by hand
+          before it leaves our bench.
         </p>
         <button
           type="button"

@@ -564,12 +564,6 @@
   }
 }
 
-@keyframes rotate-back {
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
 /* Craft */
 .craft {
   display: grid;
@@ -584,21 +578,13 @@
 }
 
 .craft-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
   min-height: 340px;
-}
-
-.movement-art {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.gear-cw {
-  animation: rotate 60s linear infinite;
-}
-
-.gear-ccw {
-  animation: rotate-back 40s linear infinite;
+  background: #4a3a2d;
+  color: #d9c3a3;
 }
 
 .craft-copy {
@@ -660,42 +646,6 @@
 
 .craft-feature svg {
   flex: none;
-}
-
-/* Lookbook */
-.lookbook-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.8rem;
-}
-
-.lookbook-tile {
-  position: relative;
-  aspect-ratio: 11 / 10;
-  margin: 0;
-  overflow: hidden;
-  border-radius: 6px;
-}
-
-.lookbook-watch {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  height: 120%;
-  transform: translate(-50%, -50%) rotate(24deg);
-  filter: drop-shadow(8px 12px 10px rgba(30, 18, 10, 0.4));
-}
-
-.lookbook-caption {
-  position: absolute;
-  left: 0.5rem;
-  bottom: 0.5rem;
-  padding: 0.15rem 0.55rem;
-  border-radius: 2px;
-  background: rgba(248, 243, 236, 0.92);
-  color: var(--ink);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
 }
 
 /* Testimonials */
@@ -815,7 +765,7 @@
 
 .footer-inner {
   display: grid;
-  grid-template-columns: 1.5fr 0.7fr 0.7fr 1.2fr;
+  grid-template-columns: 1.5fr 0.7fr 0.7fr;
   gap: 2rem;
   max-width: 1320px;
   margin: 0 auto;
@@ -862,24 +812,6 @@
 
 .footer-link:hover {
   color: var(--clay);
-}
-
-.footer-art {
-  position: relative;
-  align-self: end;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 999px 999px 0 0;
-  background: linear-gradient(#a89079, #6d5a49);
-}
-
-.footer-watch {
-  position: absolute;
-  top: 8%;
-  left: 50%;
-  height: 180%;
-  transform: translateX(-50%);
-  filter: drop-shadow(6px 8px 8px rgba(30, 18, 10, 0.4));
 }
 
 /* Cart drawer */
@@ -1156,10 +1088,6 @@
   .footer-inner {
     grid-template-columns: 1.4fr 0.8fr 0.8fr;
   }
-
-  .footer-art {
-    display: none;
-  }
 }
 
 @media (max-width: 760px) {
@@ -1244,15 +1172,6 @@
     gap: 1rem;
     margin: 0 1.25rem 1.5rem;
     padding: 1.25rem 0 0;
-  }
-
-  .lookbook-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .lookbook-tile:last-child {
-    grid-column: 1 / -1;
-    aspect-ratio: 22 / 10;
   }
 
   .testimonials {

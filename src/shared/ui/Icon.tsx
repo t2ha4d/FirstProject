@@ -8,7 +8,6 @@ export type IconName =
   | 'heart-filled'
   | 'close'
   | 'arrow'
-  | 'wave'
   | 'circle'
   | 'hand'
   | 'gem'
@@ -46,7 +45,6 @@ const PATHS: Record<IconName, ReactNode> = {
   'heart-filled': <path fill="currentColor" d={HEART} />,
   close: <path d="M6 6l12 12M18 6 6 18" />,
   arrow: <path d="M4 12h15m-5-5 5 5-5 5" />,
-  wave: <path d="M3 9c3-3 6-3 9 0s6 3 9 0M3 15c3-3 6-3 9 0s6 3 9 0" />,
   circle: (
     <>
       <circle cx="12" cy="12" r="9" />

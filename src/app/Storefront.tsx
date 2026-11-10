@@ -5,7 +5,6 @@ import {
   ANNOUNCEMENTS,
   CraftSection,
   Hero,
-  Lookbook,
   Newsletter,
   TESTIMONIALS,
   Testimonials,
@@ -34,7 +33,6 @@ export function Storefront() {
         <CollectionGrid onSelectCollection={navigation.showCollection} />
         <ProductsSection onAddToCart={cart.addItem} />
         <CraftSection onShopAll={navigation.showAll} />
-        <Lookbook onShopAll={navigation.showAll} />
         <Testimonials testimonials={TESTIMONIALS} />
         <Newsletter />
       </main>
