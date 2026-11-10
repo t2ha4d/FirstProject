@@ -10,3 +10,8 @@ export async function fetchProducts(signal?: AbortSignal): Promise<Product[]> {
   const { items } = await apiGet(ENDPOINTS.products, productListSchema, { signal })
   return items
 }
+
+/** Loads one product. A missing id rejects with an ApiError whose status is 404. */
+export function fetchProduct(id: number, signal?: AbortSignal): Promise<Product> {
+  return apiGet(ENDPOINTS.product(id), productSchema, { signal })
+}
