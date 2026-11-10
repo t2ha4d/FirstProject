@@ -664,13 +664,6 @@ main > .section:last-child {
   gap: 0.75rem;
 }
 
-.page-loading {
-  margin: 0;
-  padding: 3rem 0;
-  text-align: center;
-  color: var(--muted);
-}
-
 /* Skeletons: placeholders shaped like the content they replace */
 .skeleton {
   display: block;
