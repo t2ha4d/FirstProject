@@ -5,10 +5,7 @@ import type { FilterState, SortOption } from '../types'
 export interface SearchAndFilterProps {
   categories: string[]
   filters: FilterState
-  /** The text the search box starts with; it keeps its own text after that. */
-  initialSearch: string
   onSearchChange: (query: string) => void
-  onClearSearch: () => void
   onCategoryChange: (category: string) => void
   onSortChange: (sort: SortOption) => void
   onResetFilters: () => void
@@ -18,9 +15,7 @@ export interface SearchAndFilterProps {
 export function SearchAndFilter({
   categories,
   filters,
-  initialSearch,
   onSearchChange,
-  onClearSearch,
   onCategoryChange,
   onSortChange,
   onResetFilters,
@@ -46,14 +41,14 @@ export function SearchAndFilter({
               type="search"
               className="search-input"
               placeholder="Search by name or category..."
-              defaultValue={initialSearch}
+              value={filters.searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
             />
             {filters.searchQuery && (
               <button
                 type="button"
                 className="clear-search-btn"
-                onClick={onClearSearch}
+                onClick={() => onSearchChange('')}
                 aria-label="Clear search query"
               >
                 <Icon name="close" size={16} />

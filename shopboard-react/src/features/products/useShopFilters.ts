@@ -1,4 +1,5 @@
 import { useSearchParams } from 'next/navigation'
+import { startTransition, useOptimistic } from 'react'
 import { INITIAL_FILTERS, readFilters, writeFilters } from './logic'
 import type { FilterState } from './types'
 
@@ -15,7 +16,12 @@ function writeUrl(filters: FilterState, mode: 'push' | 'replace') {
 
 /** The shop filters, owned by the URL search params (`q`, `category`, `sort`). */
 export function useShopFilters() {
-  const filters = readFilters(useSearchParams())
+  const urlFilters = readFilters(useSearchParams())
+  // Next applies URL changes in a transition, so the URL is a moment behind the keyboard. While
+  // that transition runs, the typed text is shown from here; it is not a second copy of the
+  // filter, because it always reverts to the URL's value when the transition ends.
+  const [searchQuery, showTypedQuery] = useOptimistic(urlFilters.searchQuery)
+  const filters = { ...urlFilters, searchQuery }
 
   return {
     filters,
@@ -23,8 +29,11 @@ export function useShopFilters() {
       writeUrl({ ...filters, ...change }, 'push')
     },
     /** `replace` keeps typing from adding one history entry per key. */
-    setSearchQuery(searchQuery: string) {
-      writeUrl({ ...filters, searchQuery }, 'replace')
+    setSearchQuery(query: string) {
+      startTransition(() => {
+        showTypedQuery(query)
+        writeUrl({ ...filters, searchQuery: query }, 'replace')
+      })
     },
     resetFilters() {
       writeUrl(INITIAL_FILTERS, 'push')
