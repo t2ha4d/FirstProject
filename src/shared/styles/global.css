@@ -1,3 +1,6 @@
+/* Cascade layer order for the whole site; unlayered CSS (the site's own classes) beats all of them. */
+@layer base, theme, utilities;
+
 *,
 *::before,
 *::after {
@@ -46,20 +49,26 @@ body {
   min-height: 100vh;
 }
 
-button,
-input,
-select {
-  font: inherit;
-  color: inherit;
-}
+/*
+ * Element defaults sit in the lowest cascade layer, so any class beats them: the site's own
+ * classes (unlayered) and the Tailwind utilities that shadcn/ui components use.
+ */
+@layer base {
+  button,
+  input,
+  select {
+    font: inherit;
+    color: inherit;
+  }
 
-button {
-  cursor: pointer;
-}
+  button {
+    cursor: pointer;
+  }
 
-:focus-visible {
-  outline: 2px solid var(--clay);
-  outline-offset: 2px;
+  :focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: 2px;
+  }
 }
 
 .visually-hidden {

@@ -16,12 +16,14 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@hookform/resolvers": "^7.0.5",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.5.2",
     "radix-ui": "^1.8.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-error-boundary": "^6.1.6",
+    "react-hook-form": "^7.91.0",
     "react-router": "^8.5.1",
     "zod": "^4.6.7"
   },

@@ -1,6 +1,6 @@
 import type { z } from 'zod'
 import type { Product } from '../../shared/types'
-import type { cartLineSchema } from './schemas'
+import type { cartLineSchema, placedOrderSchema } from './schemas'
 
 export type CartLine = z.infer<typeof cartLineSchema>
 
@@ -9,3 +9,5 @@ export interface CartEntry {
   product: Product
   quantity: number
 }
+
+export type PlacedOrder = z.infer<typeof placedOrderSchema>

@@ -367,7 +367,27 @@ main > .section:last-child {
   overflow: hidden;
 }
 
-/* Checkout */
+/* Checkout: the form beside the order summary */
+.checkout-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.checkout-layout .order-summary {
+  max-width: none;
+}
+
+.order-confirmation-text {
+  margin: 0 0 1rem;
+  color: var(--muted);
+}
+
+.order-confirmation-action {
+  margin-top: 1.25rem;
+}
+
 .order-summary {
   max-width: 34rem;
   padding: 1.25rem 1.5rem;
@@ -1302,7 +1322,8 @@ main > .section:last-child {
     aspect-ratio: 4 / 1;
   }
 
-  .product-detail {
+  .product-detail,
+  .checkout-layout {
     grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
   }

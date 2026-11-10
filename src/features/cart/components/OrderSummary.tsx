@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { Link } from 'react-router'
 import { formatPrice } from '../../../shared/lib/format'
 import { Icon } from '../../../shared/ui/Icon'
@@ -7,8 +8,13 @@ import { usePricedCart } from '../usePricedCart'
 import { CartBoundary } from './CartBoundary'
 import { OrderSummarySkeleton } from './Skeletons'
 
+export interface OrderSummaryProps {
+  /** Shown beside the summary once the bag is priced, e.g. the checkout form. */
+  children: ReactNode
+}
+
 /** What is being ordered, for the checkout page. An empty bag needs no product data. */
-export function OrderSummary() {
+export function OrderSummary({ children }: OrderSummaryProps) {
   const cart = useCart()
 
   if (cart.lines.length === 0) {
@@ -27,13 +33,13 @@ export function OrderSummary() {
 
   return (
     <CartBoundary fallback={<OrderSummarySkeleton />}>
-      <PricedSummary />
+      <PricedSummary>{children}</PricedSummary>
     </CartBoundary>
   )
 }
 
 /** Suspends until the catalog has loaded. */
-function PricedSummary() {
+function PricedSummary({ children }: OrderSummaryProps) {
   const { items, unavailableCount, subtotalFormatted } = usePricedCart()
 
   if (items.length === 0) {
@@ -51,30 +57,33 @@ function PricedSummary() {
   }
 
   return (
-    <section className="order-summary" aria-labelledby="order-summary-title">
-      <h2 id="order-summary-title" className="order-summary-title">
-        Order summary
-      </h2>
-      <ul className="order-summary-list">
-        {items.map(({ product, quantity }) => (
-          <li key={product.id} className="order-summary-item">
-            <span>
-              {product.title} × {quantity}
-            </span>
-            <span>{formatPrice(product.price_cents * quantity)}</span>
-          </li>
-        ))}
-      </ul>
-      {unavailableCount > 0 && (
-        <p className="cart-unavailable">
-          {unavailableCount} saved {unavailableCount === 1 ? 'item is' : 'items are'} not available
-          right now and will not be ordered.
-        </p>
-      )}
-      <div className="subtotal-row">
-        <span className="subtotal-label">Subtotal</span>
-        <span className="subtotal-amount">{subtotalFormatted}</span>
-      </div>
-    </section>
+    <div className="checkout-layout">
+      {children}
+      <section className="order-summary" aria-labelledby="order-summary-title">
+        <h2 id="order-summary-title" className="order-summary-title">
+          Order summary
+        </h2>
+        <ul className="order-summary-list">
+          {items.map(({ product, quantity }) => (
+            <li key={product.id} className="order-summary-item">
+              <span>
+                {product.title} × {quantity}
+              </span>
+              <span>{formatPrice(product.price_cents * quantity)}</span>
+            </li>
+          ))}
+        </ul>
+        {unavailableCount > 0 && (
+          <p className="cart-unavailable">
+            {unavailableCount} saved {unavailableCount === 1 ? 'item is' : 'items are'} not
+            available right now and will not be ordered.
+          </p>
+        )}
+        <div className="subtotal-row">
+          <span className="subtotal-label">Subtotal</span>
+          <span className="subtotal-amount">{subtotalFormatted}</span>
+        </div>
+      </section>
+    </div>
   )
 }

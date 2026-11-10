@@ -8,3 +8,18 @@ export const cartLineSchema = z.object({
 
 /** The stored bag before its lines are checked one by one. */
 export const storedCartSchema = z.array(z.unknown())
+
+/** What the confirmation page receives in router state after an order is placed. */
+export const placedOrderSchema = z.object({
+  customerName: z.string(),
+  email: z.string(),
+  items: z.array(
+    z.object({
+      id: z.number(),
+      title: z.string(),
+      quantity: z.number(),
+      lineTotalCents: z.number(),
+    }),
+  ),
+  subtotalCents: z.number(),
+})
