@@ -1,0 +1,26 @@
+/*
+ * Tailwind for the shadcn/ui components and the checkout form only.
+ * - No Preflight reset, so the site's existing base styles stay as they are.
+ * - Everything sits in cascade layers (order declared in global.css), so the site's own
+ *   unlayered CSS always wins, and utilities beat the element defaults in the base layer.
+ * - Only src/shared/ui and src/features/checkout are scanned, so no utility is
+ *   generated for a class name the rest of the site happens to use.
+ */
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+@source '../ui';
+@source '../../features/checkout';
+
+/* The site has no dark mode, so shadcn's dark: classes never apply. */
+@custom-variant dark (&:is(.dark *));
+
+/* shadcn's color names, mapped to the site's palette from global.css. */
+@theme inline {
+  --color-foreground: var(--ink);
+  --color-primary: var(--clay);
+  --color-primary-foreground: #fff;
+  --color-muted-foreground: var(--muted);
+  --color-input: var(--line);
+  --color-ring: var(--clay);
+  --color-destructive: #b42318;
+}

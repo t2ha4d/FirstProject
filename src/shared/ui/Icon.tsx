@@ -3,15 +3,11 @@ import type { ReactNode } from 'react'
 export type IconName =
   | 'search'
   | 'bag'
+  | 'shoe'
   | 'heart'
   | 'heart-filled'
   | 'close'
   | 'arrow'
-  | 'crown'
-  | 'wave'
-  | 'stopwatch'
-  | 'compass'
-  | 'plane'
   | 'circle'
   | 'hand'
   | 'gem'
@@ -39,25 +35,16 @@ const PATHS: Record<IconName, ReactNode> = {
       <path d="M9 11V6a3 3 0 0 1 6 0v5" />
     </>
   ),
+  shoe: (
+    <>
+      <path d="M3 16V9.5c1.6.8 3 .8 4.5 0L9.5 8l3.5 4 5.2 1.3c1.7.4 2.8 1.3 2.8 2.7H3Z" />
+      <path d="M3 19h18" />
+    </>
+  ),
   heart: <path d={HEART} />,
   'heart-filled': <path fill="currentColor" d={HEART} />,
   close: <path d="M6 6l12 12M18 6 6 18" />,
   arrow: <path d="M4 12h15m-5-5 5 5-5 5" />,
-  crown: <path d="M4 18h16M5 15 3.5 7 9 11l3-6 3 6 5.5-4L19 15H5Z" />,
-  wave: <path d="M3 9c3-3 6-3 9 0s6 3 9 0M3 15c3-3 6-3 9 0s6 3 9 0" />,
-  stopwatch: (
-    <>
-      <circle cx="12" cy="14" r="7" />
-      <path d="M12 14V10M10 3h4M12 3v4M18 7l1.5 1.5" />
-    </>
-  ),
-  compass: (
-    <>
-      <circle cx="12" cy="12" r="9" />
-      <path d="m15.5 8.5-2 5-5 2 2-5 5-2Z" />
-    </>
-  ),
-  plane: <path d="M21 4 3 11l6 2.5L11.5 20 21 4Zm0 0L9 13.5" />,
   circle: (
     <>
       <circle cx="12" cy="12" r="9" />

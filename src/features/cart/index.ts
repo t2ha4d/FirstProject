@@ -2,4 +2,7 @@
 export { CartProvider } from './CartProvider'
 export { useCart } from './CartContext'
 export { CartPanel } from './components/CartPanel'
-export type { CartEntry } from './types'
+export { CartView } from './components/CartView'
+export { OrderConfirmation } from './components/OrderConfirmation'
+export { OrderSummary } from './components/OrderSummary'
+export { usePlaceOrder } from './usePlaceOrder'

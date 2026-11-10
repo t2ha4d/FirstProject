@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  /** Base URL for the API client, e.g. "/api" or "https://api.example.com". Defaults to "/api". */
+  /** Base URL for the API client, e.g. "https://shopboard-api.vercel.app/api" (the default). */
   readonly VITE_API_BASE_URL?: string
 }
 

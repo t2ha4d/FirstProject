@@ -1,37 +1,25 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
-import { formatPrice } from '../../shared/lib/format'
-import type { Product } from '../../shared/types'
 import { CartContext } from './CartContext'
 import type { CartActions, CartValue } from './CartContext'
-import {
-  addLine,
-  calculateSubtotalCents,
-  calculateTotalCount,
-  changeLineQuantity,
-  pruneLines,
-  removeLine,
-  resolveCart,
-} from './logic'
+import { addLine, calculateTotalCount, changeLineQuantity, removeLine } from './logic'
 import { loadCartLines, saveCartLines } from './storage'
 import type { CartLine } from './types'
 
 export interface CartProviderProps {
-  /** Current product data; the only source of prices. */
-  products: Product[]
-  /** True once `products` is the loaded catalog. Until then no line is ever dropped. */
-  isCatalogReady: boolean
   children: ReactNode
 }
 
-/** Owns the bag (`{ id, qty }` lines) and drawer visibility, persisting lines to localStorage. */
-export function CartProvider({ products, isCatalogReady, children }: CartProviderProps) {
+/** The single owner of the bag (`{ id, qty }` lines) and the drawer, saving lines to localStorage. */
+export function CartProvider({ children }: CartProviderProps) {
   const [lines, setLines] = useState<CartLine[]>(loadCartLines)
   const [isOpen, setIsOpen] = useState(false)
 
+  // Mirrors the lines to localStorage, an outside system. Every line is saved, including
+  // lines whose product is missing from the catalog, so a failed or empty list never empties the bag.
   useEffect(() => {
-    saveCartLines(isCatalogReady ? pruneLines(lines, products) : lines)
-  }, [lines, products, isCatalogReady])
+    saveCartLines(lines)
+  }, [lines])
 
   const actions = useMemo<CartActions>(
     () => ({
@@ -46,20 +34,10 @@ export function CartProvider({ products, isCatalogReady, children }: CartProvide
     [],
   )
 
-  const value = useMemo<CartValue>(() => {
-    const items = resolveCart(lines, products)
-    const subtotalCents = calculateSubtotalCents(items)
-    const countedLines = isCatalogReady ? pruneLines(lines, products) : lines
-    return {
-      ...actions,
-      items,
-      isOpen,
-      isResolving: !isCatalogReady && lines.length > 0,
-      totalCount: calculateTotalCount(countedLines),
-      subtotalCents,
-      subtotalFormatted: formatPrice(subtotalCents),
-    }
-  }, [actions, lines, products, isCatalogReady, isOpen])
+  const value = useMemo<CartValue>(
+    () => ({ ...actions, lines, isOpen, totalCount: calculateTotalCount(lines) }),
+    [actions, lines, isOpen],
+  )
 
   return <CartContext value={value}>{children}</CartContext>
 }

@@ -1,7 +1,8 @@
+import type { z } from 'zod'
 import type { IconName } from '../../shared/ui/Icon'
-import type { WatchDesign } from '../../shared/types'
+import type { sortOptionSchema } from './schemas'
 
-export type SortOption = 'default' | 'price-asc' | 'price-desc' | 'name-asc'
+export type SortOption = z.infer<typeof sortOptionSchema>
 
 export interface FilterState {
   searchQuery: string
@@ -12,5 +13,4 @@ export interface FilterState {
 export interface Collection {
   name: string
   icon: IconName
-  design: WatchDesign
 }

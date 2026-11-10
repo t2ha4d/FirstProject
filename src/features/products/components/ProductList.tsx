@@ -1,96 +1,44 @@
 import { Icon } from '../../../shared/ui/Icon'
+import { StatePanel } from '../../../shared/ui/StatePanel'
+import type { Product } from '../../../shared/types'
 import { ProductCard } from './ProductCard'
-import type { ApiStatus, Product } from '../../../shared/types'
 
 export interface ProductListProps {
   products: Product[]
-  status: ApiStatus
-  errorMessage?: string
   totalCatalogCount: number
-  onRetry: () => void
-  onAddToCart: (product: Product) => void
   onResetFilters: () => void
 }
 
-export function ProductList({
-  products,
-  status,
-  errorMessage,
-  totalCatalogCount,
-  onRetry,
-  onAddToCart,
-  onResetFilters,
-}: ProductListProps) {
-  // 1. Loading UI
-  if (status === 'loading') {
+export function ProductList({ products, totalCatalogCount, onResetFilters }: ProductListProps) {
+  if (totalCatalogCount === 0) {
     return (
-      <div className="product-list-state loading-state" role="status" aria-live="polite">
-        <div className="spinner" aria-hidden="true"></div>
-        <p className="state-title">Loading the collection...</p>
-        <p className="state-description">Winding up the latest WTC pieces</p>
-      </div>
+      <StatePanel
+        art={<Icon name="box" size={36} />}
+        title="No products available"
+        description="The collection is currently empty. Please check back soon."
+      />
     )
   }
 
-  // 2. Error UI with "Try again" button
-  if (status === 'error') {
+  if (products.length === 0) {
     return (
-      <div className="product-list-state error-state" role="alert">
-        <div className="state-icon">
-          <Icon name="alert" size={36} />
-        </div>
-        <h3 className="state-title">Unable to load the collection</h3>
-        <p className="state-description">
-          {errorMessage || 'Something went wrong while loading our watches.'}
-        </p>
-        <button type="button" className="retry-btn" onClick={onRetry}>
-          Try again
-        </button>
-      </div>
-    )
-  }
-
-  // 3. Empty state: Catalog itself has no products
-  if (status === 'success' && totalCatalogCount === 0) {
-    return (
-      <div className="product-list-state empty-state">
-        <div className="state-icon">
-          <Icon name="box" size={36} />
-        </div>
-        <h3 className="state-title">No watches available</h3>
-        <p className="state-description">
-          The collection is currently empty. Please check back soon.
-        </p>
-        <button type="button" className="retry-btn" onClick={onRetry}>
-          Refresh Collection
-        </button>
-      </div>
-    )
-  }
-
-  // 4. No Match message: Filter/Search returned 0 results
-  if (status === 'success' && products.length === 0) {
-    return (
-      <div className="product-list-state no-match-state">
-        <div className="state-icon">
-          <Icon name="search" size={36} />
-        </div>
-        <h3 className="state-title">No matching watches found</h3>
-        <p className="state-description">
-          Try a different search, choose another collection, or clear your filters.
-        </p>
+      <StatePanel
+        art={<Icon name="search" size={36} />}
+        title="No matching products found"
+        description="Try a different search, choose another collection, or clear your filters."
+      >
         <button type="button" className="retry-btn" onClick={onResetFilters}>
           Clear all filters
         </button>
-      </div>
+      </StatePanel>
     )
   }
 
-  // 5. Success state: Grid of products using real unique product.id as key
+  // Keyed by the real product id, so card state follows the product when the list is re-sorted.
   return (
-    <div className="products-grid" role="region" aria-label="Watch collection">
+    <div className="products-grid" role="region" aria-label="Product collection">
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
+        <ProductCard key={product.id} product={product} />
       ))}
     </div>
   )

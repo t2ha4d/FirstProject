@@ -29,7 +29,7 @@ export function removeLine(lines: CartLine[], productId: number): CartLine[] {
 
 /**
  * Joins stored lines with current product data. Lines whose product is not in
- * the catalog are left out (they are kept in storage until the catalog has loaded).
+ * the catalog are left out of the result; they stay in storage.
  */
 export function resolveCart(lines: CartLine[], products: Product[]): CartEntry[] {
   const byId = new Map(products.map((product) => [product.id, product]))
@@ -40,14 +40,6 @@ export function resolveCart(lines: CartLine[], products: Product[]): CartEntry[]
 }
 
 /**
- * Removes lines whose product no longer exists. Only call with a loaded catalog.
- */
-export function pruneLines(lines: CartLine[], products: Product[]): CartLine[] {
-  const ids = new Set(products.map((product) => product.id))
-  return lines.filter((line) => ids.has(line.id))
-}
-
-/**
  * Subtotal in cents, priced from the product data
  */
 export function calculateSubtotalCents(entries: CartEntry[]): number {
@@ -55,7 +47,7 @@ export function calculateSubtotalCents(entries: CartEntry[]): number {
 }
 
 /**
- * Total number of watches across lines
+ * Total number of items across lines
  */
 export function calculateTotalCount(lines: CartLine[]): number {
   return lines.reduce((count, line) => count + line.qty, 0)

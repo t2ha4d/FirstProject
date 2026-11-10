@@ -1,12 +1,8 @@
+import { Link } from 'react-router'
 import { Sprig } from './Sprig'
-import { WatchIllustration } from '../../../shared/ui/WatchIllustration'
-import { HERO_DESIGN } from '../content'
+import { HeroWatch } from './HeroWatch'
 
-export interface HeroProps {
-  onShopAll: () => void
-}
-
-export function Hero({ onShopAll }: HeroProps) {
+export function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="hero-copy">
@@ -17,22 +13,18 @@ export function Hero({ onShopAll }: HeroProps) {
           worth wearing.
         </h1>
         <p className="hero-text">
-          Thoughtfully designed watches in honest materials, made to keep time with your everyday.
+          Thoughtfully designed bags, shoes and accessories in honest materials, made for your
+          everyday.
         </p>
-        <button
-          type="button"
-          className="btn btn-clay"
-          onClick={onShopAll}
-          aria-label="Shop the collection"
-        >
+        <Link to="/shop" className="btn btn-clay">
           Shop the Collection
-        </button>
+        </Link>
       </div>
 
       <div className="hero-scene" aria-hidden="true">
         <span className="hero-arch" />
         <Sprig className="hero-sprig" />
-        <WatchIllustration design={HERO_DESIGN} className="hero-watch" />
+        <HeroWatch className="hero-watch" />
       </div>
     </section>
   )

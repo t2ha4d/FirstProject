@@ -1,26 +1,26 @@
 import { useState } from 'react'
+import { Link } from 'react-router'
 import { Icon } from '../../../shared/ui/Icon'
-import { WatchIllustration } from '../../../shared/ui/WatchIllustration'
 import { formatPrice } from '../../../shared/lib/format'
 import type { Product } from '../../../shared/types'
+import { useAddToCart } from '../AddToCartContext'
+import { iconForCategory } from '../collections'
 
 export interface ProductCardProps {
   product: Product
-  onAddToCart: (product: Product) => void
 }
 
-export function ProductCard({ product, onAddToCart }: ProductCardProps) {
+export function ProductCard({ product }: ProductCardProps) {
+  const onAddToCart = useAddToCart()
   const [isSaved, setIsSaved] = useState(false)
   const isAvailable = product.in_stock
 
   return (
     <article className={`product-card ${!isAvailable ? 'sold-out' : ''}`}>
       <div className="card-media">
-        <WatchIllustration
-          design={product.design}
-          label={`${product.title}, ${product.subtitle}`}
-          className="card-watch"
-        />
+        <span className="card-art">
+          <Icon name={iconForCategory(product.category_name)} size={84} />
+        </span>
         {!isAvailable && <span className="sold-out-tag">Sold out</span>}
         <button
           type="button"
@@ -38,8 +38,12 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
       </div>
 
       <div className="card-body">
-        <h3 className="product-title">{product.title}</h3>
-        <p className="product-subtitle">{product.subtitle}</p>
+        <h3 className="product-title">
+          <Link to={`/products/${product.id}`} className="product-link">
+            {product.title}
+          </Link>
+        </h3>
+        <p className="product-subtitle">{product.category_name}</p>
         <p className="product-price">{formatPrice(product.price_cents)}</p>
         <button
           type="button"
