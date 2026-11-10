@@ -1,4 +1,4 @@
-import { storedCartSchema, storedLineSchema } from './schemas'
+import { cartLineSchema, storedCartSchema } from './schemas'
 import type { CartLine } from './types'
 
 export const CART_STORAGE_KEY = 'wtc_cart_items_v1'
@@ -11,7 +11,7 @@ export function loadCartLines(): CartLine[] {
     const stored = storedCartSchema.safeParse(JSON.parse(raw))
     if (!stored.success) return []
     return stored.data.flatMap((value) => {
-      const line = storedLineSchema.safeParse(value)
+      const line = cartLineSchema.safeParse(value)
       return line.success ? [line.data] : []
     })
   } catch {
