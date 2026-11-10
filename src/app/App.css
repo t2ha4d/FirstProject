@@ -359,6 +359,36 @@ main > .section:last-child {
   cursor: not-allowed;
 }
 
+/* Checkout */
+.order-summary {
+  max-width: 34rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 6px;
+  background: var(--sand);
+}
+
+.order-summary-title {
+  margin: 0 0 0.75rem;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.order-summary-list {
+  margin: 0 0 0.75rem;
+  padding: 0 0 0.75rem;
+  list-style: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.order-summary-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.3rem 0;
+}
+
 /* Search and filters */
 .search-filter-section {
   margin-bottom: 1.25rem;

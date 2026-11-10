@@ -6,6 +6,12 @@ export const ShopPage = lazy(() => import('./ShopPage').then((m) => ({ default: 
 export const ProductPage = lazy(() =>
   import('./ProductPage').then((m) => ({ default: m.ProductPage })),
 )
+export const CheckoutPage = lazy(() =>
+  import('./CheckoutPage').then((m) => ({ default: m.CheckoutPage })),
+)
+export const OrderConfirmationPage = lazy(() =>
+  import('./OrderConfirmationPage').then((m) => ({ default: m.OrderConfirmationPage })),
+)
 export const NotFoundPage = lazy(() =>
   import('./NotFoundPage').then((m) => ({ default: m.NotFoundPage })),
 )
