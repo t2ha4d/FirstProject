@@ -1,13 +1,10 @@
+import { Link } from 'react-router'
 import { Icon } from '../../../shared/ui/Icon'
 import { CRAFT_FEATURES, CRAFT_ICONS } from '../content'
 
-export interface CraftSectionProps {
-  onShopAll: () => void
-}
-
-export function CraftSection({ onShopAll }: CraftSectionProps) {
+export function CraftSection() {
   return (
-    <section id="story" className="section craft" aria-labelledby="craft-title">
+    <section className="section craft" aria-labelledby="craft-title">
       <div className="craft-media" aria-hidden="true">
         {CRAFT_ICONS.map((icon) => (
           <Icon key={icon} name={icon} size={64} />
@@ -26,14 +23,9 @@ export function CraftSection({ onShopAll }: CraftSectionProps) {
           makers. We choose materials that age well, then check each bag, shoe and accessory by hand
           before it leaves our bench.
         </p>
-        <button
-          type="button"
-          className="text-link"
-          onClick={onShopAll}
-          aria-label="Explore the collection"
-        >
+        <Link to="/shop" className="text-link">
           Explore the collection <Icon name="arrow" size={16} />
-        </button>
+        </Link>
       </div>
 
       <ul className="craft-features">

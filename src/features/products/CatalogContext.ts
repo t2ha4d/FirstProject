@@ -1,23 +1,11 @@
 import { createContext, useContext } from 'react'
 import type { ApiStatus, Product } from '../../shared/types'
-import type { FilterState, SortOption } from './types'
 
-export interface CatalogActions {
-  reload: () => void
-  setSearchQuery: (searchQuery: string) => void
-  setCategory: (category: string) => void
-  setSortBy: (sortBy: SortOption) => void
-  resetFilters: () => void
-  selectCollection: (collection: string) => void
-}
-
-export interface CatalogValue extends CatalogActions {
+export interface CatalogValue {
   products: Product[]
   status: ApiStatus
   errorMessage: string
-  filters: FilterState
-  categories: string[]
-  filteredProducts: Product[]
+  reload: () => void
 }
 
 export const CatalogContext = createContext<CatalogValue | null>(null)

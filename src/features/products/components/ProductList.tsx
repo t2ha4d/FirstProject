@@ -24,7 +24,7 @@ export function ProductList({
   // 1. Loading UI
   if (status === 'loading') {
     return (
-      <div className="product-list-state loading-state" role="status" aria-live="polite">
+      <div className="state-panel loading-state" role="status" aria-live="polite">
         <div className="spinner" aria-hidden="true"></div>
         <p className="state-title">Loading the collection...</p>
         <p className="state-description">Winding up the latest WTC pieces</p>
@@ -35,7 +35,7 @@ export function ProductList({
   // 2. Error UI with "Try again" button
   if (status === 'error') {
     return (
-      <div className="product-list-state error-state" role="alert">
+      <div className="state-panel error-state" role="alert">
         <div className="state-icon">
           <Icon name="alert" size={36} />
         </div>
@@ -53,7 +53,7 @@ export function ProductList({
   // 3. Empty state: Catalog itself has no products
   if (status === 'success' && totalCatalogCount === 0) {
     return (
-      <div className="product-list-state empty-state">
+      <div className="state-panel empty-state">
         <div className="state-icon">
           <Icon name="box" size={36} />
         </div>
@@ -71,7 +71,7 @@ export function ProductList({
   // 4. No Match message: Filter/Search returned 0 results
   if (status === 'success' && products.length === 0) {
     return (
-      <div className="product-list-state no-match-state">
+      <div className="state-panel no-match-state">
         <div className="state-icon">
           <Icon name="search" size={36} />
         </div>

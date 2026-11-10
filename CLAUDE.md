@@ -12,10 +12,10 @@
 
 - **`src/features/<name>/`**: One folder per feature (`products`, `cart`, `home`). A feature owns its state (a Provider + `use<Feature>()` hook), its pure `logic.ts`, its `types.ts` and its `components/`. Other code imports a feature only through its `index.ts`.
   - Features never import each other. Cross-feature wiring happens in `src/app/` (e.g. `CatalogCartProvider` passes catalog products to the cart).
-- **`src/shared/`**: Code used by more than one feature: the API client, endpoint paths, the `isOneOf` guard, `formatPrice`, domain types, the `Icon` primitive and global styles. `shared/` never imports from `features/` or `app/`.
+- **`src/shared/`**: Code used by more than one feature: the API client, endpoint paths, Zod schemas for API data, `formatPrice`, domain types, UI primitives (`Icon`, `StatePanel`) and global styles. `shared/` never imports from `features/` or `app/`.
 - **`src/shared/api/client.ts`**: The only place that calls `fetch`. Base URL from `VITE_API_BASE_URL`; paths from `shared/api/endpoints.ts`. Never hardcode a URL in a feature.
-- **`src/app/`**: Composition only: providers, page layout (`Storefront`, `layout/`) and `App.css`. No business state.
-- **Types**: Always import with `import type`. Validate unknown data (API responses, `localStorage`) with the guards in `shared/lib/guards.ts`.
+- **`src/app/`**: Composition only: providers, the router (`router.tsx`), the shared layout (`layout/`), thin lazy-loaded pages (`pages/`) and `App.css`. No business state.
+- **Types**: Always import with `import type`. Validate unknown data (API responses, `localStorage`) with Zod schemas and infer the types from them.
 - **Cart storage**: `localStorage` holds only `[{ id, qty }]`. Prices always come from the product data, and no line is dropped before the catalog has loaded.
 
 ## React Rules & Coding Standards
@@ -24,7 +24,7 @@
 2. **Pure Components**: Presentational components should be stateless or restrict state to purely local UI visual flags (like expanded states). Business state must be hoisted.
 3. **Semantic HTML & Accessibility**: Use appropriate elements (`<header>`, `<main>`, `<section>`, `<aside>`), label all buttons with `aria-label`, and ensure full keyboard navigability.
 4. **Clean Code & Modularity**: Keep components under 150 lines and isolate complex calculation logic into pure helper functions in the feature's `logic.ts`.
-5. **No Escape Hatches in Types**: No `any`, no type assertions (`as`, `<T>x`), no non-null assertions (`!`) and no `as const`. Narrow with type guards instead. Enforced by oxlint and `scripts/check-no-as-const.mjs`.
+5. **No Escape Hatches in Types**: No `any`, no type assertions (`as`, `<T>x`), no non-null assertions (`!`) and no `as const`. Narrow with Zod or type guards instead. Enforced by oxlint and `scripts/check-no-as-const.mjs`.
 
 ---
 

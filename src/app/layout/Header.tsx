@@ -1,66 +1,38 @@
+import { Link, NavLink } from 'react-router'
 import { Icon } from '../../shared/ui/Icon'
 import { BRAND_NAME } from '../../shared/config/brand'
 import { COLLECTIONS } from '../../features/products'
+import { ShopLink } from './ShopLink'
 
 export interface HeaderProps {
   cartCount: number
   onOpenCart: () => void
-  onOpenSearch: () => void
-  onShopAll: () => void
-  onSelectCollection: (collection: string) => void
 }
 
-export function Header({
-  cartCount,
-  onOpenCart,
-  onOpenSearch,
-  onShopAll,
-  onSelectCollection,
-}: HeaderProps) {
+export function Header({ cartCount, onOpenCart }: HeaderProps) {
   return (
     <header className="header">
       <div className="header-inner">
-        <a className="brand" href="#top" aria-label={`${BRAND_NAME} home`}>
+        <NavLink to="/" end className="brand" aria-label={`${BRAND_NAME} home`}>
           <span className="brand-mark">
             <Icon name="circle" size={26} />
           </span>
           <span className="brand-name">{BRAND_NAME}</span>
-        </a>
+        </NavLink>
 
         <nav className="header-nav" aria-label="Main navigation">
-          <button
-            type="button"
-            className="nav-link"
-            onClick={onShopAll}
-            aria-label="Shop all products"
-          >
-            Shop All
-          </button>
+          <ShopLink className="nav-link">Shop All</ShopLink>
           {COLLECTIONS.map(({ name }) => (
-            <button
-              key={name}
-              type="button"
-              className="nav-link"
-              onClick={() => onSelectCollection(name)}
-              aria-label={`Shop ${name}`}
-            >
+            <ShopLink key={name} category={name} className="nav-link">
               {name}
-            </button>
+            </ShopLink>
           ))}
-          <a className="nav-link" href="#story">
-            Our Story
-          </a>
         </nav>
 
         <div className="header-actions">
-          <button
-            type="button"
-            className="icon-btn"
-            onClick={onOpenSearch}
-            aria-label="Search products"
-          >
+          <Link to="/shop" className="icon-btn" aria-label="Search products">
             <Icon name="search" />
-          </button>
+          </Link>
           <button
             type="button"
             className="icon-btn"

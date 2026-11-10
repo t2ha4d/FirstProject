@@ -1,7 +1,6 @@
 import { Icon } from '../../../shared/ui/Icon'
-import { SORT_OPTIONS, isSortOption } from '../logic'
+import { SORT_OPTIONS, toSortOption } from '../logic'
 import type { FilterState, SortOption } from '../types'
-import { SEARCH_INPUT_ID } from '../useShopNavigation'
 
 export interface SearchAndFilterProps {
   categories: string[]
@@ -30,7 +29,7 @@ export function SearchAndFilter({
       <div className="search-filter-grid">
         {/* Search input */}
         <div className="filter-group search-group">
-          <label htmlFor={SEARCH_INPUT_ID} className="filter-label">
+          <label htmlFor="search-input" className="filter-label">
             Search Products
           </label>
           <div className="search-input-wrapper">
@@ -38,7 +37,7 @@ export function SearchAndFilter({
               <Icon name="search" size={18} />
             </span>
             <input
-              id={SEARCH_INPUT_ID}
+              id="search-input"
               type="search"
               className="search-input"
               placeholder="Search by name or category..."
@@ -87,10 +86,7 @@ export function SearchAndFilter({
             id="sort-select"
             className="filter-select"
             value={filters.sortBy}
-            onChange={(e) => {
-              const { value } = e.target
-              if (isSortOption(value)) onSortChange(value)
-            }}
+            onChange={(e) => onSortChange(toSortOption(e.target.value))}
           >
             {SORT_OPTIONS.map(({ value, label }) => (
               <option key={value} value={value}>

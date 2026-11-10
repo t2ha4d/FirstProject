@@ -1,5 +1,5 @@
-import { isOneOf } from '../../shared/lib/guards'
 import type { Product } from '../../shared/types'
+import { sortOptionSchema } from './schemas'
 import type { FilterState, SortOption } from './types'
 
 export const INITIAL_FILTERS: FilterState = {
@@ -8,7 +8,7 @@ export const INITIAL_FILTERS: FilterState = {
   sortBy: 'default',
 }
 
-/** Sort choices in display order; the single source for the select and the guard. */
+/** Sort choices in display order, for the sort select. */
 export const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: 'default', label: 'Featured' },
   { value: 'price-asc', label: 'Price: Low to High' },
@@ -16,11 +16,36 @@ export const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: 'name-asc', label: 'Alphabetical (A - Z)' },
 ]
 
-const SORT_VALUES = SORT_OPTIONS.map((option) => option.value)
+/** Reads a sort value from the URL or a select; anything unknown falls back to 'default'. */
+export function toSortOption(value: string | null): SortOption {
+  const result = sortOptionSchema.safeParse(value)
+  return result.success ? result.data : 'default'
+}
 
-/** Narrows a raw <select> value to a SortOption without a type assertion. */
-export function isSortOption(value: string): value is SortOption {
-  return isOneOf(value, SORT_VALUES)
+/** Reads the shop filters from the URL search params (`q`, `category`, `sort`). */
+export function readFilters(params: URLSearchParams): FilterState {
+  return {
+    searchQuery: params.get('q') ?? '',
+    selectedCategory: params.get('category') ?? INITIAL_FILTERS.selectedCategory,
+    sortBy: toSortOption(params.get('sort')),
+  }
+}
+
+/** Writes filters back to search params, leaving out values that equal the defaults. */
+export function writeFilters(filters: FilterState): URLSearchParams {
+  const params = new URLSearchParams()
+  if (filters.searchQuery) params.set('q', filters.searchQuery)
+  if (filters.selectedCategory !== INITIAL_FILTERS.selectedCategory) {
+    params.set('category', filters.selectedCategory)
+  }
+  if (filters.sortBy !== INITIAL_FILTERS.sortBy) params.set('sort', filters.sortBy)
+  return params
+}
+
+/** The shop URL, optionally filtered to one collection. */
+export function shopUrl(category?: string): string {
+  const search = writeFilters({ ...INITIAL_FILTERS, selectedCategory: category ?? 'all' })
+  return search.size > 0 ? `/shop?${search}` : '/shop'
 }
 
 /**

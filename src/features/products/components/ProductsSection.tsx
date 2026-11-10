@@ -1,6 +1,14 @@
+import { useSearchParams } from 'react-router'
 import type { Product } from '../../../shared/types'
 import { useCatalog } from '../CatalogContext'
-import { SHOP_SECTION_ID } from '../useShopNavigation'
+import {
+  INITIAL_FILTERS,
+  applyFilters,
+  getUniqueCategories,
+  readFilters,
+  writeFilters,
+} from '../logic'
+import type { FilterState } from '../types'
 import { ProductList } from './ProductList'
 import { SearchAndFilter } from './SearchAndFilter'
 
@@ -8,32 +16,48 @@ export interface ProductsSectionProps {
   onAddToCart: (product: Product) => void
 }
 
-/** The shop section: filters plus the product grid, wired to the catalog state. */
+/** The shop: filters kept in the URL search params, plus the filtered product grid. */
 export function ProductsSection({ onAddToCart }: ProductsSectionProps) {
   const catalog = useCatalog()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const filters = readFilters(searchParams)
+  const filteredProducts = applyFilters(catalog.products, filters)
+
+  function updateFilters(change: Partial<FilterState>, replace = false) {
+    setSearchParams(writeFilters({ ...filters, ...change }), { replace })
+  }
+
+  function resetFilters() {
+    setSearchParams(writeFilters(INITIAL_FILTERS))
+  }
+
+  const title =
+    filters.selectedCategory === INITIAL_FILTERS.selectedCategory
+      ? 'All Products'
+      : filters.selectedCategory
 
   return (
-    <section id={SHOP_SECTION_ID} className="section" aria-labelledby="shop-title">
-      <h2 id="shop-title" className="section-title section-title-left">
-        Featured Pieces
-      </h2>
+    <section className="section" aria-labelledby="shop-title">
+      <h1 id="shop-title" className="section-title section-title-left">
+        {title}
+      </h1>
       <SearchAndFilter
-        categories={catalog.categories}
-        filters={catalog.filters}
-        onSearchChange={catalog.setSearchQuery}
-        onCategoryChange={catalog.setCategory}
-        onSortChange={catalog.setSortBy}
-        onResetFilters={catalog.resetFilters}
-        totalResults={catalog.filteredProducts.length}
+        categories={getUniqueCategories(catalog.products)}
+        filters={filters}
+        onSearchChange={(searchQuery) => updateFilters({ searchQuery }, true)}
+        onCategoryChange={(selectedCategory) => updateFilters({ selectedCategory })}
+        onSortChange={(sortBy) => updateFilters({ sortBy })}
+        onResetFilters={resetFilters}
+        totalResults={filteredProducts.length}
       />
       <ProductList
-        products={catalog.filteredProducts}
+        products={filteredProducts}
         status={catalog.status}
         errorMessage={catalog.errorMessage}
         totalCatalogCount={catalog.products.length}
         onRetry={catalog.reload}
         onAddToCart={onAddToCart}
-        onResetFilters={catalog.resetFilters}
+        onResetFilters={resetFilters}
       />
     </section>
   )

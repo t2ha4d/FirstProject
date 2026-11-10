@@ -1,11 +1,8 @@
+import { Link } from 'react-router'
 import { Sprig } from './Sprig'
 import { HeroWatch } from './HeroWatch'
 
-export interface HeroProps {
-  onShopAll: () => void
-}
-
-export function Hero({ onShopAll }: HeroProps) {
+export function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="hero-copy">
@@ -19,14 +16,9 @@ export function Hero({ onShopAll }: HeroProps) {
           Thoughtfully designed bags, shoes and accessories in honest materials, made for your
           everyday.
         </p>
-        <button
-          type="button"
-          className="btn btn-clay"
-          onClick={onShopAll}
-          aria-label="Shop the collection"
-        >
+        <Link to="/shop" className="btn btn-clay">
           Shop the Collection
-        </button>
+        </Link>
       </div>
 
       <div className="hero-scene" aria-hidden="true">

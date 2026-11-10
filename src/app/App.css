@@ -48,6 +48,7 @@
 }
 
 .btn {
+  display: inline-block;
   border: 0;
   border-radius: 2px;
   padding: 0.8rem 1.6rem;
@@ -56,6 +57,7 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #fff;
+  text-decoration: none;
   transition: background-color 0.2s ease;
 }
 
@@ -161,7 +163,8 @@
   transition: border-color 0.2s ease;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link[aria-current='page'] {
   border-bottom-color: var(--clay);
 }
 
@@ -277,6 +280,7 @@
 }
 
 .collection-tile {
+  display: block;
   position: relative;
   aspect-ratio: 5 / 2;
   padding: 0;
@@ -284,6 +288,7 @@
   border: 0;
   border-radius: 6px;
   background: linear-gradient(160deg, #b69d81, #7d6450);
+  text-decoration: none;
 }
 
 .collection-tile:nth-child(even) {
@@ -509,8 +514,8 @@
   cursor: not-allowed;
 }
 
-/* List states */
-.product-list-state {
+/* State panels: loading, error, empty and not-found messages */
+.state-panel {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -539,6 +544,7 @@
 }
 
 .retry-btn {
+  display: inline-block;
   border: 0;
   border-radius: 2px;
   padding: 0.65rem 1.25rem;
@@ -547,6 +553,21 @@
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  text-decoration: none;
+}
+
+.state-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.page-loading {
+  margin: 0;
+  padding: 3rem 0;
+  text-align: center;
+  color: var(--muted);
 }
 
 .spinner {
@@ -608,6 +629,7 @@
 
 .text-link {
   display: inline-flex;
+  text-decoration: none;
   align-items: center;
   gap: 0.5rem;
   border: 0;

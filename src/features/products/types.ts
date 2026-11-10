@@ -1,6 +1,8 @@
+import type { z } from 'zod'
 import type { IconName } from '../../shared/ui/Icon'
+import type { sortOptionSchema } from './schemas'
 
-export type SortOption = 'default' | 'price-asc' | 'price-desc' | 'name-asc'
+export type SortOption = z.infer<typeof sortOptionSchema>
 
 export interface FilterState {
   searchQuery: string
