@@ -1,229 +1,183 @@
-# WTC — React + TypeScript Watch Store
+# WTC — React + TypeScript Store
 
-A watch storefront built with **React 19**, **TypeScript** and **Vite**, organised by feature:
-each feature owns its state, `shared/` holds code used by more than one feature, and `app/`
-composes them into the page.
+A multi-page store for bags, shoes and accessories, built with **React 19**, **TypeScript**,
+**Vite** and **React Router**. Products come from the
+[ShopBoard API](https://shopboard-api.vercel.app); the bag is saved in `localStorage`. The code is
+organised by feature: each feature owns its state, `shared/` holds code used by more than one
+feature, and `app/` composes them into pages.
 
 ---
 
-## 🏗️ React DevTools Component Tree
+## 🚀 Getting Started
 
-The hierarchy as it appears in the **React DevTools Components tab** (context providers such
-as `CatalogContext` and `CartContext` also show up between the provider components and their
-children). State lives in the two feature providers; everything below them is presentational
-or reads a provider through a hook.
-
-```text
-<App>                                  [src/app/App.tsx]
- │  Props: none · State: none
- │
- └── <CatalogProvider>                 [src/features/products/CatalogProvider.tsx]
-      │  Props: children
-      │  State Owned:
-      │    • products: Product[]
-      │    • status: ApiStatus ('idle' | 'loading' | 'error' | 'success')
-      │    • errorMessage: string
-      │    • reloadCount: number (bumped by "Try again" to refetch)
-      │    • filters: FilterState ({ searchQuery, selectedCategory, sortBy })
-      │
-      └── <CatalogCartProvider>        [src/app/CatalogCartProvider.tsx]
-           │  Props: children · State: none
-           │  Reads useCatalog() and passes products to the cart, so neither feature imports the other.
-           │
-           └── <CartProvider>          [src/features/cart/CartProvider.tsx]
-                │  Props: products, isCatalogReady, children
-                │  State Owned:
-                │    • lines: CartLine[] ({ id, qty }, persisted to localStorage)
-                │    • isOpen: boolean (drawer visibility)
-                │
-                └── <Storefront>       [src/app/Storefront.tsx]
-                     │  Props: none · State: none
-                     │  Reads useShopNavigation() and useCart().
-                     │
-                     ├── <AnnouncementBar>     [src/app/layout/AnnouncementBar.tsx]
-                     │     Props: messages
-                     │
-                     ├── <Header>              [src/app/layout/Header.tsx]
-                     │     Props: cartCount, onOpenCart, onOpenSearch, onShopAll, onSelectCollection
-                     │     └── <Icon>
-                     │
-                     ├── <Hero>                [src/features/home/components/Hero.tsx]
-                     │     Props: onShopAll
-                     │     ├── <Sprig>
-                     │     └── <WatchIllustration>
-                     │
-                     ├── <CollectionGrid>      [src/features/products/components/CollectionGrid.tsx]
-                     │     Props: onSelectCollection
-                     │     ├── <WatchIllustration>   (one per collection, key=name)
-                     │     └── <Icon>
-                     │
-                     ├── <ProductsSection>     [src/features/products/components/ProductsSection.tsx]
-                     │    │  Props: onAddToCart · Reads useCatalog()
-                     │    │
-                     │    ├── <SearchAndFilter>     [.../products/components/SearchAndFilter.tsx]
-                     │    │     Props: categories, filters, totalResults, onSearchChange,
-                     │    │            onCategoryChange, onSortChange, onResetFilters
-                     │    │     └── <Icon>
-                     │    │
-                     │    └── <ProductList>         [.../products/components/ProductList.tsx]
-                     │         │  Props: products, status, errorMessage?, totalCatalogCount,
-                     │         │         onRetry, onAddToCart, onResetFilters
-                     │         │
-                     │         └── <ProductCard>    [.../products/components/ProductCard.tsx]
-                     │               (one per product, key=product.id)
-                     │               Props: product, onAddToCart
-                     │               State Owned: isSaved: boolean (local favourite toggle)
-                     │               ├── <WatchIllustration>
-                     │               └── <Icon>
-                     │
-                     ├── <CraftSection>        [src/features/home/components/CraftSection.tsx]
-                     │     Props: onShopAll
-                     │     ├── <MovementIllustration>
-                     │     └── <Icon>
-                     │
-                     ├── <Lookbook>            [src/features/home/components/Lookbook.tsx]
-                     │     Props: onShopAll
-                     │     └── <WatchIllustration>   (one per tile, key=id)
-                     │
-                     ├── <Testimonials>        [src/features/home/components/Testimonials.tsx]
-                     │     Props: testimonials
-                     │
-                     ├── <Newsletter>          [src/features/home/components/Newsletter.tsx]
-                     │     Props: onSubscribe? (not passed yet)
-                     │     State Owned: email: string, isSubmitted: boolean
-                     │
-                     ├── <Footer>              [src/app/layout/Footer.tsx]
-                     │     Props: onShopAll, onSelectCollection
-                     │     ├── <Icon>
-                     │     └── <WatchIllustration>
-                     │
-                     └── <CartPanel>           [src/features/cart/components/CartPanel.tsx]
-                          │  Props: ariaLabel? · Reads useCart()
-                          │
-                          └── <CartDrawer>     [src/features/cart/components/CartDrawer.tsx]
-                               │  Props: isOpen, isResolving, ariaLabel, items, subtotalFormatted,
-                               │         totalCount, onClose, onIncrement, onDecrement, onRemove, onClear
-                               │  Escape key handled in useEffect · renders nothing while closed
-                               │
-                               └── <CartItem>  [src/features/cart/components/CartItem.tsx]
-                                     (one per entry, key=item.product.id)
-                                     Props: item, onIncrement, onDecrement, onRemove
+```bash
+npm install            # also installs the pre-commit hook
+cp .env.example .env   # optional: pick another API base URL (see "Testing the UI states")
+npm run dev            # http://localhost:5173
 ```
 
-Every `<WatchIllustration>` ([src/shared/ui/WatchIllustration.tsx](src/shared/ui/WatchIllustration.tsx), props: `design`, `label?`, `className?`) renders the same four parts from `src/shared/ui/watch/`:
+| Command                | What it does                             |
+| :--------------------- | :--------------------------------------- |
+| `npm run dev`          | Start the Vite dev server                |
+| `npm run typecheck`    | TypeScript check (`tsc -b`)              |
+| `npm run lint`         | oxlint plus the `as const` check         |
+| `npm run format`       | Format everything with Prettier          |
+| `npm run format:check` | Verify formatting (`prettier --check .`) |
+| `npm run build`        | Type-check and build for production      |
+| `npm run preview`      | Serve the production build               |
+
+The pre-commit hook runs `typecheck`, `lint`, `format:check` and `build`, and blocks the commit if
+any of them fails.
+
+---
+
+## 🗺️ Routes
+
+Every page is lazy loaded, so its code downloads the first time the page is opened.
+
+| Path                  | Page                    | What it shows                                                               |
+| :-------------------- | :---------------------- | :-------------------------------------------------------------------------- |
+| `/`                   | `HomePage`              | Hero, collections, craft story, testimonials, newsletter                    |
+| `/shop`               | `ShopPage`              | Catalog with search, collection and sort in the URL (`?q=&category=&sort=`) |
+| `/products/:id`       | `ProductPage`           | One product loaded by id; invalid or unknown ids show "Product not found"   |
+| `/cart`               | `CartPage`              | The bag with quantity controls and totals                                   |
+| `/checkout`           | `CheckoutPage`          | Shipping form next to the order summary                                     |
+| `/order-confirmation` | `OrderConfirmationPage` | The order just placed, or "No recent order" when opened directly            |
+| `*`                   | `NotFoundPage`          | Page not found                                                              |
+
+---
+
+## 🧪 Testing the UI States
+
+The API can pretend to be slow, broken or empty. Set `VITE_API_BASE_URL` in `.env` (the four values
+are also in `.env.example`) and restart `npm run dev`:
+
+| State   | `VITE_API_BASE_URL`                               | What you should see                                                                                                     |
+| :------ | :------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------- |
+| Normal  | `https://shopboard-api.vercel.app/api`            | 12 products; product pages, bag and checkout priced                                                                     |
+| Loading | `https://shopboard-api.vercel.app/delay/3000/api` | Skeletons shaped like the shop grid, product page, bag lines and order summary for 3 seconds; header and footer at once |
+| Error   | `https://shopboard-api.vercel.app/fail/500/api`   | Each data region (shop, product, bag, drawer, order summary) shows its own error with **Try again**; navigation works   |
+| Empty   | `https://shopboard-api.vercel.app/empty/api`      | Shop: "No products available". Bag: saved items "not available right now". Product pages still load by id               |
+
+Other things to try:
+
+- **No search matches:** `/shop?q=zzz` shows a "Clear all filters" button.
+- **Empty bag:** `/cart` and `/checkout` with nothing saved show a link to the shop.
+- **Not found:** `/products/99999`, `/products/abc` and any unknown URL.
+- **Saved bag survives errors:** add items, switch to the `/fail` or `/empty` URL and back; the bag is
+  unchanged, because only the customer's own actions change it.
+
+---
+
+## 🏗️ Component Tree
+
+As it appears in React DevTools (context providers and router internals left out).
 
 ```text
-<WatchIllustration>
- ├── <WatchStrap>   Props: color, strapStyle
- ├── <WatchCase>    Props: metalFill, bezelColor?
- ├── <WatchDial>    Props: design, shadingFill
- └── <WatchHands>   Props: dialRadius, handColor, accentColor
+<App>                                     app/App.tsx
+└── <CartProvider>                        features/cart/CartProvider.tsx
+    │   State: lines [{ id, qty }] (saved to localStorage), isOpen
+    └── <RouterProvider>
+        └── <RootLayout>                  app/layout/RootLayout.tsx
+            │   Provides AddToCartContext (the cart's addItem) to the products feature
+            ├── <AnnouncementBar>
+            ├── <Header>                  reads useCart() for the bag count
+            │   └── <ShopLink> ×4         aria-current on the shown collection
+            ├── <main> <Suspense> <Outlet>      ← the current page, lazy loaded
+            ├── <Footer>
+            │   └── <ShopLink> ×4, <NavLink> ×2
+            └── <CartPanel>               reads useCart(); Escape closes it
+                └── <CartView>
+                    ├── <EmptyCart>                         when no lines are saved
+                    └── <AsyncBoundary>                     skeleton / "Try again"
+                        └── <PricedCart>                    usePricedCart() → use(loadProducts())
+                            └── <CartItem> ×n               key = product.id
+
+Pages (app/pages/):
+<HomePage>
+├── <Hero> → <Sprig>, <HeroWatch>
+├── <CollectionGrid>                      links to /shop?category=…
+├── <CraftSection>
+├── <Testimonials>
+└── <Newsletter>                          State: email, isSubmitted
+
+<ShopPage> → <ProductsSection>            useShopFilters() (URL search params)
+             └── <AsyncBoundary>          <ShopSkeleton> / "Try again"
+                 └── <ShopCatalog>        use(loadProducts()); filtered list calculated in render
+                     ├── <SearchAndFilter>
+                     └── <ProductList>    empty / no-match states, or the grid
+                         └── <ProductCard> ×n   key = product.id; State: isSaved; useAddToCart()
+
+<ProductPage> → <ProductDetails>          parses :id with Zod
+                ├── <ProductNotFound>     invalid id (no request)
+                └── <AsyncBoundary key={id}>   <ProductDetailsSkeleton> / "Try again"
+                    └── <ProductInfo>     use(loadProduct(id)); null → <ProductNotFound>
+
+<CartPage> → <CartView>                   same component as in the drawer
+
+<CheckoutPage> → <OrderSummary>
+                 ├── <StatePanel>         empty bag
+                 └── <AsyncBoundary>      <OrderSummarySkeleton> / "Try again"
+                     └── <PricedSummary>
+                         └── <PlaceOrderForm>         usePlaceOrder()
+                             └── <CheckoutForm>       useForm + zodResolver; shadcn Label/Input/Button
+
+<OrderConfirmationPage> → <OrderConfirmation>   reads the order from router state (Zod-validated)
+<NotFoundPage> → <StatePanel>
 ```
 
 ---
 
-## 📋 Component Summary Table
-
-| Component              | Source File                                             | Props Interface             | State Owned                                                    |
-| :--------------------- | :------------------------------------------------------ | :-------------------------- | :------------------------------------------------------------- |
-| `App`                  | `src/app/App.tsx`                                       | none (root)                 | _None_                                                         |
-| `CatalogCartProvider`  | `src/app/CatalogCartProvider.tsx`                       | `CatalogCartProviderProps`  | _None_                                                         |
-| `Storefront`           | `src/app/Storefront.tsx`                                | none                        | _None_                                                         |
-| `AnnouncementBar`      | `src/app/layout/AnnouncementBar.tsx`                    | `AnnouncementBarProps`      | _None_                                                         |
-| `Header`               | `src/app/layout/Header.tsx`                             | `HeaderProps`               | _None_                                                         |
-| `Footer`               | `src/app/layout/Footer.tsx`                             | `FooterProps`               | _None_                                                         |
-| `CatalogProvider`      | `src/features/products/CatalogProvider.tsx`             | `CatalogProviderProps`      | `products`, `status`, `errorMessage`, `reloadCount`, `filters` |
-| `ProductsSection`      | `src/features/products/components/ProductsSection.tsx`  | `ProductsSectionProps`      | _None_ (reads `useCatalog`)                                    |
-| `SearchAndFilter`      | `src/features/products/components/SearchAndFilter.tsx`  | `SearchAndFilterProps`      | _None_                                                         |
-| `ProductList`          | `src/features/products/components/ProductList.tsx`      | `ProductListProps`          | _None_                                                         |
-| `ProductCard`          | `src/features/products/components/ProductCard.tsx`      | `ProductCardProps`          | `isSaved`                                                      |
-| `CollectionGrid`       | `src/features/products/components/CollectionGrid.tsx`   | `CollectionGridProps`       | _None_                                                         |
-| `CartProvider`         | `src/features/cart/CartProvider.tsx`                    | `CartProviderProps`         | `lines`, `isOpen`                                              |
-| `CartPanel`            | `src/features/cart/components/CartPanel.tsx`            | `CartPanelProps`            | _None_ (reads `useCart`)                                       |
-| `CartDrawer`           | `src/features/cart/components/CartDrawer.tsx`           | `CartDrawerProps`           | _None_                                                         |
-| `CartItem`             | `src/features/cart/components/CartItem.tsx`             | `CartItemProps`             | _None_                                                         |
-| `Hero`                 | `src/features/home/components/Hero.tsx`                 | `HeroProps`                 | _None_                                                         |
-| `CraftSection`         | `src/features/home/components/CraftSection.tsx`         | `CraftSectionProps`         | _None_                                                         |
-| `MovementIllustration` | `src/features/home/components/MovementIllustration.tsx` | `MovementIllustrationProps` | _None_                                                         |
-| `Sprig`                | `src/features/home/components/Sprig.tsx`                | `SprigProps`                | _None_                                                         |
-| `Lookbook`             | `src/features/home/components/Lookbook.tsx`             | `LookbookProps`             | _None_                                                         |
-| `Testimonials`         | `src/features/home/components/Testimonials.tsx`         | `TestimonialsProps`         | _None_                                                         |
-| `Newsletter`           | `src/features/home/components/Newsletter.tsx`           | `NewsletterProps`           | `email`, `isSubmitted`                                         |
-| `Icon`                 | `src/shared/ui/Icon.tsx`                                | `IconProps`                 | _None_                                                         |
-| `WatchIllustration`    | `src/shared/ui/WatchIllustration.tsx`                   | `WatchIllustrationProps`    | _None_                                                         |
-| `WatchStrap`           | `src/shared/ui/watch/WatchStrap.tsx`                    | `WatchStrapProps`           | _None_                                                         |
-| `WatchCase`            | `src/shared/ui/watch/WatchCase.tsx`                     | `WatchCaseProps`            | _None_                                                         |
-| `WatchDial`            | `src/shared/ui/watch/WatchDial.tsx`                     | `WatchDialProps`            | _None_                                                         |
-| `WatchHands`           | `src/shared/ui/watch/WatchHands.tsx`                    | `WatchHandsProps`           | _None_                                                         |
-
----
-
-## 🛠️ Project Structure & Architecture
+## 🛠️ Project Structure
 
 ```text
 shopboard-react/
-├── .claude/skills/
-│   ├── vercel-react-best-practices/    # Installed skill (vercel-labs/agent-skills)
-│   └── vercel-composition-patterns/    # Installed skill (vercel-labs/agent-skills)
-├── .husky/pre-commit                   # Runs lint-staged
-├── public/
-│   └── favicon.svg
-├── scripts/
-│   └── check-no-as-const.mjs           # Rejects `as const` (oxlint allows it)
+├── .claude/skills/                     # Vercel agent skills (see below)
+├── .husky/pre-commit                   # typecheck, lint, format:check, build
+├── public/favicon.svg
+├── scripts/check-no-as-const.mjs       # Rejects `as const` (oxlint allows it)
 ├── src/
-│   ├── main.tsx                        # Entry point
-│   ├── vite-env.d.ts                   # Typed import.meta.env (VITE_API_BASE_URL)
-│   ├── app/                            # Composition only: providers, page layout, styles
-│   │   ├── App.tsx
-│   │   ├── App.css
-│   │   ├── CatalogCartProvider.tsx     # Feeds catalog products into the cart
-│   │   ├── Storefront.tsx              # Page sections in order
-│   │   └── layout/                     # AnnouncementBar, Header, Footer
+│   ├── main.tsx                        # createRoot, global CSS, onCaughtError
+│   ├── vite-env.d.ts                   # Typed VITE_API_BASE_URL
+│   ├── app/                            # Composition only
+│   │   ├── App.tsx / App.css           # Providers + router / the site's styles
+│   │   ├── router.tsx                  # Route table
+│   │   ├── layout/                     # RootLayout, Header, Footer, AnnouncementBar, ShopLink
+│   │   └── pages/                      # One thin page per route; index.ts lazy-loads them
 │   ├── features/
-│   │   ├── products/                   # Catalog loading, filters, product grid
-│   │   │   ├── index.ts                # Public API of the feature
-│   │   │   ├── api.ts                  # fetchProducts + response validation
-│   │   │   ├── CatalogContext.ts       # Context + useCatalog()
-│   │   │   ├── CatalogProvider.tsx     # Owns catalog + filter state
-│   │   │   ├── useShopNavigation.ts    # Filter-and-scroll actions for nav links
-│   │   │   ├── collections.ts          # Collection names, icons, designs
-│   │   │   ├── logic.ts                # Pure search / filter / sort helpers
-│   │   │   ├── types.ts
-│   │   │   └── components/             # ProductsSection, SearchAndFilter, ProductList,
-│   │   │                               # ProductCard, CollectionGrid
-│   │   ├── cart/                       # Bag state, storage and drawer
-│   │   │   ├── index.ts
-│   │   │   ├── CartContext.ts          # Context + useCart()
-│   │   │   ├── CartProvider.tsx        # Owns { id, qty } lines + drawer state
-│   │   │   ├── storage.ts              # localStorage load/save, validated with Zod
-│   │   │   ├── logic.ts                # Pure line reducers, pricing, totals
-│   │   │   ├── types.ts
-│   │   │   └── components/             # CartPanel, CartDrawer, CartItem
-│   │   └── home/                       # Marketing sections
-│   │       ├── index.ts
-│   │       ├── content.ts              # Copy, lookbook tiles, testimonials
-│   │       ├── types.ts
-│   │       └── components/             # Hero, CraftSection, Lookbook, Testimonials,
-│   │                                   # Newsletter, MovementIllustration, Sprig
-│   └── shared/                         # Used by more than one feature
-│       ├── api/client.ts               # apiGet + ApiError; the only place that calls fetch
-│       ├── api/endpoints.ts            # Endpoint paths (no URLs in features)
+│   │   ├── products/                   # Shop, filters (URL), product page, AddToCartContext
+│   │   │   ├── components/             # ProductsSection, ShopCatalog, SearchAndFilter, ProductList,
+│   │   │   │                           # ProductCard, ProductDetails, ProductInfo, ProductNotFound,
+│   │   │   │                           # CollectionGrid, Skeletons
+│   │   │   ├── useShopFilters.ts       # Filters read from / written to the URL
+│   │   │   ├── logic.ts                # Pure search, filter, sort and URL helpers
+│   │   │   ├── schemas.ts / types.ts   # Sort and product-id schemas, inferred types
+│   │   │   └── collections.ts          # Bags, Shoes, Accessories and their icons
+│   │   ├── cart/                       # The bag
+│   │   │   ├── CartProvider.tsx        # Single owner of { id, qty } lines and the drawer
+│   │   │   ├── usePricedCart.ts        # Lines joined with the catalog (prices, totals)
+│   │   │   ├── usePlaceOrder.ts        # Order snapshot → confirmation page → clear the bag
+│   │   │   ├── storage.ts / schemas.ts # localStorage load/save, validated with Zod
+│   │   │   └── components/             # CartPanel, CartView, PricedCart, CartItem, EmptyCart,
+│   │   │                               # OrderSummary, OrderConfirmation, CartBoundary, Skeletons
+│   │   ├── checkout/                   # CheckoutForm, schema.ts (every rule), fields.ts
+│   │   └── home/                       # Hero, HeroWatch, CraftSection, Testimonials, Newsletter
+│   └── shared/
+│       ├── api/                        # client (only fetch), endpoints, schemas, cache, products
 │       ├── config/brand.ts             # BRAND_NAME
 │       ├── lib/format.ts               # formatPrice
-│       ├── lib/guards.ts               # Runtime type guards (no type assertions)
-│       ├── styles/global.css           # Theme tokens and base styles
-│       ├── types.ts                    # Product, WatchDesign, ApiStatus
-│       └── ui/                         # Icon, WatchIllustration, watch/*, watchDesigns.ts
-├── .env.example                        # VITE_API_BASE_URL plus the delay/fail/empty test URLs
-├── .prettierrc.json / .prettierignore
-├── .oxlintrc.json
-├── CLAUDE.md                           # Development guidelines
+│       ├── styles/                     # global.css (tokens, base layer), tailwind.css
+│       ├── types.ts                    # Product (inferred from its schema)
+│       └── ui/                         # Icon, StatePanel, AsyncBoundary, shadcn button/input/label
+├── .env.example                        # API base URL plus the delay/fail/empty test URLs
+├── components.json                     # shadcn/ui CLI config (writes to src/shared/ui)
+├── CLAUDE.md                           # Development guidelines and rules
 ├── debug-lab-log.md                    # Analysis of the Debug Lab bugs
-└── package.json
+└── vite.config.ts / tsconfig*.json / .oxlintrc.json / .prettierrc.json
 ```
 
-**Import rules:** features import from `shared/` and never from each other; `app/` imports
-features only through their `index.ts`; `shared/` imports nothing from `features/` or `app/`.
+**Import rules:** features import from `shared/` and never from each other; `app/` imports features
+only through their `index.ts`; `shared/` imports nothing from `features/` or `app/`.
 
 **Agent skills:** `.claude/skills/vercel-react-best-practices` and
 `.claude/skills/vercel-composition-patterns` are copied unmodified from
@@ -233,52 +187,22 @@ features only through their `index.ts`; `shared/` imports nothing from `features
 The repository was cloned as plain files instead, reviewed (Markdown only, no scripts), and copied.
 The committed folders have the same git tree hashes as upstream.
 
-**Catalog source:** the ShopBoard API (`https://shopboard-api.vercel.app/api/products`). It sells
-bags, shoes and accessories, so product cards show a category icon instead of a drawn watch.
-
 ---
 
-## ⚡ Key Features
+## ⚡ How It Works
 
-1. **Catalog over a real request**
-   - Fetches the catalog from the ShopBoard API and validates every response with Zod.
-   - All requests go through `shared/api/client.ts`. The base URL comes from `VITE_API_BASE_URL` (default `https://shopboard-api.vercel.app/api`).
-   - Handles **Loading**, **Error** (with a "Try again" button), **Empty**, and **Success** states.
-
-2. **Pure data transformation**
-   - Search, collection filter and immutable sorting live in `features/products/logic.ts`.
-   - Cart reducers and totals live in `features/cart/logic.ts`.
-
-3. **Persistent cart that stores no prices**
-   - `localStorage` (`wtc_cart_items_v1`) holds only `[{ id, qty }]`. Prices, titles and stock always come from the catalog.
-   - Saved lines that do not match `{ id, qty }` are skipped on load.
-   - No line is dropped before the catalog has loaded. Unknown products are pruned only after a successful load.
-
-4. **Type safety**
-   - `strict` TypeScript, `import type` for all types.
-   - No `any`, no type assertions (`as`), no non-null assertions (`!`) and no `as const`. oxlint and `scripts/check-no-as-const.mjs` enforce this in `npm run lint` and the pre-commit hook.
-
-5. **Accessibility & responsive design**
-   - Labelled buttons and dialogs (`aria-label`, `aria-pressed`, `aria-modal`); `Escape` closes the bag.
-   - Responsive from 320px phones to desktop.
-
----
-
-## 🚀 Getting Started
-
-```bash
-npm install            # also installs the husky pre-commit hook
-cp .env.example .env   # optional: change VITE_API_BASE_URL
-npm run dev
-```
-
-| Command                | What it does                                   |
-| :--------------------- | :--------------------------------------------- |
-| `npm run dev`          | Start the Vite dev server                      |
-| `npm run build`        | Type-check (`tsc -b`) and build for production |
-| `npm run lint`         | oxlint plus the `as const` check               |
-| `npm run format`       | Format everything with Prettier                |
-| `npm run format:check` | Verify formatting (`prettier --check .`)       |
-| `npm run preview`      | Preview the production build                   |
-
-The pre-commit hook runs oxlint, the `as const` check and Prettier on staged files.
+1. **Data loading with Suspense.** Components read the API with React 19 `use()` from a small promise
+   cache (`shared/api/products.ts`). Every data region has its own `AsyncBoundary`: a skeleton while
+   loading and an error boundary whose **Try again** clears the failed request and refetches. All
+   responses are validated with Zod.
+2. **One owner per piece of state.** The bag lines live in `CartProvider`; shop filters live in the
+   URL; prices, totals and filtered lists are calculated during render, never stored.
+3. **A bag that stores no prices.** `localStorage` (`wtc_cart_items_v1`) holds only `[{ id, qty }]`.
+   Lines whose product the API does not have right now are hidden and explained, never deleted.
+4. **Checkout.** react-hook-form with one Zod schema; labels, autocomplete, linked error messages and
+   focus on the first invalid field. There is no order endpoint: placing an order shows the
+   confirmation with the order in router state and empties the bag.
+5. **Type safety.** Strict TypeScript; no `any`, type assertions, non-null assertions or `as const`
+   (enforced by oxlint and `scripts/check-no-as-const.mjs`).
+6. **Styling.** The site is plain CSS. Tailwind is loaded without its reset and in cascade layers,
+   only for the shadcn/ui components and the checkout form, so it does not change the rest of the site.

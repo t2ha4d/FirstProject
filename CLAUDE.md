@@ -32,8 +32,10 @@ src/
 │   └── home/             # Marketing sections
 └── shared/               # Used by more than one feature; never imports features/ or app/
     ├── api/              # client (the only fetch), endpoints, schemas, promise cache, products
+    ├── config/brand.ts   # BRAND_NAME
     ├── lib/              # formatPrice
     ├── styles/           # global.css (tokens, base layer), tailwind.css
+    ├── types.ts          # Product, inferred from its schema
     └── ui/               # Icon, StatePanel, AsyncBoundary, shadcn button/input/label
 ```
 
