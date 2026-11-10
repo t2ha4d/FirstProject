@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Jost } from 'next/font/google'
 import type { ReactNode } from 'react'
 import { CartPanel, CartProvider } from '../features/cart'
 import { ANNOUNCEMENTS } from '../features/home'
@@ -10,13 +9,6 @@ import { AddToCartBridge } from './layout/AddToCartBridge'
 import { AnnouncementBar } from './layout/AnnouncementBar'
 import { Footer } from './layout/Footer'
 import { Header } from './layout/Header'
-
-const serif = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['500', '600'],
-  variable: '--font-serif',
-})
-const sans = Jost({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-sans' })
 
 export const metadata: Metadata = {
   title: 'WTC | Bags, Shoes and Accessories',
@@ -34,7 +26,18 @@ export interface RootLayoutProps {
  */
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang="en">
+      <head>
+        {/* The site's two web fonts, loaded as before. next/font was tried and rejected: it puts
+            its own size-adjusted Arial in front of the font stack, which draws glyphs the web
+            fonts lack (the "←" in the back link) differently. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>
         <CartProvider>
           <AddToCartBridge>
