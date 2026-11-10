@@ -89,8 +89,13 @@ for collection links because `NavLink` ignores search params.
 - Every data region is wrapped in `AsyncBoundary`: a `Suspense` with a skeleton shaped like the content,
   inside an `ErrorBoundary` (react-error-boundary) whose "Try again" calls `retry…()` to clear the failed
   promise and then resets. Header, footer and the bag count never read API data.
-- `main.tsx` passes `onCaughtError` to `createRoot`: expected `ApiError`s are not logged (the UI shows
-  them); any other caught error is logged.
+- `src/instrumentation-client.ts` filters the Console: Next.js logs every error that an error boundary
+  catches, and it owns the React root, so there is no `onCaughtError` option to turn that off. A failed
+  API request is an expected state that the page already shows with "Try again", so the file replaces
+  `console.error` with a version that drops only calls carrying an `ApiError`. It must filter nothing
+  else: any other caught error is a bug and has to stay visible. What remains in the Console for a
+  failed request is the browser's own "Failed to load resource" network line (and in `npm run dev` a
+  "1 Issue" badge in Next's dev overlay); JavaScript cannot remove either.
 
 ## Forms
 
