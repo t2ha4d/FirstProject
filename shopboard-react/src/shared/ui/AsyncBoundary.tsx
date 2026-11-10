@@ -3,7 +3,6 @@
 import { Suspense, useSyncExternalStore } from 'react'
 import type { ReactNode } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { ApiError } from '../api/client'
 import { Icon } from './Icon'
 import { StatePanel } from './StatePanel'
 
@@ -42,10 +41,6 @@ export function AsyncBoundary({ fallback, errorTitle, onRetry, children }: Async
   return (
     <ErrorBoundary
       onReset={onRetry}
-      onError={(error) => {
-        // Failed requests are shown to the customer; anything else is a bug and is logged.
-        if (!(error instanceof ApiError)) console.error(error)
-      }}
       fallbackRender={({ error, resetErrorBoundary }) => (
         <StatePanel
           art={<Icon name="alert" size={36} />}

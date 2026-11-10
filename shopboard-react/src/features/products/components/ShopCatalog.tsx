@@ -10,24 +10,26 @@ export function ShopCatalog() {
   const products = use(loadProducts())
   const { filters, updateFilters, setSearchQuery, resetFilters } = useShopFilters()
   const filteredProducts = applyFilters(products, filters)
-  // The search box keeps its own text while typing (so fast typing never loses a letter) and
-  // starts again from the URL when a new key remounts it, i.e. after the filters are cleared.
-  const [searchBoxKey, setSearchBoxKey] = useState(0)
+  // The search box keeps its own text while typing, so fast typing never loses a letter. A new
+  // key remounts it with the text given here: the URL's at first, empty after the filters are
+  // cleared (the URL itself updates a moment later, so it cannot be read for this).
+  const [searchBox, setSearchBox] = useState({ key: 0, text: filters.searchQuery })
 
   function clearSearch() {
     setSearchQuery('')
-    setSearchBoxKey((key) => key + 1)
+    setSearchBox(({ key }) => ({ key: key + 1, text: '' }))
   }
 
   function resetAllFilters() {
     resetFilters()
-    setSearchBoxKey((key) => key + 1)
+    setSearchBox(({ key }) => ({ key: key + 1, text: '' }))
   }
 
   return (
     <>
       <SearchAndFilter
-        key={searchBoxKey}
+        key={searchBox.key}
+        initialSearch={searchBox.text}
         categories={getUniqueCategories(products)}
         filters={filters}
         onSearchChange={setSearchQuery}
