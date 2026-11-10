@@ -1,7 +1,7 @@
 import { cartLineSchema, storedCartSchema } from './schemas'
 import type { CartLine } from './types'
 
-export const CART_STORAGE_KEY = 'wtc_cart_items_v1'
+const CART_STORAGE_KEY = 'wtc_cart_items_v1'
 
 /** Loads the bag from localStorage, skipping lines that are not valid. Never throws. */
 export function loadCartLines(): CartLine[] {

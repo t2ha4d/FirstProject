@@ -7,13 +7,13 @@ import { productSchema } from './schemas'
 
 const productListSchema = z.object({ items: z.array(productSchema) })
 
-export async function fetchProducts(): Promise<Product[]> {
+async function fetchProducts(): Promise<Product[]> {
   const { items } = await apiGet(ENDPOINTS.products, productListSchema)
   return items
 }
 
 /** Loads one product. A missing id rejects with an ApiError whose status is 404. */
-export function fetchProduct(id: number): Promise<Product> {
+function fetchProduct(id: number): Promise<Product> {
   return apiGet(ENDPOINTS.product(id), productSchema)
 }
 

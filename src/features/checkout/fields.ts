@@ -1,7 +1,7 @@
 import type { HTMLInputTypeAttribute } from 'react'
 import type { CheckoutValues } from './types'
 
-export interface CheckoutField {
+interface CheckoutField {
   name: keyof CheckoutValues
   label: string
   type: HTMLInputTypeAttribute

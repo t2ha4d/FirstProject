@@ -57,7 +57,7 @@ export function parseProductId(id: string | undefined): number | null {
 /**
  * Pure search filter: matches product title or category name (case-insensitive)
  */
-export function filterBySearch(products: Product[], query: string): Product[] {
+function filterBySearch(products: Product[], query: string): Product[] {
   const trimmed = query.trim().toLowerCase()
   if (!trimmed) {
     return products
@@ -72,7 +72,7 @@ export function filterBySearch(products: Product[], query: string): Product[] {
 /**
  * Pure category filter: matches exact category or returns all if 'all' or empty
  */
-export function filterByCategory(products: Product[], category: string): Product[] {
+function filterByCategory(products: Product[], category: string): Product[] {
   if (!category || category === 'all') {
     return products
   }
@@ -82,7 +82,7 @@ export function filterByCategory(products: Product[], category: string): Product
 /**
  * Pure sort function: returns a NEW sorted array without mutating input
  */
-export function sortProducts(products: Product[], sortBy: SortOption): Product[] {
+function sortProducts(products: Product[], sortBy: SortOption): Product[] {
   const copy = [...products]
   switch (sortBy) {
     case 'price-asc':

@@ -4,7 +4,7 @@ import { calculateSubtotalCents } from './logic'
 import type { PlacedOrder } from './types'
 import { usePricedCart } from './usePricedCart'
 
-export interface Customer {
+interface Customer {
   name: string
   email: string
 }
