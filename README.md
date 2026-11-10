@@ -167,7 +167,6 @@ shopboard-react/
 │   └── vercel-composition-patterns/    # Installed skill (vercel-labs/agent-skills)
 ├── .husky/pre-commit                   # Runs lint-staged
 ├── public/
-│   ├── api/products.json               # The watch catalog, served at /api/products.json
 │   └── favicon.svg
 ├── scripts/
 │   └── check-no-as-const.mjs           # Rejects `as const` (oxlint allows it)
@@ -215,7 +214,7 @@ shopboard-react/
 │       ├── styles/global.css           # Theme tokens and base styles
 │       ├── types.ts                    # Product, WatchDesign, ApiStatus
 │       └── ui/                         # Icon, WatchIllustration, watch/*, watchDesigns.ts
-├── .env.example                        # VITE_API_BASE_URL=/api
+├── .env.example                        # VITE_API_BASE_URL plus the delay/fail/empty test URLs
 ├── .prettierrc.json / .prettierignore
 ├── .oxlintrc.json
 ├── CLAUDE.md                           # Development guidelines
@@ -234,16 +233,16 @@ features only through their `index.ts`; `shared/` imports nothing from `features
 The repository was cloned as plain files instead, reviewed (Markdown only, no scripts), and copied.
 The committed folders have the same git tree hashes as upstream.
 
-**Catalog source:** the catalog lives in `public/api/products.json` because the original
-ShopBoard API returns bags and shoes without the `subtitle` and `design` fields the watch store needs.
+**Catalog source:** the ShopBoard API (`https://shopboard-api.vercel.app/api/products`). It sells
+bags, shoes and accessories, so product cards show a category icon instead of a drawn watch.
 
 ---
 
 ## ⚡ Key Features
 
 1. **Catalog over a real request**
-   - Fetches the catalog from `public/api/products.json`, because the original ShopBoard API (`https://shopboard-api.vercel.app/api/products`) returns bags and shoes, not WTC watches, and has no `subtitle` or `design` fields.
-   - All requests go through `shared/api/client.ts`. The base URL comes from `VITE_API_BASE_URL` (default `/api`).
+   - Fetches the catalog from the ShopBoard API and validates every response with Zod.
+   - All requests go through `shared/api/client.ts`. The base URL comes from `VITE_API_BASE_URL` (default `https://shopboard-api.vercel.app/api`).
    - Handles **Loading**, **Error** (with a "Try again" button), **Empty**, and **Success** states.
 
 2. **Pure data transformation**
