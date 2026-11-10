@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router'
 import { Icon } from '../../../shared/ui/Icon'
 import { formatPrice } from '../../../shared/lib/format'
 import type { Product } from '../../../shared/types'
@@ -36,7 +37,11 @@ export function ProductCard({ product, onAddToCart }: ProductCardProps) {
       </div>
 
       <div className="card-body">
-        <h3 className="product-title">{product.title}</h3>
+        <h3 className="product-title">
+          <Link to={`/products/${product.id}`} className="product-link">
+            {product.title}
+          </Link>
+        </h3>
         <p className="product-subtitle">{product.category_name}</p>
         <p className="product-price">{formatPrice(product.price_cents)}</p>
         <button

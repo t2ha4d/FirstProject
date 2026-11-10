@@ -1,5 +1,5 @@
 import type { Product } from '../../shared/types'
-import { sortOptionSchema } from './schemas'
+import { productIdSchema, sortOptionSchema } from './schemas'
 import type { FilterState, SortOption } from './types'
 
 export const INITIAL_FILTERS: FilterState = {
@@ -46,6 +46,13 @@ export function writeFilters(filters: FilterState): URLSearchParams {
 export function shopUrl(category?: string): string {
   const search = writeFilters({ ...INITIAL_FILTERS, selectedCategory: category ?? 'all' })
   return search.size > 0 ? `/shop?${search}` : '/shop'
+}
+
+/** Finds the product a raw `:id` route param points to, or undefined for an invalid or unknown id. */
+export function findProduct(products: Product[], id: string | undefined): Product | undefined {
+  const parsed = productIdSchema.safeParse(id)
+  if (!parsed.success) return undefined
+  return products.find((product) => product.id === parsed.data)
 }
 
 /**
