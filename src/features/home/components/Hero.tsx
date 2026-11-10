@@ -17,7 +17,8 @@ export function Hero({ onShopAll }: HeroProps) {
           worth wearing.
         </h1>
         <p className="hero-text">
-          Thoughtfully designed watches in honest materials, made to keep time with your everyday.
+          Thoughtfully designed bags, shoes and accessories in honest materials, made for your
+          everyday.
         </p>
         <button
           type="button"

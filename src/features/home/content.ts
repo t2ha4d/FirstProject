@@ -12,7 +12,7 @@ import type { LookbookTile, Testimonial } from './types'
 export const HERO_DESIGN = chronoClay
 
 export const ANNOUNCEMENTS = [
-  'Free shipping on every watch',
+  'Free shipping on every order',
   'Assembled in small batches',
   'Easy 30-day returns',
 ]

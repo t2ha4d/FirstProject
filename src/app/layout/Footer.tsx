@@ -23,7 +23,7 @@ export function Footer({ onShopAll, onSelectCollection }: FooterProps) {
             <span className="brand-name">{BRAND_NAME}</span>
           </a>
           <p className="footer-text">
-            Thoughtfully crafted watches that bring warmth, character, and meaning to your time.
+            Thoughtfully crafted pieces that bring warmth, character, and meaning to your everyday.
           </p>
           <p className="footer-copy">
             © {CURRENT_YEAR} {BRAND_NAME}. All rights reserved.
