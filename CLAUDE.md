@@ -3,7 +3,7 @@
 This repo holds two separate projects side by side:
 
 - `shopboard-vanilla/`: vanilla JS ShopBoard (tasks 1 and 2).
-- `shopboard-react/`: React ShopBoard (task 4 and the task 5 multi-page app).
+- `shopboard-nextjs/`: ShopBoard on Next.js (the React app from tasks 4 and 5, converted for task 6). In the tags `task-4-react` and `task-5-multipage` this folder is still named `shopboard-react/`.
 
 Each project has its own `package.json` and `CLAUDE.md`. Work inside one folder at a time, and treat that folder's `CLAUDE.md` as the rulebook for it.
 

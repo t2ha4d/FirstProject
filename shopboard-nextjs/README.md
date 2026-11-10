@@ -131,7 +131,7 @@ Pages (app/pages/):
 ## 🛠️ Project Structure
 
 ```text
-shopboard-react/
+shopboard-nextjs/
 ├── .claude/skills/                     # Vercel agent skills (see below)
 ├── .husky/pre-commit                   # typecheck, lint, format:check, build
 ├── public/favicon.svg

@@ -8,10 +8,10 @@ if echo "$staged" | grep -q '^shopboard-vanilla/'; then
   (cd shopboard-vanilla && npx lint-staged)
 fi
 
-if echo "$staged" | grep -q '^shopboard-react/'; then
-  echo "pre-commit: shopboard-react"
+if echo "$staged" | grep -q '^shopboard-nextjs/'; then
+  echo "pre-commit: shopboard-nextjs"
   (
-    cd shopboard-react
+    cd shopboard-nextjs
     npm run typecheck
     npm run lint
     npm run format:check
