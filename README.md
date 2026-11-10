@@ -2,11 +2,12 @@
 
 Two course projects in one repository. Both keep their full commit history.
 
-| Task | Folder | Tag |
-| ---- | ------ | --- |
-| 1 and 2 (vanilla JS) | `shopboard-vanilla/` | `task-2-vanilla` |
-| 4 (React) | `shopboard-react/` in the tag (now `shopboard-nextjs/`) | `task-4-react` |
-| 5 (multi-page React app) | `shopboard-react/` in the tag (now `shopboard-nextjs/`) | `task-5-multipage` |
+| Task                     | Folder                                                  | Tag                                                     |
+| ------------------------ | ------------------------------------------------------- | ------------------------------------------------------- |
+| 1 and 2 (vanilla JS)     | `shopboard-vanilla/`                                    | `task-2-vanilla`                                        |
+| 4 (React)                | `shopboard-react/` in the tag (now `shopboard-nextjs/`) | `task-4-react`                                          |
+| 5 (multi-page React app) | `shopboard-react/` in the tag (now `shopboard-nextjs/`) | `task-5-multipage`                                      |
+| 6 (Next.js conversion)   | `shopboard-nextjs/`                                     | `task-6-nextjs` (added when the pull request is merged) |
 
 Check out a tag to see a project as it was at that task, for example `git checkout task-4-react`.
 
