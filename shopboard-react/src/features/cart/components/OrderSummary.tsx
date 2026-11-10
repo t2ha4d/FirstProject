@@ -1,5 +1,7 @@
+'use client'
+
 import type { ReactNode } from 'react'
-import { Link } from 'react-router'
+import Link from 'next/link'
 import { formatPrice } from '../../../shared/lib/format'
 import { Icon } from '../../../shared/ui/Icon'
 import { StatePanel } from '../../../shared/ui/StatePanel'
@@ -17,6 +19,11 @@ export interface OrderSummaryProps {
 export function OrderSummary({ children }: OrderSummaryProps) {
   const cart = useCart()
 
+  // Until the saved bag is read, an empty bag would be a wrong answer: show the skeleton.
+  if (!cart.isReady) {
+    return <OrderSummarySkeleton />
+  }
+
   if (cart.lines.length === 0) {
     return (
       <StatePanel
@@ -24,7 +31,7 @@ export function OrderSummary({ children }: OrderSummaryProps) {
         title="Your bag is empty"
         description="Add something to your bag before checking out."
       >
-        <Link to="/shop" className="retry-btn">
+        <Link href="/shop" className="retry-btn">
           Browse the shop
         </Link>
       </StatePanel>
@@ -49,7 +56,7 @@ function PricedSummary({ children }: OrderSummaryProps) {
         title="Nothing in your bag is available"
         description="Your saved items are not in the collection right now. They stay in your bag."
       >
-        <Link to="/shop" className="retry-btn">
+        <Link href="/shop" className="retry-btn">
           Browse the shop
         </Link>
       </StatePanel>

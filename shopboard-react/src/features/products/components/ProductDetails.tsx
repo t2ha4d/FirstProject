@@ -1,3 +1,5 @@
+'use client'
+
 import { retryProduct } from '../../../shared/api/products'
 import { AsyncBoundary } from '../../../shared/ui/AsyncBoundary'
 import { parseProductId } from '../logic'
@@ -6,8 +8,8 @@ import { ProductNotFound } from './ProductNotFound'
 import { ProductDetailsSkeleton } from './Skeletons'
 
 export interface ProductDetailsProps {
-  /** The raw `:id` route param. */
-  id: string | undefined
+  /** The raw `[id]` route param. */
+  id: string
 }
 
 /** The product page body. An id that is not a valid number never reaches the API. */

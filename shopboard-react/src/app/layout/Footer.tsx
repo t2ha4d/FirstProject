@@ -1,7 +1,7 @@
-import { NavLink } from 'react-router'
 import { Icon } from '../../shared/ui/Icon'
 import { BRAND_NAME } from '../../shared/config/brand'
 import { COLLECTIONS } from '../../features/products'
+import { NavLink } from './NavLink'
 import { ShopLink } from './ShopLink'
 
 const CURRENT_YEAR = new Date().getFullYear()
@@ -11,7 +11,7 @@ export function Footer() {
     <footer className="footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <NavLink to="/" end className="brand" aria-label={`${BRAND_NAME} home`}>
+          <NavLink href="/" className="brand" aria-label={`${BRAND_NAME} home`}>
             <span className="brand-mark">
               <Icon name="circle" size={26} />
             </span>
@@ -37,10 +37,10 @@ export function Footer() {
 
         <nav className="footer-column" aria-label="Explore WTC">
           <h3 className="footer-heading">Explore</h3>
-          <NavLink to="/" end className="footer-link">
+          <NavLink href="/" className="footer-link">
             Home
           </NavLink>
-          <NavLink to="/cart" className="footer-link">
+          <NavLink href="/cart" className="footer-link">
             Your Bag
           </NavLink>
         </nav>

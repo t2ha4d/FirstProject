@@ -1,5 +1,7 @@
+'use client'
+
 import { useEffect } from 'react'
-import { Link } from 'react-router'
+import Link from 'next/link'
 import { Icon } from '../../../shared/ui/Icon'
 import { useCart } from '../CartContext'
 import { CartView } from './CartView'
@@ -55,7 +57,7 @@ export function CartPanel() {
         </div>
 
         <CartView>
-          <Link to="/cart" className="view-bag-link" onClick={close}>
+          <Link href="/cart" className="view-bag-link" onClick={close}>
             View bag
           </Link>
         </CartView>

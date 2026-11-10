@@ -1,27 +1,33 @@
-import { useSearchParams } from 'react-router'
+import { useSearchParams } from 'next/navigation'
 import { INITIAL_FILTERS, readFilters, writeFilters } from './logic'
 import type { FilterState } from './types'
 
+/**
+ * Writes the filters to the address bar. Next.js feeds History API calls into `useSearchParams`,
+ * so the page updates without a request to the server.
+ */
+function writeUrl(filters: FilterState, mode: 'push' | 'replace') {
+  const search = writeFilters(filters).toString()
+  const url = search === '' ? window.location.pathname : `${window.location.pathname}?${search}`
+  if (mode === 'push') window.history.pushState(null, '', url)
+  else window.history.replaceState(null, '', url)
+}
+
 /** The shop filters, owned by the URL search params (`q`, `category`, `sort`). */
 export function useShopFilters() {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const filters = readFilters(searchParams)
+  const filters = readFilters(useSearchParams())
 
   return {
     filters,
     updateFilters(change: Partial<FilterState>) {
-      setSearchParams(writeFilters({ ...filters, ...change }))
+      writeUrl({ ...filters, ...change }, 'push')
     },
-    /**
-     * The search box reads its value from the URL, so each keystroke must update the URL
-     * synchronously (flushSync) or fast typing loses letters. `replace` keeps typing from
-     * adding one history entry per key.
-     */
+    /** `replace` keeps typing from adding one history entry per key. */
     setSearchQuery(searchQuery: string) {
-      setSearchParams(writeFilters({ ...filters, searchQuery }), { replace: true, flushSync: true })
+      writeUrl({ ...filters, searchQuery }, 'replace')
     },
     resetFilters() {
-      setSearchParams(writeFilters(INITIAL_FILTERS))
+      writeUrl(INITIAL_FILTERS, 'push')
     },
   }
 }

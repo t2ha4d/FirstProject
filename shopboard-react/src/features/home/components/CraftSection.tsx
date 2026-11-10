@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import Link from 'next/link'
 import { Icon } from '../../../shared/ui/Icon'
 import { CRAFT_FEATURES, CRAFT_ICONS } from '../content'
 
@@ -23,7 +23,7 @@ export function CraftSection() {
           makers. We choose materials that age well, then check each bag, shoe and accessory by hand
           before it leaves our bench.
         </p>
-        <Link to="/shop" className="text-link">
+        <Link href="/shop" className="text-link">
           Explore the collection <Icon name="arrow" size={16} />
         </Link>
       </div>

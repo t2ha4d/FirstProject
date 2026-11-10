@@ -1,8 +1,11 @@
-import { Link, NavLink } from 'react-router'
+'use client'
+
+import Link from 'next/link'
 import { Icon } from '../../shared/ui/Icon'
 import { BRAND_NAME } from '../../shared/config/brand'
 import { useCart } from '../../features/cart'
 import { COLLECTIONS } from '../../features/products'
+import { NavLink } from './NavLink'
 import { ShopLink } from './ShopLink'
 
 export function Header() {
@@ -11,7 +14,7 @@ export function Header() {
   return (
     <header className="header">
       <div className="header-inner">
-        <NavLink to="/" end className="brand" aria-label={`${BRAND_NAME} home`}>
+        <NavLink href="/" className="brand" aria-label={`${BRAND_NAME} home`}>
           <span className="brand-mark">
             <Icon name="circle" size={26} />
           </span>
@@ -28,7 +31,7 @@ export function Header() {
         </nav>
 
         <div className="header-actions">
-          <Link to="/shop" className="icon-btn" aria-label="Search products">
+          <Link href="/shop" className="icon-btn" aria-label="Search products">
             <Icon name="search" />
           </Link>
           <button

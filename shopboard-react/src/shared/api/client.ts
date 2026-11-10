@@ -2,8 +2,11 @@ import type { ZodType } from 'zod'
 
 const DEFAULT_API_BASE_URL = 'https://shopboard-api.vercel.app/api'
 
-/** Base URL for every request, from VITE_API_BASE_URL without a trailing slash. */
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL).replace(/\/+$/, '')
+/** Base URL for every request, from NEXT_PUBLIC_API_BASE_URL without a trailing slash. */
+const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || DEFAULT_API_BASE_URL).replace(
+  /\/+$/,
+  '',
+)
 
 export class ApiError extends Error {
   readonly status: number | null

@@ -49,7 +49,7 @@ export function shopUrl(category?: string): string {
 }
 
 /** Reads a raw `:id` route param as a product id, or null when it is not a valid id. */
-export function parseProductId(id: string | undefined): number | null {
+export function parseProductId(id: string): number | null {
   const parsed = productIdSchema.safeParse(id)
   return parsed.success ? parsed.data : null
 }

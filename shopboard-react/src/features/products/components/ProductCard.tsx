@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
+import Link from 'next/link'
 import { Icon } from '../../../shared/ui/Icon'
 import { formatPrice } from '../../../shared/lib/format'
 import type { Product } from '../../../shared/types'
@@ -39,7 +39,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
       <div className="card-body">
         <h3 className="product-title">
-          <Link to={`/products/${product.id}`} className="product-link">
+          <Link href={`/products/${product.id}`} className="product-link">
             {product.title}
           </Link>
         </h3>

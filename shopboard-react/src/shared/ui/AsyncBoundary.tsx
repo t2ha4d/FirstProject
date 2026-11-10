@@ -1,6 +1,9 @@
-import { Suspense } from 'react'
+'use client'
+
+import { Suspense, useSyncExternalStore } from 'react'
 import type { ReactNode } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
+import { ApiError } from '../api/client'
 import { Icon } from './Icon'
 import { StatePanel } from './StatePanel'
 
@@ -14,14 +17,35 @@ export interface AsyncBoundaryProps {
   children: ReactNode
 }
 
+function subscribeToNothing(): () => void {
+  return () => {}
+}
+
+/** False on the server and during hydration, true in the browser afterwards. */
+function useIsBrowser(): boolean {
+  return useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false,
+  )
+}
+
 /**
  * One data region: a Suspense boundary for loading and an error boundary with
  * "Try again". A slow or failing region never affects the rest of the page.
  */
 export function AsyncBoundary({ fallback, errorTitle, onRetry, children }: AsyncBoundaryProps) {
+  const isBrowser = useIsBrowser()
+
+  // Data is read in the browser only: the server renders the skeleton, and the request cache
+  // (module state) never runs on the server, where it would be shared between visitors.
   return (
     <ErrorBoundary
       onReset={onRetry}
+      onError={(error) => {
+        // Failed requests are shown to the customer; anything else is a bug and is logged.
+        if (!(error instanceof ApiError)) console.error(error)
+      }}
       fallbackRender={({ error, resetErrorBoundary }) => (
         <StatePanel
           art={<Icon name="alert" size={36} />}
@@ -35,7 +59,7 @@ export function AsyncBoundary({ fallback, errorTitle, onRetry, children }: Async
         </StatePanel>
       )}
     >
-      <Suspense fallback={fallback}>{children}</Suspense>
+      {isBrowser ? <Suspense fallback={fallback}>{children}</Suspense> : fallback}
     </ErrorBoundary>
   )
 }

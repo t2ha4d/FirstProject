@@ -1,3 +1,5 @@
+'use client'
+
 import { retryProducts } from '../../../shared/api/products'
 import { AsyncBoundary } from '../../../shared/ui/AsyncBoundary'
 import { INITIAL_FILTERS } from '../logic'

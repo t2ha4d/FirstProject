@@ -1,5 +1,9 @@
+'use client'
+
+import Link from 'next/link'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 import type { ReactNode } from 'react'
-import { Link, useLocation } from 'react-router'
 import { readFilters, shopUrl } from '../../features/products'
 
 export interface ShopLinkProps {
@@ -10,20 +14,40 @@ export interface ShopLinkProps {
 }
 
 /**
- * A link to the shop, marked as the current page when the shop shows exactly
- * this collection. NavLink cannot do this because it ignores the search params.
+ * A link to the shop, marked as the current page when the shop shows exactly this collection.
+ * Reading the search params makes the link wait for the browser, so the server renders it
+ * as a plain link (the Suspense fallback) and the browser adds `aria-current`.
  */
 export function ShopLink({ category = 'all', className, children }: ShopLinkProps) {
-  const { pathname, search } = useLocation()
-  const isCurrent =
-    pathname === '/shop' && readFilters(new URLSearchParams(search)).selectedCategory === category
+  const href = shopUrl(category)
 
   return (
-    <Link
-      to={shopUrl(category)}
-      className={className}
-      aria-current={isCurrent ? 'page' : undefined}
+    <Suspense
+      fallback={
+        <Link href={href} className={className}>
+          {children}
+        </Link>
+      }
     >
+      <CurrentShopLink href={href} category={category} className={className}>
+        {children}
+      </CurrentShopLink>
+    </Suspense>
+  )
+}
+
+interface CurrentShopLinkProps extends ShopLinkProps {
+  href: string
+  category: string
+}
+
+function CurrentShopLink({ href, category, className, children }: CurrentShopLinkProps) {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const isCurrent = pathname === '/shop' && readFilters(searchParams).selectedCategory === category
+
+  return (
+    <Link href={href} className={className} aria-current={isCurrent ? 'page' : undefined}>
       {children}
     </Link>
   )

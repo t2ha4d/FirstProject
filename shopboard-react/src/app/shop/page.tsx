@@ -1,5 +1,5 @@
 import { ProductsSection } from '../../features/products'
 
-export function ShopPage() {
+export default function ShopPage() {
   return <ProductsSection />
 }

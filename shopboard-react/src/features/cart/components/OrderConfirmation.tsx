@@ -1,17 +1,33 @@
-import { Link, useLocation } from 'react-router'
+'use client'
+
+import Link from 'next/link'
+import { useSyncExternalStore } from 'react'
 import { formatPrice } from '../../../shared/lib/format'
 import { Icon } from '../../../shared/ui/Icon'
 import { StatePanel } from '../../../shared/ui/StatePanel'
-import { placedOrderSchema } from '../schemas'
+import { parseStoredOrder, readStoredOrder, subscribeToOrder } from '../orderStorage'
+
+/** The server cannot know the saved order; `undefined` means the browser has not been asked yet. */
+function readNothingOnServer(): undefined {
+  return undefined
+}
 
 /**
- * The order passed in router state by checkout. Opened directly there is no order,
- * so it says so instead of redirecting or inventing a confirmation.
+ * The order saved by checkout. Opened directly there is no order, so it says so instead of
+ * redirecting or inventing a confirmation.
  */
 export function OrderConfirmation() {
-  const order = placedOrderSchema.safeParse(useLocation().state)
+  const raw = useSyncExternalStore<string | null | undefined>(
+    subscribeToOrder,
+    readStoredOrder,
+    readNothingOnServer,
+  )
 
-  if (!order.success) {
+  if (raw === undefined) return null
+
+  const order = parseStoredOrder(raw)
+
+  if (order === null) {
     return (
       <StatePanel
         art={<Icon name="box" size={36} />}
@@ -19,14 +35,14 @@ export function OrderConfirmation() {
         description="When you place an order, its confirmation will show here."
         heading="h1"
       >
-        <Link to="/shop" className="retry-btn">
+        <Link href="/shop" className="retry-btn">
           Browse the shop
         </Link>
       </StatePanel>
     )
   }
 
-  const { customerName, email, items, subtotalCents } = order.data
+  const { customerName, email, items, subtotalCents } = order
 
   return (
     <section className="order-summary order-confirmation" aria-labelledby="confirmation-title">
@@ -48,7 +64,7 @@ export function OrderConfirmation() {
         <span className="subtotal-label">Total</span>
         <span className="subtotal-amount">{formatPrice(subtotalCents)}</span>
       </div>
-      <Link to="/shop" className="retry-btn order-confirmation-action">
+      <Link href="/shop" className="retry-btn order-confirmation-action">
         Continue shopping
       </Link>
     </section>

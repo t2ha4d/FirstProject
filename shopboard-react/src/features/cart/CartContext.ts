@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useContext } from 'react'
 import type { Product } from '../../shared/types'
 import type { CartLine } from './types'
@@ -15,6 +17,8 @@ export interface CartActions {
 export interface CartValue extends CartActions {
   /** What is saved: product ids and quantities. Prices come from the catalog, see usePricedCart. */
   lines: CartLine[]
+  /** False until the saved bag has been read in the browser; the bag views show a skeleton until then. */
+  isReady: boolean
   isOpen: boolean
   /** Number of items saved in the bag. Needs no product data, so the header never waits for it. */
   totalCount: number

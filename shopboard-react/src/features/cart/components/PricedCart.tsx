@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { Link } from 'react-router'
+import Link from 'next/link'
 import { useCart } from '../CartContext'
 import { usePricedCart } from '../usePricedCart'
 import { CartItem } from './CartItem'
@@ -47,7 +47,7 @@ export function PricedCart({ children }: PricedCartProps) {
           </div>
           <p className="subtotal-note">Taxes and shipping calculated at checkout.</p>
           <div className="drawer-actions">
-            <Link to="/checkout" className="checkout-btn" onClick={cart.close}>
+            <Link href="/checkout" className="checkout-btn" onClick={cart.close}>
               Checkout ({subtotalFormatted})
             </Link>
             {children}

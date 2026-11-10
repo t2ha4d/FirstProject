@@ -6,6 +6,7 @@ export interface SearchAndFilterProps {
   categories: string[]
   filters: FilterState
   onSearchChange: (query: string) => void
+  onClearSearch: () => void
   onCategoryChange: (category: string) => void
   onSortChange: (sort: SortOption) => void
   onResetFilters: () => void
@@ -16,6 +17,7 @@ export function SearchAndFilter({
   categories,
   filters,
   onSearchChange,
+  onClearSearch,
   onCategoryChange,
   onSortChange,
   onResetFilters,
@@ -41,14 +43,14 @@ export function SearchAndFilter({
               type="search"
               className="search-input"
               placeholder="Search by name or category..."
-              value={filters.searchQuery}
+              defaultValue={filters.searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
             />
             {filters.searchQuery && (
               <button
                 type="button"
                 className="clear-search-btn"
-                onClick={() => onSearchChange('')}
+                onClick={onClearSearch}
                 aria-label="Clear search query"
               >
                 <Icon name="close" size={16} />

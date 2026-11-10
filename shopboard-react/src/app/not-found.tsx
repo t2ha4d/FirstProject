@@ -1,8 +1,8 @@
-import { Link } from 'react-router'
-import { Icon } from '../../shared/ui/Icon'
-import { StatePanel } from '../../shared/ui/StatePanel'
+import Link from 'next/link'
+import { Icon } from '../shared/ui/Icon'
+import { StatePanel } from '../shared/ui/StatePanel'
 
-export function NotFoundPage() {
+export default function NotFound() {
   return (
     <div className="section">
       <StatePanel
@@ -12,10 +12,10 @@ export function NotFoundPage() {
         heading="h1"
       >
         <div className="state-actions">
-          <Link to="/" className="retry-btn">
+          <Link href="/" className="retry-btn">
             Go home
           </Link>
-          <Link to="/shop" className="retry-btn">
+          <Link href="/shop" className="retry-btn">
             Browse the shop
           </Link>
         </div>

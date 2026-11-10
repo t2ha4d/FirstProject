@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import Link from 'next/link'
 import { Sprig } from './Sprig'
 import { HeroWatch } from './HeroWatch'
 
@@ -16,7 +16,7 @@ export function Hero() {
           Thoughtfully designed bags, shoes and accessories in honest materials, made for your
           everyday.
         </p>
-        <Link to="/shop" className="btn btn-clay">
+        <Link href="/shop" className="btn btn-clay">
           Shop the Collection
         </Link>
       </div>
