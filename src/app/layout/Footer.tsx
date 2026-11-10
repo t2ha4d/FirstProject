@@ -40,6 +40,9 @@ export function Footer() {
           <NavLink to="/" end className="footer-link">
             Home
           </NavLink>
+          <NavLink to="/cart" className="footer-link">
+            Your Bag
+          </NavLink>
         </nav>
       </div>
     </footer>

@@ -6,6 +6,7 @@ export const ShopPage = lazy(() => import('./ShopPage').then((m) => ({ default: 
 export const ProductPage = lazy(() =>
   import('./ProductPage').then((m) => ({ default: m.ProductPage })),
 )
+export const CartPage = lazy(() => import('./CartPage').then((m) => ({ default: m.CartPage })))
 export const CheckoutPage = lazy(() =>
   import('./CheckoutPage').then((m) => ({ default: m.CheckoutPage })),
 )

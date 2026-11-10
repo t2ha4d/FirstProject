@@ -1,5 +1,8 @@
+import { Link } from 'react-router'
 import { useCart } from '../CartContext'
 import { CartDrawer } from './CartDrawer'
+import { CartLineList } from './CartLineList'
+import { CartTotals } from './CartTotals'
 
 export interface CartPanelProps {
   ariaLabel?: string
@@ -13,15 +16,17 @@ export function CartPanel({ ariaLabel = 'Shopping bag' }: CartPanelProps) {
     <CartDrawer
       ariaLabel={ariaLabel}
       isOpen={cart.isOpen}
-      isResolving={cart.isResolving}
-      items={cart.items}
-      subtotalFormatted={cart.subtotalFormatted}
       totalCount={cart.totalCount}
       onClose={cart.close}
-      onIncrement={cart.increment}
-      onDecrement={cart.decrement}
-      onRemove={cart.removeItem}
-      onClear={cart.clear}
-    />
+      footer={
+        <CartTotals>
+          <Link to="/cart" className="view-bag-link" onClick={cart.close}>
+            View bag
+          </Link>
+        </CartTotals>
+      }
+    >
+      <CartLineList />
+    </CartDrawer>
   )
 }

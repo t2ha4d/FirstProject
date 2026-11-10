@@ -1,34 +1,26 @@
 import { useEffect } from 'react'
-import { CartItem } from './CartItem'
+import type { ReactNode } from 'react'
 import { Icon } from '../../../shared/ui/Icon'
-import type { CartEntry } from '../types'
 
 export interface CartDrawerProps {
   isOpen: boolean
-  isResolving: boolean
   ariaLabel: string
-  items: CartEntry[]
-  subtotalFormatted: string
   totalCount: number
   onClose: () => void
-  onIncrement: (productId: number) => void
-  onDecrement: (productId: number) => void
-  onRemove: (productId: number) => void
-  onClear: () => void
+  /** The scrolling body of the drawer. */
+  children: ReactNode
+  /** Shown pinned under the body. */
+  footer: ReactNode
 }
 
+/** The slide-in dialog frame: title, close button, Escape and backdrop handling. */
 export function CartDrawer({
-  ariaLabel,
   isOpen,
-  isResolving,
-  items,
-  subtotalFormatted,
+  ariaLabel,
   totalCount,
   onClose,
-  onIncrement,
-  onDecrement,
-  onRemove,
-  onClear,
+  children,
+  footer,
 }: CartDrawerProps) {
   // Close drawer on Escape key press
   useEffect(() => {
@@ -47,8 +39,6 @@ export function CartDrawer({
   if (!isOpen) {
     return null
   }
-
-  const hasItems = items.length > 0
 
   return (
     <div className="cart-backdrop" onClick={onClose} role="presentation">
@@ -78,69 +68,8 @@ export function CartDrawer({
           </button>
         </div>
 
-        <div className="drawer-body">
-          {isResolving && (
-            <p className="cart-resolving" role="status">
-              Loading your bag…
-            </p>
-          )}
-          {!isResolving && hasItems && (
-            <ul className="cart-items-list" aria-label="Bag items">
-              {items.map((item) => (
-                <CartItem
-                  key={item.product.id}
-                  item={item}
-                  onIncrement={onIncrement}
-                  onDecrement={onDecrement}
-                  onRemove={onRemove}
-                />
-              ))}
-            </ul>
-          )}
-          {!isResolving && !hasItems && (
-            <div className="empty-cart-state">
-              <span className="empty-cart-icon">
-                <Icon name="bag" size={44} />
-              </span>
-              <p className="empty-cart-title">Your bag is empty</p>
-              <p className="empty-cart-text">
-                Explore the collection and find a piece worth keeping.
-              </p>
-              <button type="button" className="continue-shopping-btn" onClick={onClose}>
-                Explore Products
-              </button>
-            </div>
-          )}
-        </div>
-
-        {hasItems && (
-          <div className="drawer-footer">
-            <div className="subtotal-row">
-              <span className="subtotal-label">Subtotal</span>
-              <span className="subtotal-amount">{subtotalFormatted}</span>
-            </div>
-            <p className="subtotal-note">Taxes and shipping calculated at checkout.</p>
-            <div className="drawer-actions">
-              <button
-                type="button"
-                className="checkout-btn"
-                onClick={() =>
-                  alert(
-                    'Secure checkout is coming soon. Your bag has ' +
-                      totalCount +
-                      ' items totaling ' +
-                      subtotalFormatted,
-                  )
-                }
-              >
-                Checkout ({subtotalFormatted})
-              </button>
-              <button type="button" className="clear-cart-btn" onClick={onClear}>
-                Empty Bag
-              </button>
-            </div>
-          </div>
-        )}
+        <div className="drawer-body">{children}</div>
+        {footer}
       </aside>
     </div>
   )
