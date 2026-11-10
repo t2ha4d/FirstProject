@@ -134,6 +134,13 @@ for collection links because `NavLink` ignores search params.
 6. **Every hook needs a reason**: no state for anything that can be calculated, no effect for anything
    that can happen during render or in an event handler. Effects are only for outside systems
    (`localStorage`, `window` listeners).
+7. **One documented lint exception**: `CartProvider` reads `localStorage` in an effect and calls
+   `setStoredLines` there, which trips oxlint's `react/set-state-in-effect`, so that one line has
+   `oxlint-disable-next-line react/set-state-in-effect`. It stays because the saved bag cannot be read
+   during render: the server has no `localStorage`, and reading it in the first browser render would
+   not match the server's HTML (a hydration error). The effect is the only place that runs in the
+   browser alone, and it reads an outside system, which is what effects are for. Do not copy this
+   pattern elsewhere or add other disables: calculate in render, or handle it in an event handler.
 
 ---
 
