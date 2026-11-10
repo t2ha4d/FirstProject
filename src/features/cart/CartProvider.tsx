@@ -19,7 +19,7 @@ import type { CartLine } from './types'
 export interface CartProviderProps {
   /** Current product data; the only source of prices. */
   products: Product[]
-  /** True once `products` is the loaded catalog. Until then no line is ever dropped. */
+  /** True once `products` is the loaded catalog. Until then lines cannot be priced. */
   isCatalogReady: boolean
   children: ReactNode
 }
@@ -29,9 +29,11 @@ export function CartProvider({ products, isCatalogReady, children }: CartProvide
   const [lines, setLines] = useState<CartLine[]>(loadCartLines)
   const [isOpen, setIsOpen] = useState(false)
 
+  // Storage always gets every line. A line whose product is missing from the catalog is
+  // hidden below but never deleted, so an empty or failed product list cannot empty the bag.
   useEffect(() => {
-    saveCartLines(isCatalogReady ? pruneLines(lines, products) : lines)
-  }, [lines, products, isCatalogReady])
+    saveCartLines(lines)
+  }, [lines])
 
   const actions = useMemo<CartActions>(
     () => ({

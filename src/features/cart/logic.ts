@@ -29,7 +29,7 @@ export function removeLine(lines: CartLine[], productId: number): CartLine[] {
 
 /**
  * Joins stored lines with current product data. Lines whose product is not in
- * the catalog are left out (they are kept in storage until the catalog has loaded).
+ * the catalog are left out of the result; they stay in storage.
  */
 export function resolveCart(lines: CartLine[], products: Product[]): CartEntry[] {
   const byId = new Map(products.map((product) => [product.id, product]))
@@ -40,7 +40,7 @@ export function resolveCart(lines: CartLine[], products: Product[]): CartEntry[]
 }
 
 /**
- * Removes lines whose product no longer exists. Only call with a loaded catalog.
+ * Leaves out lines whose product is not in the catalog, for counting. Only call with a loaded catalog.
  */
 export function pruneLines(lines: CartLine[], products: Product[]): CartLine[] {
   const ids = new Set(products.map((product) => product.id))
