@@ -15,7 +15,6 @@ export interface WatchIllustrationProps {
 const METALS: Record<CaseTone, [string, string]> = {
   steel: ['#eeece7', '#94928c'],
   gold: ['#ecd7a8', '#a27c45'],
-  black: ['#5a5753', '#1f1e1c'],
 }
 
 /** A drawn watch, set to the classic 10:10 display position. */

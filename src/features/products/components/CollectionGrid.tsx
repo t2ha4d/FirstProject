@@ -1,5 +1,4 @@
 import { Icon } from '../../../shared/ui/Icon'
-import { WatchIllustration } from '../../../shared/ui/WatchIllustration'
 import { COLLECTIONS } from '../collections'
 
 export interface CollectionGridProps {
@@ -13,7 +12,7 @@ export function CollectionGrid({ onSelectCollection }: CollectionGridProps) {
         Shop by Collection
       </h2>
       <div className="collection-grid">
-        {COLLECTIONS.map(({ name, icon, design }) => (
+        {COLLECTIONS.map(({ name, icon }) => (
           <button
             key={name}
             type="button"
@@ -21,7 +20,6 @@ export function CollectionGrid({ onSelectCollection }: CollectionGridProps) {
             onClick={() => onSelectCollection(name)}
             aria-label={`Shop the ${name} collection`}
           >
-            <WatchIllustration design={design} className="collection-watch" />
             <span className="collection-label">
               <Icon name={icon} size={30} />
               {name}

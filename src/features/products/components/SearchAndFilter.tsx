@@ -26,12 +26,12 @@ export function SearchAndFilter({
     filters.searchQuery !== '' || filters.selectedCategory !== 'all' || filters.sortBy !== 'default'
 
   return (
-    <section className="search-filter-section" aria-label="Search and filter watches">
+    <section className="search-filter-section" aria-label="Search and filter products">
       <div className="search-filter-grid">
         {/* Search input */}
         <div className="filter-group search-group">
           <label htmlFor={SEARCH_INPUT_ID} className="filter-label">
-            Search Watches
+            Search Products
           </label>
           <div className="search-input-wrapper">
             <span className="search-icon">
@@ -41,7 +41,7 @@ export function SearchAndFilter({
               id={SEARCH_INPUT_ID}
               type="search"
               className="search-input"
-              placeholder="Search by name, dial or strap..."
+              placeholder="Search by name or category..."
               value={filters.searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
             />
@@ -104,7 +104,7 @@ export function SearchAndFilter({
       {/* Active filters & results counter */}
       <div className="filter-status-bar">
         <span className="results-count">
-          Showing <strong>{totalResults}</strong> {totalResults === 1 ? 'watch' : 'watches'}
+          Showing <strong>{totalResults}</strong> {totalResults === 1 ? 'product' : 'products'}
         </span>
         {isFiltered && (
           <button

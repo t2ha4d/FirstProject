@@ -24,7 +24,7 @@ export function isSortOption(value: string): value is SortOption {
 }
 
 /**
- * Pure search filter: matches product title, subtitle or category name (case-insensitive)
+ * Pure search filter: matches product title or category name (case-insensitive)
  */
 export function filterBySearch(products: Product[], query: string): Product[] {
   const trimmed = query.trim().toLowerCase()
@@ -34,7 +34,6 @@ export function filterBySearch(products: Product[], query: string): Product[] {
   return products.filter(
     (product) =>
       product.title.toLowerCase().includes(trimmed) ||
-      product.subtitle.toLowerCase().includes(trimmed) ||
       product.category_name.toLowerCase().includes(trimmed),
   )
 }

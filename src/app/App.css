@@ -272,13 +272,13 @@
 /* Collections */
 .collection-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.8rem;
 }
 
 .collection-tile {
   position: relative;
-  aspect-ratio: 9 / 10;
+  aspect-ratio: 5 / 2;
   padding: 0;
   overflow: hidden;
   border: 0;
@@ -288,19 +288,6 @@
 
 .collection-tile:nth-child(even) {
   background: linear-gradient(160deg, #988b70, #5f5a44);
-}
-
-.collection-watch {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 92%;
-  transform: translate(-50%, -50%) rotate(-12deg);
-  transition: transform 0.4s ease;
-}
-
-.collection-tile:hover .collection-watch {
-  transform: translate(-50%, -50%) rotate(-12deg) scale(1.06);
 }
 
 .collection-label {
@@ -433,17 +420,17 @@
   background: var(--card);
 }
 
-.card-watch {
-  height: 92%;
-  filter: drop-shadow(5px 8px 7px rgba(70, 50, 30, 0.3));
+.card-art {
+  display: flex;
+  color: var(--clay);
   transition: transform 0.35s ease;
 }
 
-.product-card:hover .card-watch {
+.product-card:hover .card-art {
   transform: scale(1.05);
 }
 
-.sold-out .card-watch {
+.sold-out .card-art {
   opacity: 0.55;
 }
 
@@ -1147,8 +1134,7 @@
     scrollbar-width: none;
   }
 
-  .products-grid,
-  .collection-grid {
+  .products-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
@@ -1222,9 +1208,16 @@
     grid-column: 1 / -1;
   }
 
-  .products-grid,
-  .collection-grid {
+  .products-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .collection-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .collection-tile {
+    aspect-ratio: 4 / 1;
   }
 
   .craft,

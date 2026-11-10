@@ -107,7 +107,7 @@ export function CartDrawer({
                 Explore the collection and find a piece worth keeping.
               </p>
               <button type="button" className="continue-shopping-btn" onClick={onClose}>
-                Explore Watches
+                Explore Products
               </button>
             </div>
           )}

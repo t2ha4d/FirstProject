@@ -32,7 +32,7 @@ export function Header({
             type="button"
             className="nav-link"
             onClick={onShopAll}
-            aria-label="Shop all watches"
+            aria-label="Shop all products"
           >
             Shop All
           </button>
@@ -42,7 +42,7 @@ export function Header({
               type="button"
               className="nav-link"
               onClick={() => onSelectCollection(name)}
-              aria-label={`Shop ${name} watches`}
+              aria-label={`Shop ${name}`}
             >
               {name}
             </button>
@@ -57,7 +57,7 @@ export function Header({
             type="button"
             className="icon-btn"
             onClick={onOpenSearch}
-            aria-label="Search watches"
+            aria-label="Search products"
           >
             <Icon name="search" />
           </button>

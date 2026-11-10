@@ -41,7 +41,7 @@ export function ProductList({
         </div>
         <h3 className="state-title">Unable to load the collection</h3>
         <p className="state-description">
-          {errorMessage || 'Something went wrong while loading our watches.'}
+          {errorMessage || 'Something went wrong while loading our products.'}
         </p>
         <button type="button" className="retry-btn" onClick={onRetry}>
           Try again
@@ -57,7 +57,7 @@ export function ProductList({
         <div className="state-icon">
           <Icon name="box" size={36} />
         </div>
-        <h3 className="state-title">No watches available</h3>
+        <h3 className="state-title">No products available</h3>
         <p className="state-description">
           The collection is currently empty. Please check back soon.
         </p>
@@ -75,7 +75,7 @@ export function ProductList({
         <div className="state-icon">
           <Icon name="search" size={36} />
         </div>
-        <h3 className="state-title">No matching watches found</h3>
+        <h3 className="state-title">No matching products found</h3>
         <p className="state-description">
           Try a different search, choose another collection, or clear your filters.
         </p>
@@ -88,7 +88,7 @@ export function ProductList({
 
   // 5. Success state: Grid of products using real unique product.id as key
   return (
-    <div className="products-grid" role="region" aria-label="Watch collection">
+    <div className="products-grid" role="region" aria-label="Product collection">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} onAddToCart={onAddToCart} />
       ))}

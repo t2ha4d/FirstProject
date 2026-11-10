@@ -55,7 +55,7 @@ export function calculateSubtotalCents(entries: CartEntry[]): number {
 }
 
 /**
- * Total number of watches across lines
+ * Total number of items across lines
  */
 export function calculateTotalCount(lines: CartLine[]): number {
   return lines.reduce((count, line) => count + line.qty, 0)

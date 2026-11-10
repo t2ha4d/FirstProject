@@ -1,6 +1,6 @@
 export type DialStyle = 'baton' | 'numeral' | 'minimal'
-export type StrapStyle = 'leather' | 'steel' | 'mesh'
-export type CaseTone = 'steel' | 'gold' | 'black'
+export type StrapStyle = 'leather' | 'steel'
+export type CaseTone = 'steel' | 'gold'
 
 /** Visual recipe used by WatchIllustration to draw a watch. */
 export interface WatchDesign {
@@ -19,11 +19,9 @@ export interface WatchDesign {
 export interface Product {
   id: number
   title: string
-  subtitle: string
   category_name: string
   price_cents: number
   in_stock: boolean
-  design: WatchDesign
 }
 
 export type ApiStatus = 'idle' | 'loading' | 'error' | 'success'

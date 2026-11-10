@@ -1,4 +1,4 @@
-const DEFAULT_API_BASE_URL = '/api'
+const DEFAULT_API_BASE_URL = 'https://shopboard-api.vercel.app/api'
 
 /** Base URL for every request, from VITE_API_BASE_URL without a trailing slash. */
 export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL).replace(
@@ -20,7 +20,7 @@ export interface ApiRequestOptions {
   signal?: AbortSignal
 }
 
-/** Builds the full URL for an endpoint path such as "/products.json". */
+/** Builds the full URL for an endpoint path such as "/products". */
 export function buildApiUrl(path: string): string {
   return `${API_BASE_URL}/${path.replace(/^\/+/, '')}`
 }

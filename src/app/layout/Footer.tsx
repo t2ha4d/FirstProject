@@ -36,9 +36,9 @@ export function Footer({ onShopAll, onSelectCollection }: FooterProps) {
             type="button"
             className="footer-link"
             onClick={onShopAll}
-            aria-label="Shop all watches"
+            aria-label="Shop all products"
           >
-            All Watches
+            All Products
           </button>
           {COLLECTIONS.map(({ name }) => (
             <button
@@ -46,7 +46,7 @@ export function Footer({ onShopAll, onSelectCollection }: FooterProps) {
               type="button"
               className="footer-link"
               onClick={() => onSelectCollection(name)}
-              aria-label={`Shop ${name} watches`}
+              aria-label={`Shop ${name}`}
             >
               {name}
             </button>
