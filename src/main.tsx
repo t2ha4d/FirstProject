@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './shared/styles/global.css'
+import './shared/styles/tailwind.css'
 import App from './app/App.tsx'
 import { ApiError } from './shared/api/client'
 
