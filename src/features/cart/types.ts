@@ -1,10 +1,8 @@
+import type { z } from 'zod'
 import type { Product } from '../../shared/types'
+import type { cartLineSchema } from './schemas'
 
-/** What the bag stores: a product id and a quantity. Prices are never stored. */
-export interface CartLine {
-  id: number
-  qty: number
-}
+export type CartLine = z.infer<typeof cartLineSchema>
 
 /** A cart line joined with its current product data, for display and totals. */
 export interface CartEntry {

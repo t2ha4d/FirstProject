@@ -1,3 +1,6 @@
+import type { z } from 'zod'
+import type { productSchema } from './api/schemas'
+
 export type DialStyle = 'baton' | 'numeral' | 'minimal'
 export type StrapStyle = 'leather' | 'steel'
 export type CaseTone = 'steel' | 'gold'
@@ -16,12 +19,6 @@ export interface WatchDesign {
   hasDate?: boolean
 }
 
-export interface Product {
-  id: number
-  title: string
-  category_name: string
-  price_cents: number
-  in_stock: boolean
-}
+export type Product = z.infer<typeof productSchema>
 
 export type ApiStatus = 'idle' | 'loading' | 'error' | 'success'
