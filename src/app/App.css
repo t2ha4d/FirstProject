@@ -367,10 +367,6 @@ main > .section:last-child {
   overflow: hidden;
 }
 
-.cart-page .cart-items-list {
-  padding: 0 1.25rem;
-}
-
 /* Checkout */
 .order-summary {
   max-width: 34rem;
@@ -669,18 +665,48 @@ main > .section:last-child {
   color: var(--muted);
 }
 
-.spinner {
-  width: 34px;
-  height: 34px;
-  border: 2px solid var(--line);
-  border-top-color: var(--clay);
-  border-radius: 50%;
-  animation: rotate 0.9s linear infinite;
+/* Skeletons: placeholders shaped like the content they replace */
+.skeleton {
+  display: block;
+  border-radius: 4px;
+  background: var(--card);
+  animation: pulse 1.4s ease-in-out infinite;
 }
 
-@keyframes rotate {
-  to {
-    transform: rotate(360deg);
+.skeleton-line {
+  height: 0.8rem;
+  margin: 0.45rem 0;
+}
+
+.skeleton-short {
+  width: 40%;
+}
+
+.skeleton-label {
+  width: 35%;
+  height: 0.6rem;
+  margin-bottom: 0.55rem;
+}
+
+.skeleton-field {
+  height: 2.6rem;
+}
+
+.skeleton-title {
+  width: 70%;
+  height: 2.4rem;
+  margin: 0.5rem 0 0.9rem;
+}
+
+.skeleton-button {
+  width: 9rem;
+  height: 2.75rem;
+  margin-top: 1.5rem;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.55;
   }
 }
 
@@ -1092,10 +1118,12 @@ main > .section:last-child {
   color: var(--clay);
 }
 
-.cart-resolving {
-  margin: 0;
-  padding: 3.5rem 1rem;
-  text-align: center;
+.cart-unavailable {
+  margin: 1rem 0 0;
+  padding: 0.6rem 0.8rem;
+  border-radius: 4px;
+  background: var(--sand);
+  font-size: 0.82rem;
   color: var(--muted);
 }
 

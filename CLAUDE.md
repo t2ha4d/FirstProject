@@ -11,7 +11,7 @@
 ## Architecture & Code Organization
 
 - **`src/features/<name>/`**: One folder per feature (`products`, `cart`, `home`). A feature owns its state (a Provider + `use<Feature>()` hook), its pure `logic.ts`, its `types.ts` and its `components/`. Other code imports a feature only through its `index.ts`.
-  - Features never import each other. Cross-feature wiring happens in `src/app/` (e.g. `CatalogCartProvider` passes catalog products to the cart).
+  - Features never import each other. Cross-feature wiring happens in `src/app/` (e.g. `RootLayout` gives the products feature the cart's add action through `AddToCartContext`).
 - **`src/shared/`**: Code used by more than one feature: the API client, endpoint paths, Zod schemas for API data, `formatPrice`, domain types, UI primitives (`Icon`, `StatePanel`) and global styles. `shared/` never imports from `features/` or `app/`.
 - **`src/shared/api/client.ts`**: The only place that calls `fetch`. Base URL from `VITE_API_BASE_URL`; paths from `shared/api/endpoints.ts`. Never hardcode a URL in a feature.
 - **`src/app/`**: Composition only: providers, the router (`router.tsx`), the shared layout (`layout/`), thin lazy-loaded pages (`pages/`) and `App.css`. No business state.

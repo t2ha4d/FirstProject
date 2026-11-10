@@ -48,11 +48,10 @@ export function shopUrl(category?: string): string {
   return search.size > 0 ? `/shop?${search}` : '/shop'
 }
 
-/** Finds the product a raw `:id` route param points to, or undefined for an invalid or unknown id. */
-export function findProduct(products: Product[], id: string | undefined): Product | undefined {
+/** Reads a raw `:id` route param as a product id, or null when it is not a valid id. */
+export function parseProductId(id: string | undefined): number | null {
   const parsed = productIdSchema.safeParse(id)
-  if (!parsed.success) return undefined
-  return products.find((product) => product.id === parsed.data)
+  return parsed.success ? parsed.data : null
 }
 
 /**

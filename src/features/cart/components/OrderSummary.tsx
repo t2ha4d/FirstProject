@@ -3,24 +3,15 @@ import { formatPrice } from '../../../shared/lib/format'
 import { Icon } from '../../../shared/ui/Icon'
 import { StatePanel } from '../../../shared/ui/StatePanel'
 import { useCart } from '../CartContext'
+import { usePricedCart } from '../usePricedCart'
+import { CartBoundary } from './CartBoundary'
+import { OrderSummarySkeleton } from './Skeletons'
 
-/** A read-only list of what is in the bag, with the subtotal, for the checkout page. */
+/** What is being ordered, for the checkout page. An empty bag needs no product data. */
 export function OrderSummary() {
   const cart = useCart()
 
-  if (cart.isResolving) {
-    return (
-      <StatePanel
-        art={<div className="spinner" aria-hidden="true" />}
-        title="Loading your bag…"
-        description="One moment while we price your items."
-        heading="p"
-        role="status"
-      />
-    )
-  }
-
-  if (cart.items.length === 0) {
+  if (cart.lines.length === 0) {
     return (
       <StatePanel
         art={<Icon name="bag" size={36} />}
@@ -35,12 +26,37 @@ export function OrderSummary() {
   }
 
   return (
+    <CartBoundary fallback={<OrderSummarySkeleton />}>
+      <PricedSummary />
+    </CartBoundary>
+  )
+}
+
+/** Suspends until the catalog has loaded. */
+function PricedSummary() {
+  const { items, unavailableCount, subtotalFormatted } = usePricedCart()
+
+  if (items.length === 0) {
+    return (
+      <StatePanel
+        art={<Icon name="box" size={36} />}
+        title="Nothing in your bag is available"
+        description="Your saved items are not in the collection right now. They stay in your bag."
+      >
+        <Link to="/shop" className="retry-btn">
+          Browse the shop
+        </Link>
+      </StatePanel>
+    )
+  }
+
+  return (
     <section className="order-summary" aria-labelledby="order-summary-title">
       <h2 id="order-summary-title" className="order-summary-title">
         Order summary
       </h2>
       <ul className="order-summary-list">
-        {cart.items.map(({ product, quantity }) => (
+        {items.map(({ product, quantity }) => (
           <li key={product.id} className="order-summary-item">
             <span>
               {product.title} × {quantity}
@@ -49,9 +65,15 @@ export function OrderSummary() {
           </li>
         ))}
       </ul>
+      {unavailableCount > 0 && (
+        <p className="cart-unavailable">
+          {unavailableCount} saved {unavailableCount === 1 ? 'item is' : 'items are'} not available
+          right now and will not be ordered.
+        </p>
+      )}
       <div className="subtotal-row">
         <span className="subtotal-label">Subtotal</span>
-        <span className="subtotal-amount">{cart.subtotalFormatted}</span>
+        <span className="subtotal-amount">{subtotalFormatted}</span>
       </div>
     </section>
   )

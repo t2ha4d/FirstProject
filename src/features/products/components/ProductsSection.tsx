@@ -1,36 +1,13 @@
-import { useSearchParams } from 'react-router'
-import type { Product } from '../../../shared/types'
-import { useCatalog } from '../CatalogContext'
-import {
-  INITIAL_FILTERS,
-  applyFilters,
-  getUniqueCategories,
-  readFilters,
-  writeFilters,
-} from '../logic'
-import type { FilterState } from '../types'
-import { ProductList } from './ProductList'
-import { SearchAndFilter } from './SearchAndFilter'
+import { retryProducts } from '../../../shared/api/products'
+import { AsyncBoundary } from '../../../shared/ui/AsyncBoundary'
+import { INITIAL_FILTERS } from '../logic'
+import { useShopFilters } from '../useShopFilters'
+import { ShopCatalog } from './ShopCatalog'
+import { ShopSkeleton } from './Skeletons'
 
-export interface ProductsSectionProps {
-  onAddToCart: (product: Product) => void
-}
-
-/** The shop: filters kept in the URL search params, plus the filtered product grid. */
-export function ProductsSection({ onAddToCart }: ProductsSectionProps) {
-  const catalog = useCatalog()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const filters = readFilters(searchParams)
-  const filteredProducts = applyFilters(catalog.products, filters)
-
-  function updateFilters(change: Partial<FilterState>, replace = false) {
-    setSearchParams(writeFilters({ ...filters, ...change }), { replace })
-  }
-
-  function resetFilters() {
-    setSearchParams(writeFilters(INITIAL_FILTERS))
-  }
-
+/** The shop page body: a title from the URL and the catalog as its own data region. */
+export function ProductsSection() {
+  const { filters } = useShopFilters()
   const title =
     filters.selectedCategory === INITIAL_FILTERS.selectedCategory
       ? 'All Products'
@@ -41,24 +18,13 @@ export function ProductsSection({ onAddToCart }: ProductsSectionProps) {
       <h1 id="shop-title" className="section-title section-title-left">
         {title}
       </h1>
-      <SearchAndFilter
-        categories={getUniqueCategories(catalog.products)}
-        filters={filters}
-        onSearchChange={(searchQuery) => updateFilters({ searchQuery }, true)}
-        onCategoryChange={(selectedCategory) => updateFilters({ selectedCategory })}
-        onSortChange={(sortBy) => updateFilters({ sortBy })}
-        onResetFilters={resetFilters}
-        totalResults={filteredProducts.length}
-      />
-      <ProductList
-        products={filteredProducts}
-        status={catalog.status}
-        errorMessage={catalog.errorMessage}
-        totalCatalogCount={catalog.products.length}
-        onRetry={catalog.reload}
-        onAddToCart={onAddToCart}
-        onResetFilters={resetFilters}
-      />
+      <AsyncBoundary
+        fallback={<ShopSkeleton />}
+        errorTitle="Unable to load the collection"
+        onRetry={retryProducts}
+      >
+        <ShopCatalog />
+      </AsyncBoundary>
     </section>
   )
 }

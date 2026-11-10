@@ -18,10 +18,6 @@ export class ApiError extends Error {
   }
 }
 
-export interface ApiRequestOptions {
-  signal?: AbortSignal
-}
-
 /** Builds the full URL for an endpoint path such as "/products". */
 export function buildApiUrl(path: string): string {
   return `${API_BASE_URL}/${path.replace(/^\/+/, '')}`
@@ -31,13 +27,8 @@ export function buildApiUrl(path: string): string {
  * GETs an endpoint and validates the JSON body against `schema`, returning typed
  * data or throwing an ApiError. Every feature goes through this function.
  */
-export async function apiGet<T>(
-  path: string,
-  schema: ZodType<T>,
-  { signal }: ApiRequestOptions = {},
-): Promise<T> {
+export async function apiGet<T>(path: string, schema: ZodType<T>): Promise<T> {
   const response = await fetch(buildApiUrl(path), {
-    signal,
     headers: { Accept: 'application/json' },
   })
 

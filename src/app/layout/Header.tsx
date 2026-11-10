@@ -1,15 +1,13 @@
 import { Link, NavLink } from 'react-router'
 import { Icon } from '../../shared/ui/Icon'
 import { BRAND_NAME } from '../../shared/config/brand'
+import { useCart } from '../../features/cart'
 import { COLLECTIONS } from '../../features/products'
 import { ShopLink } from './ShopLink'
 
-export interface HeaderProps {
-  cartCount: number
-  onOpenCart: () => void
-}
+export function Header() {
+  const { totalCount: cartCount, open: onOpenCart } = useCart()
 
-export function Header({ cartCount, onOpenCart }: HeaderProps) {
   return (
     <header className="header">
       <div className="header-inner">

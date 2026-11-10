@@ -3,14 +3,15 @@ import { Link } from 'react-router'
 import { Icon } from '../../../shared/ui/Icon'
 import { formatPrice } from '../../../shared/lib/format'
 import type { Product } from '../../../shared/types'
+import { useAddToCart } from '../AddToCartContext'
 import { iconForCategory } from '../collections'
 
 export interface ProductCardProps {
   product: Product
-  onAddToCart: (product: Product) => void
 }
 
-export function ProductCard({ product, onAddToCart }: ProductCardProps) {
+export function ProductCard({ product }: ProductCardProps) {
+  const onAddToCart = useAddToCart()
   const [isSaved, setIsSaved] = useState(false)
   const isAvailable = product.in_stock
 

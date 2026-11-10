@@ -1,17 +1,12 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 
-export interface NewsletterProps {
-  onSubscribe?: (email: string) => void
-}
-
-export function Newsletter({ onSubscribe }: NewsletterProps) {
+export function Newsletter() {
   const [email, setEmail] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    onSubscribe?.(email)
     setIsSubmitted(true)
   }
 

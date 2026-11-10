@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 import type { Product } from '../../shared/types'
-import type { CartEntry } from './types'
+import type { CartLine } from './types'
 
 export interface CartActions {
   addItem: (product: Product) => void
@@ -13,13 +13,11 @@ export interface CartActions {
 }
 
 export interface CartValue extends CartActions {
-  items: CartEntry[]
+  /** What is saved: product ids and quantities. Prices come from the catalog, see usePricedCart. */
+  lines: CartLine[]
   isOpen: boolean
-  /** Stored lines exist but the catalog has not loaded yet, so they cannot be priced. */
-  isResolving: boolean
+  /** Number of items saved in the bag. Needs no product data, so the header never waits for it. */
   totalCount: number
-  subtotalCents: number
-  subtotalFormatted: string
 }
 
 export const CartContext = createContext<CartValue | null>(null)

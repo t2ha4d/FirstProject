@@ -40,14 +40,6 @@ export function resolveCart(lines: CartLine[], products: Product[]): CartEntry[]
 }
 
 /**
- * Leaves out lines whose product is not in the catalog, for counting. Only call with a loaded catalog.
- */
-export function pruneLines(lines: CartLine[], products: Product[]): CartLine[] {
-  const ids = new Set(products.map((product) => product.id))
-  return lines.filter((line) => ids.has(line.id))
-}
-
-/**
  * Subtotal in cents, priced from the product data
  */
 export function calculateSubtotalCents(entries: CartEntry[]): number {
