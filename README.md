@@ -195,7 +195,7 @@ shopboard-react/
 │   │   │   ├── index.ts
 │   │   │   ├── CartContext.ts          # Context + useCart()
 │   │   │   ├── CartProvider.tsx        # Owns { id, qty } lines + drawer state
-│   │   │   ├── storage.ts              # localStorage load/save + legacy migration
+│   │   │   ├── storage.ts              # localStorage load/save, validated with Zod
 │   │   │   ├── logic.ts                # Pure line reducers, pricing, totals
 │   │   │   ├── types.ts
 │   │   │   └── components/             # CartPanel, CartDrawer, CartItem
@@ -251,7 +251,7 @@ bags, shoes and accessories, so product cards show a category icon instead of a 
 
 3. **Persistent cart that stores no prices**
    - `localStorage` (`wtc_cart_items_v1`) holds only `[{ id, qty }]`. Prices, titles and stock always come from the catalog.
-   - Older `{ product, quantity }` entries are migrated on load.
+   - Saved lines that do not match `{ id, qty }` are skipped on load.
    - No line is dropped before the catalog has loaded. Unknown products are pruned only after a successful load.
 
 4. **Type safety**
